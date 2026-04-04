@@ -11,6 +11,38 @@
   padding-top: var(--nav-h);
 }
 
+/* Continuous sidebar background column extending behind the nav */
+.docs-layout::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 280px;
+  height: 100vh;
+  background: var(--s1);
+  border-right: 1px solid var(--rule);
+  z-index: 150;
+  pointer-events: none;
+}
+
+/* Nav needs to sit fully above the sidebar panel on docs pages */
+.docs-page .nav {
+  z-index: 300;
+}
+
+/* Nav background on docs pages: sidebar colour on the left portion */
+.docs-page .nav::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 281px;
+  height: 100%;
+  background: var(--s1);
+  border-right: 1px solid var(--rule);
+  z-index: -1;
+}
+
 
 /* ── SIDEBAR ────────────────────────────────────────────────── */
 .docs-sidebar {
@@ -303,6 +335,9 @@
 }
 
 @media (max-width: 768px) {
+  .docs-layout::before { display: none; }
+  .docs-page .nav::before { display: none; }
+  .docs-page .nav { z-index: 200; }
   .docs-drawer-toggle { display: flex; }
   .docs-overlay { display: block; pointer-events: none; }
   .docs-overlay.visible { pointer-events: auto; }
