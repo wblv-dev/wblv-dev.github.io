@@ -77,7 +77,32 @@
 
 /* Section group */
 .docs-nav-group {
-  margin-bottom: 4px;
+  margin-bottom: 2px;
+}
+
+/* Top-level standalone links (Overview, Automation, etc.) */
+.docs-nav > a {
+  display: block;
+  padding: 8px 20px;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--muted);
+  text-decoration: none;
+  border-left: 2px solid transparent;
+  transition: color 0.15s, background 0.15s, border-color 0.15s;
+  line-height: 1.6;
+}
+
+.docs-nav > a:hover {
+  color: var(--ink);
+  background: var(--s2);
+}
+
+.docs-nav > a.active {
+  color: var(--ink);
+  border-left-color: var(--accent);
+  background: rgba(200, 245, 87, 0.04);
 }
 
 /* Section heading (collapsible) */
@@ -134,7 +159,7 @@
 
 .docs-nav-items a {
   display: block;
-  padding: 5px 20px 5px 36px;
+  padding: 6px 20px 6px 36px;
   font-family: var(--font-body);
   font-size: 13px;
   font-weight: 300;
@@ -166,6 +191,51 @@
   min-width: 0;
   max-width: 860px;
   padding: 48px 60px 80px;
+}
+
+/* Content typography spacing */
+.docs-content h2 {
+  margin-top: 56px;
+  margin-bottom: 16px;
+}
+
+.docs-content h2:first-child {
+  margin-top: 0;
+}
+
+.docs-content h3 {
+  margin-top: 40px;
+  margin-bottom: 12px;
+}
+
+.docs-content p {
+  margin-bottom: 16px;
+  line-height: 1.7;
+}
+
+.docs-content p + p {
+  margin-top: 0;
+}
+
+.docs-content ul, .docs-content ol {
+  margin-bottom: 20px;
+}
+
+.docs-content li {
+  margin-bottom: 6px;
+  line-height: 1.65;
+}
+
+.docs-content .callout {
+  margin: 24px 0;
+}
+
+.docs-content .spec-table {
+  margin: 20px 0 28px;
+}
+
+.docs-content .arch-block {
+  margin: 20px 0 28px;
 }
 
 /* ── MOBILE DRAWER TOGGLE ───────────────────────────────────── */
