@@ -11,6 +11,11 @@
   padding-top: var(--nav-h);
 }
 
+/* Offset nav content to align with docs content area */
+.docs-page .nav .nav-inner {
+  padding-left: 300px;
+}
+
 /* ── SIDEBAR ────────────────────────────────────────────────── */
 .docs-sidebar {
   width: 280px;
@@ -302,6 +307,7 @@
 }
 
 @media (max-width: 768px) {
+  .docs-page .nav .nav-inner { padding-left: var(--pad); }
   .docs-drawer-toggle { display: flex; }
   .docs-overlay { display: block; pointer-events: none; }
   .docs-overlay.visible { pointer-events: auto; }
