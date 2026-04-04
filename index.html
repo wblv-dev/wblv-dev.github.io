@@ -3,510 +3,145 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Harry Wellbelove — Cyber Security Professional based in Milton Keynes. SC Cleared. Five years across SOC analysis, security engineering, and team leadership.">
+<meta name="description" content="Harry Wellbelove — Cyber Security Professional. SC Cleared. Milton Keynes, UK.">
 <meta name="robots" content="index, follow">
 <title>Harry Wellbelove</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;1,9..144,300&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-<style>
-
-/* ── TOKENS ─────────────────────────────────────────────── */
-:root {
-  --bg:       #0f0f0f;
-  --s1:       #161616;
-  --s2:       #1e1e1e;
-  --rule:     #2a2a2a;
-  --ruled:    #333;
-  --ink:      #e8e8e8;
-  --muted:    #888;
-  --dim:      #444;
-  --accent:   #c8f557;
-  --accent-d: rgba(200,245,87,0.07);
-}
-
-/* ── RESET ──────────────────────────────────────────────── */
-*,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
-
-body {
-  background: var(--bg);
-  color: var(--ink);
-  font-family: 'DM Sans', sans-serif;
-  font-weight: 300;
-  font-size: 15px;
-  line-height: 1.7;
-  min-height: 100vh;
-  overflow-x: hidden;
-}
-
-/* grain */
-body::after {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
-  pointer-events: none;
-  z-index: 100;
-}
-
-/* ── LAYOUT ─────────────────────────────────────────────── */
-.wrap { max-width: 1100px; margin: 0 auto; padding: 0 60px; }
-
-/* ── NAV ────────────────────────────────────────────────── */
-nav {
-  padding: 28px 0 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 56px;
-}
-
-.nav-mark {
-  font-family: 'DM Mono', monospace;
-  font-size: 10px;
-  font-weight: 500;
-  letter-spacing: 0.18em;
-  color: var(--accent);
-  text-transform: uppercase;
-}
-
-.nav-links {
-  display: flex;
-  gap: 24px;
-  align-items: center;
-  list-style: none;
-}
-
-.nav-links a {
-  font-family: 'DM Mono', monospace;
-  font-size: 10px;
-  letter-spacing: 0.1em;
-  color: var(--muted);
-  text-decoration: none;
-  text-transform: uppercase;
-  transition: color 0.15s;
-}
-
-.nav-links a:hover { color: var(--accent); }
-
-/* ── HERO ───────────────────────────────────────────────── */
-.hero {
-  padding-bottom: 48px;
-  margin-bottom: 48px;
-}
-
-.hero-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 32px;
-  margin-bottom: 32px;
-}
-
-.hero-name {
-  font-family: 'Fraunces', serif;
-  font-size: clamp(44px, 7vw, 72px);
-  font-weight: 700;
-  line-height: 0.95;
-  letter-spacing: -0.03em;
-  color: var(--ink);
-}
-
-.hero-name em {
-  display: block;
-  font-style: italic;
-  color: var(--accent);
-}
-
-.hero-meta {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 10px;
-  flex-shrink: 0;
-  padding-top: 6px;
-}
-
-.meta-item {
-  font-family: 'DM Mono', monospace;
-  font-size: 10px;
-  letter-spacing: 0.1em;
-  color: var(--muted);
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.meta-item a {
-  color: var(--muted);
-  text-decoration: none;
-  transition: color 0.15s;
-}
-
-.meta-item a:hover { color: var(--accent); }
-
-.meta-item::before {
-  content: '↗';
-  font-size: 9px;
-  color: var(--dim);
-}
-
-.meta-item.email::before { content: '→'; }
-
-.hero-role {
-  font-size: 15px;
-  color: var(--muted);
-  margin-bottom: 20px;
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  flex-wrap: wrap;
-}
-
-.sc-tag {
-  font-family: 'DM Mono', monospace;
-  font-size: 9px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--accent);
-  border: 1px solid rgba(200,245,87,0.35);
-  padding: 3px 10px;
-  border-radius: 2px;
-}
-
-.location-tag {
-  font-family: 'DM Mono', monospace;
-  font-size: 9px;
-  letter-spacing: 0.1em;
-  color: var(--dim);
-}
-
-.hero-statement {
-  font-family: 'Fraunces', serif;
-  font-size: clamp(18px, 2.5vw, 24px);
-  font-weight: 300;
-  font-style: italic;
-  color: var(--muted);
-  line-height: 1.5;
-  border-left: 2px solid var(--ruled);
-  padding-left: 18px;
-}
-
-/* ── SECTION LABEL ──────────────────────────────────────── */
-.section-label {
-  font-family: 'DM Mono', monospace;
-  font-size: 9px;
-  font-weight: 500;
-  letter-spacing: 0.2em;
-  color: var(--dim);
-  text-transform: uppercase;
-  margin-bottom: 28px;
-  display: flex;
-  align-items: center;
-  gap: 14px;
-}
-
-.section-label::after {
-  content: '';
-  flex: 1;
-  height: 1px;
-  background: var(--rule);
-}
-
-/* ── ABOUT ──────────────────────────────────────────────── */
-.about {
-  margin-bottom: 56px;
-}
-
-.about-body {
-  font-size: 15px;
-  color: var(--muted);
-  line-height: 1.8;
-  text-align: justify;
-}
-
-.about-body strong {
-  color: var(--ink);
-  font-weight: 500;
-}
-
-/* ── PROJECTS ───────────────────────────────────────────── */
-.projects {
-  margin-bottom: 56px;
-}
-
-.project-card {
-  border: 1px solid var(--rule);
-  border-radius: 8px;
-  padding: 26px 26px 22px;
-  margin-bottom: 12px;
-  background: var(--s1);
-  transition: border-color 0.2s, background 0.2s;
-  text-decoration: none;
-  display: block;
-  position: relative;
-}
-
-.project-card:hover {
-  border-color: var(--ruled);
-  background: var(--s2);
-}
-
-.project-card:hover .project-arrow {
-  color: var(--accent);
-  transform: translate(2px, -2px);
-}
-
-.project-head {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 16px;
-  margin-bottom: 10px;
-}
-
-.project-name {
-  font-family: 'Fraunces', serif;
-  font-size: 20px;
-  font-weight: 700;
-  color: var(--ink);
-  letter-spacing: -0.01em;
-  line-height: 1.2;
-}
-
-.project-arrow {
-  font-size: 13px;
-  color: var(--dim);
-  transition: color 0.15s, transform 0.15s;
-  flex-shrink: 0;
-  margin-top: 4px;
-}
-
-.project-desc {
-  font-size: 14px;
-  color: var(--muted);
-  line-height: 1.7;
-  text-align: justify;
-}
-
-/* ── CONTACT ────────────────────────────────────────────── */
-.contact {
-  margin-bottom: 56px;
-}
-
-.contact-body {
-  font-size: 14px;
-  color: var(--muted);
-  line-height: 1.7;
-  margin-bottom: 24px;
-}
-
-.contact-links {
-  display: flex;
-  gap: 16px;
-  flex-wrap: wrap;
-}
-
-.contact-link {
-  font-family: 'DM Mono', monospace;
-  font-size: 11px;
-  letter-spacing: 0.08em;
-  color: var(--ink);
-  text-decoration: none;
-  border: 1px solid var(--ruled);
-  padding: 10px 20px;
-  border-radius: 3px;
-  transition: all 0.15s;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.contact-link:hover {
-  border-color: var(--accent);
-  color: var(--accent);
-}
-
-/* ── FOOTER ─────────────────────────────────────────────── */
-footer {
-  border-top: 1px solid var(--rule);
-  padding: 28px 0 40px;
-}
-
-.foot-inner {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 16px;
-  flex-wrap: wrap;
-}
-
-.foot-copy {
-  font-family: 'DM Mono', monospace;
-  font-size: 9px;
-  letter-spacing: 0.1em;
-  color: var(--dim);
-  text-transform: uppercase;
-}
-
-.foot-note {
-  font-family: 'DM Mono', monospace;
-  font-size: 9px;
-  letter-spacing: 0.08em;
-  color: var(--dim);
-}
-
-/* ── ANIMATIONS ─────────────────────────────────────────── */
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(14px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-nav    { animation: fadeUp 0.45s ease 0.0s both; }
-.hero  { animation: fadeUp 0.45s ease 0.1s both; }
-.about { animation: fadeUp 0.45s ease 0.2s both; }
-.projects { animation: fadeUp 0.45s ease 0.25s both; }
-.contact  { animation: fadeUp 0.45s ease 0.3s both; }
-footer    { animation: fadeUp 0.45s ease 0.35s both; }
-
-/* ── RESPONSIVE ─────────────────────────────────────────── */
-@media (max-width: 580px) {
-  .wrap { padding: 0 20px; }
-  .hero-top { flex-direction: column; gap: 24px; }
-  .hero-meta { align-items: flex-start; flex-direction: row; flex-wrap: wrap; gap: 12px; }
-  .meta-item::before { display: none; }
-  .about-stats { grid-template-columns: 1fr; }
-  .nav-links { gap: 16px; }
-  .hero-name { font-size: 38px; }
-}
-
-</style>
+<link rel="stylesheet" href="/assets/css/style.css">
 </head>
 <body>
-<div class="wrap">
 
-  <!-- NAV -->
-  <nav>
-    <div class="nav-mark">wblv.dev</div>
+<!-- ── NAV ─────────────────────────────────────────────────── -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-mark" href="/">wblv.dev</a>
+    <button class="nav-toggle" aria-label="Menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
     <ul class="nav-links">
-      <li><a href="#about">About</a></li>
-      <li><a href="#projects">Projects</a></li>
-      <li><a href="#contact">Contact</a></li>
+      <li><a href="/index.html">Home</a></li>
+      <li><a href="/about.html">About</a></li>
+      <li><a href="/projects/">Projects</a></li>
+      <li><a href="/blog.html">Blog</a></li>
+      <li><a href="/contact.html">Contact</a></li>
     </ul>
-  </nav>
+  </div>
+</nav>
+
+<!-- ── MAIN ────────────────────────────────────────────────── -->
+<main>
+<div class="wrap page-content">
 
   <!-- HERO -->
-  <section class="hero">
-    <div class="hero-top">
-      <h1 class="hero-name">
+  <section class="section-lg fade-in">
+
+    <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:32px; margin-bottom:28px;">
+
+      <h1 class="display-xl" style="color:var(--ink)">
         Harry<br>
-        <em>Wellbelove</em>
+        <em class="accent">Wellbelove</em>
       </h1>
-      <div class="hero-meta">
-        <div class="meta-item">
-          <a href="https://linkedin.com/in/harrywellbelove" target="_blank" rel="noopener">LinkedIn</a>
-        </div>
-        <div class="meta-item">
-          <a href="https://github.com/wblv-dev" target="_blank" rel="noopener">GitHub</a>
-        </div>
-        <div class="meta-item email">
-          <a href="mailto:harry@wellbelove.org">harry@wellbelove.org</a>
-        </div>
+
+      <div style="display:flex; flex-direction:column; align-items:flex-end; gap:12px; flex-shrink:0; padding-top:8px;">
+        <a class="link" href="https://linkedin.com/in/harrywellbelove" target="_blank" rel="noopener">
+          <span class="link-arr">↗</span> LinkedIn
+        </a>
+        <a class="link" href="https://github.com/wblv-dev" target="_blank" rel="noopener">
+          <span class="link-arr">↗</span> GitHub
+        </a>
+        <a class="link" href="mailto:harry@wellbelove.org">
+          <span class="link-arr">→</span> harry@wellbelove.org
+        </a>
       </div>
+
     </div>
 
-    <div class="hero-role">
-      Cyber Security Professional
-      <span class="sc-tag">SC Cleared</span>
-      <span class="location-tag">Milton Keynes, UK</span>
+    <div style="display:flex; align-items:center; gap:14px; flex-wrap:wrap; margin-bottom:28px;">
+      <span style="font-size:14px; color:var(--muted);">Cyber Security Professional</span>
+      <span class="tag tag-accent">SC Cleared</span>
+      <span class="tag tag-dim">Milton Keynes, UK</span>
     </div>
 
-    <p class="hero-statement">
-      Five years building and leading security operations across MSSP, regulated finance,
-      and Critical National Infrastructure — with a preference for hands-on work
-      over slide decks.
+    <p class="italic-statement" style="font-size:clamp(17px,2vw,22px); max-width:680px;">
+      Five years building and leading security operations across MSSP,
+      regulated finance, and Critical National Infrastructure — with a
+      preference for hands-on work over slide decks.
     </p>
-  </section>
 
-  <!-- ABOUT -->
-  <section class="about" id="about">
-    <div class="section-label">About</div>
-
-    <p class="about-body">
-      <!-- Your words go here. Replace this with your own about text. -->
-      I'm a Cyber Security professional with experience spanning SOC analysis, detection engineering,
-      security engineering, and team leadership. My most significant delivery to date was a
-      <strong>multi-million-pound greenfield CNI programme</strong> for a major UK energy operator —
-      covering infrastructure security engineering, CIS Level 2 hardening across Linux and Windows
-      estates, OPNsense firewall deployment, and full production handover aligned to NCSC CAF and
-      NIST CSF. Alongside delivery work I've led a SOC team of five, built managed detection services
-      from scratch, and served as internal SME for Cloudflare Enterprise, Microsoft Sentinel, and
-      KQL detection engineering. I hold <strong>active SC clearance</strong> and am DV-vetting ready
-      with sole British citizenship.
-    </p>
   </section>
 
   <!-- PROJECTS -->
-  <section class="projects" id="projects">
-    <div class="section-label">Projects</div>
+  <section class="section fade-in-2">
+    <div class="label">Projects</div>
 
-    <a class="project-card" href="https://github.com/wblv-dev/wblv-private-cloud-lab" target="_blank" rel="noopener">
-      <div class="project-head">
-        <div class="project-name">WBLV Private Cloud Lab</div>
-        <span class="project-arrow">↗</span>
+    <a class="card card-link" href="/projects/private-cloud-lab.html" style="margin-bottom:12px;">
+      <div class="card-head">
+        <div class="card-title">WBLV Private Cloud Lab</div>
+        <span class="card-arrow">↗</span>
       </div>
-      <p class="project-desc">
-        A production-grade homelab built on a three-node Proxmox/Ceph cluster with HA OPNsense
-        firewalls, VLAN-segmented networking, and CIS-hardened workloads throughout. Built to
-        replicate enterprise infrastructure patterns, test tooling before committing changes to
-        client environments, and maintain hands-on depth across platform engineering, network
-        security, and Linux administration.
+      <p class="card-desc">
+        Three-node Proxmox/Ceph cluster with HA OPNsense firewalls, VLAN-segmented networking,
+        and CIS-hardened workloads throughout. Built to replicate enterprise infrastructure
+        patterns and maintain hands-on depth across platform engineering and network security.
       </p>
+      <div class="tag-group mt-sm">
+        <span class="tag tag-dim">Proxmox</span>
+        <span class="tag tag-dim">Ceph</span>
+        <span class="tag tag-dim">OPNsense</span>
+        <span class="tag tag-dim">CIS L2</span>
+        <span class="tag tag-dim">Linux</span>
+      </div>
     </a>
 
-    <a class="project-card" href="https://github.com/wblv-dev/domain-security-toolkit" target="_blank" rel="noopener">
-      <div class="project-head">
-        <div class="project-name">Domain Security Toolkit</div>
-        <span class="project-arrow">↗</span>
+    <a class="card card-link" href="/projects/domain-security-toolkit.html">
+      <div class="card-head">
+        <div class="card-title">Domain Security Toolkit</div>
+        <span class="card-arrow">↗</span>
       </div>
-      <p class="project-desc">
-        Open source Python tool that runs 35+ automated checks across TLS configuration, email
-        authentication, HTTP security headers, DNSSEC, certificate validity, and OSINT exposure.
-        Produces customer-ready HTML reports with remediation guidance aligned to NIST, OWASP,
-        NCSC, CISA, and GDPR. Built against real client domains — findings were production
-        issues, not synthetic test cases.
+      <p class="card-desc">
+        Open source Python tool running 35+ automated checks across TLS, email authentication,
+        HTTP headers, DNSSEC, certificates, and OSINT. Produces customer-ready HTML reports
+        with remediation guidance aligned to NIST, OWASP, NCSC, CISA, and GDPR.
       </p>
+      <div class="tag-group mt-sm">
+        <span class="tag tag-dim">Python</span>
+        <span class="tag tag-dim">DNS</span>
+        <span class="tag tag-dim">TLS</span>
+        <span class="tag tag-dim">NCSC</span>
+        <span class="tag tag-dim">Open Source</span>
+      </div>
     </a>
+
   </section>
 
-  <!-- CONTACT -->
-  <section class="contact" id="contact">
-    <div class="section-label">Contact</div>
-    <p class="contact-body">
-      Available for Cyber Security Engineering and SOC leadership roles in the UK.
-      SC cleared and DV-vetting ready. Reach out directly or connect on LinkedIn.
-    </p>
-    <div class="contact-links">
-      <a class="contact-link" href="mailto:harry@wellbelove.org">
-        → harry@wellbelove.org
-      </a>
-      <a class="contact-link" href="https://linkedin.com/in/harrywellbelove" target="_blank" rel="noopener">
-        ↗ LinkedIn
-      </a>
-      <a class="contact-link" href="https://github.com/wblv-dev" target="_blank" rel="noopener">
-        ↗ GitHub
-      </a>
+  <!-- CTA -->
+  <section class="section fade-in-3" style="display:flex; justify-content:space-between; align-items:center; gap:24px; flex-wrap:wrap; padding:32px; background:var(--s1); border:1px solid var(--rule); border-radius:var(--radius-lg);">
+    <div>
+      <div style="font-family:var(--font-display); font-size:20px; font-weight:700; margin-bottom:6px;">
+        If you've got something worth <em class="accent">talking about.</em>
+      </div>
+      <div style="font-size:13px; color:var(--muted);">Get in touch directly or via the contact page.</div>
     </div>
+    <a class="btn btn-outline" href="/contact.html">Get in touch →</a>
   </section>
-
-  <!-- FOOTER -->
-  <footer>
-    <div class="foot-inner">
-      <div class="foot-copy">© 2026 Harry Wellbelove · wellbelove.org</div>
-      <div class="foot-note">Built with GitHub Pages</div>
-    </div>
-  </footer>
 
 </div>
+</main>
+
+<!-- ── FOOTER ───────────────────────────────────────────────── -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-left">© 2026 Harry Wellbelove · wellbelove.org</div>
+    <div class="footer-right">
+      <a href="/about.html">About</a>
+      <a href="/projects/">Projects</a>
+      <a href="/contact.html">Contact</a>
+      <a href="https://github.com/wblv-dev" target="_blank" rel="noopener">GitHub ↗</a>
+    </div>
+  </div>
+</footer>
+
+<script src="/assets/js/nav.js"></script>
 </body>
 </html>
