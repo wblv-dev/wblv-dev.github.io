@@ -50,7 +50,7 @@ body::after {
 }
 
 /* ── LAYOUT ─────────────────────────────────────────────── */
-.wrap { max-width: 760px; margin: 0 auto; padding: 0 28px; }
+.wrap { max-width: 1100px; margin: 0 auto; padding: 0 60px; }
 
 /* ── NAV ────────────────────────────────────────────────── */
 nav {
@@ -92,7 +92,6 @@ nav {
 /* ── HERO ───────────────────────────────────────────────── */
 .hero {
   padding-bottom: 80px;
-  border-bottom: 1px solid var(--rule);
   margin-bottom: 80px;
 }
 
@@ -189,7 +188,6 @@ nav {
   font-style: italic;
   color: var(--muted);
   line-height: 1.5;
-  max-width: 560px;
   border-left: 2px solid var(--ruled);
   padding-left: 18px;
 }
@@ -225,7 +223,6 @@ nav {
   color: var(--muted);
   line-height: 1.8;
   text-align: justify;
-  max-width: 640px;
 }
 
 .about-body strong {
@@ -335,7 +332,6 @@ nav {
   color: var(--muted);
   line-height: 1.7;
   margin-bottom: 24px;
-  max-width: 520px;
 }
 
 .contact-links {
@@ -408,6 +404,7 @@ footer    { animation: fadeUp 0.45s ease 0.35s both; }
 
 /* ── RESPONSIVE ─────────────────────────────────────────── */
 @media (max-width: 580px) {
+  .wrap { padding: 0 20px; }
   .hero-top { flex-direction: column; gap: 24px; }
   .hero-meta { align-items: flex-start; flex-direction: row; flex-wrap: wrap; gap: 12px; }
   .meta-item::before { display: none; }
