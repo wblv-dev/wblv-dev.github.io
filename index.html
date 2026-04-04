@@ -3,24 +3,25 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Harry Wellbelove — Cyber Security Professional. SC Cleared.">
+<meta name="description" content="Harry Wellbelove — Cyber Security Professional based in Milton Keynes. SC Cleared. Five years across SOC analysis, security engineering, and team leadership.">
 <meta name="robots" content="index, follow">
 <title>Harry Wellbelove</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;1,9..144,300&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
+
 /* ── TOKENS ─────────────────────────────────────────────── */
 :root {
-  --bg:      #0f0f0f;
-  --s1:      #161616;
-  --s2:      #1e1e1e;
-  --rule:    #2a2a2a;
-  --ruled:   #333;
-  --ink:     #e8e8e8;
-  --muted:   #888;
-  --dim:     #444;
-  --accent:  #c8f557;
-  --accent-d: rgba(200,245,87,0.08);
+  --bg:       #0f0f0f;
+  --s1:       #161616;
+  --s2:       #1e1e1e;
+  --rule:     #2a2a2a;
+  --ruled:    #333;
+  --ink:      #e8e8e8;
+  --muted:    #888;
+  --dim:      #444;
+  --accent:   #c8f557;
+  --accent-d: rgba(200,245,87,0.07);
 }
 
 /* ── RESET ──────────────────────────────────────────────── */
@@ -33,143 +34,236 @@ body {
   font-family: 'DM Sans', sans-serif;
   font-weight: 300;
   font-size: 15px;
-  line-height: 1.65;
+  line-height: 1.7;
   min-height: 100vh;
   overflow-x: hidden;
 }
 
-/* ── GRAIN OVERLAY ──────────────────────────────────────── */
-body::before {
+/* grain */
+body::after {
   content: '';
   position: fixed;
   inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
   pointer-events: none;
-  z-index: 0;
+  z-index: 100;
 }
 
 /* ── LAYOUT ─────────────────────────────────────────────── */
-.wrap {
-  max-width: 780px;
-  margin: 0 auto;
-  padding: 0 28px;
-  position: relative;
-  z-index: 1;
-}
+.wrap { max-width: 760px; margin: 0 auto; padding: 0 28px; }
 
-/* ── HEADER ─────────────────────────────────────────────── */
-header {
-  padding: 64px 0 56px;
-  border-bottom: 1px solid var(--ruled);
-  margin-bottom: 64px;
-}
-
-.header-inner {
+/* ── NAV ────────────────────────────────────────────────── */
+nav {
+  padding: 28px 0 0;
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
-  gap: 24px;
+  align-items: center;
+  margin-bottom: 80px;
 }
 
-.header-left {}
-
-.eyebrow {
+.nav-mark {
   font-family: 'DM Mono', monospace;
   font-size: 10px;
   font-weight: 500;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.18em;
   color: var(--accent);
   text-transform: uppercase;
-  margin-bottom: 16px;
+}
+
+.nav-links {
   display: flex;
+  gap: 24px;
   align-items: center;
-  gap: 10px;
+  list-style: none;
 }
 
-.eyebrow::after {
-  content: '';
-  width: 32px;
-  height: 1px;
-  background: var(--accent);
-  opacity: 0.5;
-}
-
-h1 {
-  font-family: 'Fraunces', serif;
-  font-size: clamp(40px, 6vw, 64px);
-  font-weight: 700;
-  line-height: 1.0;
-  letter-spacing: -0.03em;
-  color: var(--ink);
-  margin-bottom: 16px;
-}
-
-.role {
-  font-size: 15px;
-  color: var(--muted);
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.role-tag {
-  font-family: 'DM Mono', monospace;
-  font-size: 10px;
-  letter-spacing: 0.1em;
-  color: var(--accent);
-  border: 1px solid rgba(200,245,87,0.3);
-  padding: 3px 10px;
-  border-radius: 2px;
-}
-
-.header-right {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 8px;
-  flex-shrink: 0;
-  padding-top: 4px;
-}
-
-.nav-link {
+.nav-links a {
   font-family: 'DM Mono', monospace;
   font-size: 10px;
   letter-spacing: 0.1em;
   color: var(--muted);
   text-decoration: none;
+  text-transform: uppercase;
   transition: color 0.15s;
-  display: flex;
-  align-items: center;
-  gap: 6px;
 }
 
-.nav-link:hover { color: var(--accent); }
+.nav-links a:hover { color: var(--accent); }
 
-.nav-link::before {
+/* ── HERO ───────────────────────────────────────────────── */
+.hero {
+  padding-bottom: 80px;
+  border-bottom: 1px solid var(--rule);
+  margin-bottom: 80px;
+}
+
+.hero-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 32px;
+  margin-bottom: 32px;
+}
+
+.hero-name {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(44px, 7vw, 72px);
+  font-weight: 700;
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+}
+
+.hero-name em {
+  display: block;
+  font-style: italic;
+  color: var(--accent);
+}
+
+.hero-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+  flex-shrink: 0;
+  padding-top: 6px;
+}
+
+.meta-item {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.meta-item a {
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+
+.meta-item a:hover { color: var(--accent); }
+
+.meta-item::before {
   content: '↗';
   font-size: 9px;
-  opacity: 0.6;
+  color: var(--dim);
+}
+
+.meta-item.email::before { content: '→'; }
+
+.hero-role {
+  font-size: 15px;
+  color: var(--muted);
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.sc-tag {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  border: 1px solid rgba(200,245,87,0.35);
+  padding: 3px 10px;
+  border-radius: 2px;
+}
+
+.location-tag {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  color: var(--dim);
+}
+
+.hero-statement {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(18px, 2.5vw, 24px);
+  font-weight: 300;
+  font-style: italic;
+  color: var(--muted);
+  line-height: 1.5;
+  max-width: 560px;
+  border-left: 2px solid var(--ruled);
+  padding-left: 18px;
 }
 
 /* ── SECTION LABEL ──────────────────────────────────────── */
-.lbl {
+.section-label {
   font-family: 'DM Mono', monospace;
   font-size: 9px;
   font-weight: 500;
   letter-spacing: 0.2em;
   color: var(--dim);
   text-transform: uppercase;
-  margin-bottom: 24px;
+  margin-bottom: 28px;
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
 }
 
-.lbl::after {
+.section-label::after {
   content: '';
   flex: 1;
   height: 1px;
   background: var(--rule);
+}
+
+/* ── ABOUT ──────────────────────────────────────────────── */
+.about {
+  margin-bottom: 80px;
+}
+
+.about-body {
+  font-size: 15px;
+  color: var(--muted);
+  line-height: 1.8;
+  text-align: justify;
+  max-width: 640px;
+}
+
+.about-body strong {
+  color: var(--ink);
+  font-weight: 500;
+}
+
+.about-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  overflow: hidden;
+  margin-top: 28px;
+}
+
+.stat {
+  background: var(--s1);
+  padding: 18px 20px;
+}
+
+.stat-n {
+  font-family: 'Fraunces', serif;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--accent);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.stat-l {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: var(--dim);
+  text-transform: uppercase;
 }
 
 /* ── PROJECTS ───────────────────────────────────────────── */
@@ -180,25 +274,13 @@ h1 {
 .project-card {
   border: 1px solid var(--rule);
   border-radius: 8px;
-  padding: 28px 28px 24px;
+  padding: 26px 26px 22px;
   margin-bottom: 12px;
   background: var(--s1);
-  transition: all 0.2s;
+  transition: border-color 0.2s, background 0.2s;
   text-decoration: none;
   display: block;
   position: relative;
-  overflow: hidden;
-}
-
-.project-card::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0;
-  width: 3px;
-  height: 100%;
-  background: var(--accent);
-  opacity: 0;
-  transition: opacity 0.2s;
 }
 
 .project-card:hover {
@@ -206,16 +288,17 @@ h1 {
   background: var(--s2);
 }
 
-.project-card:hover::before {
-  opacity: 1;
+.project-card:hover .project-arrow {
+  color: var(--accent);
+  transform: translate(2px, -2px);
 }
 
-.project-top {
+.project-head {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 10px;
   gap: 16px;
+  margin-bottom: 10px;
 }
 
 .project-name {
@@ -228,57 +311,63 @@ h1 {
 }
 
 .project-arrow {
-  font-size: 14px;
+  font-size: 13px;
   color: var(--dim);
   transition: color 0.15s, transform 0.15s;
   flex-shrink: 0;
   margin-top: 4px;
 }
 
-.project-card:hover .project-arrow {
-  color: var(--accent);
-  transform: translate(2px, -2px);
-}
-
 .project-desc {
   font-size: 14px;
   color: var(--muted);
-  line-height: 1.65;
-  margin-bottom: 16px;
+  line-height: 1.7;
+  text-align: justify;
 }
 
-/* ── ABOUT STRIP ────────────────────────────────────────── */
-.about {
-  background: var(--s1);
-  border: 1px solid var(--rule);
-  border-radius: 8px;
-  padding: 24px 28px;
+/* ── CONTACT ────────────────────────────────────────────── */
+.contact {
   margin-bottom: 80px;
-  display: grid;
-  grid-template-columns: auto 1fr;
-  gap: 20px;
-  align-items: start;
 }
 
-.about-ico {
-  font-size: 13px;
-  margin-top: 2px;
-  color: var(--accent);
-  font-family: 'DM Mono', monospace;
-}
-
-.about-txt {
-  font-size: 13px;
+.contact-body {
+  font-size: 14px;
   color: var(--muted);
-  line-height: 1.75;
+  line-height: 1.7;
+  margin-bottom: 24px;
+  max-width: 520px;
 }
 
-.about-txt strong { color: var(--ink); font-weight: 500; }
+.contact-links {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.contact-link {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: var(--ink);
+  text-decoration: none;
+  border: 1px solid var(--ruled);
+  padding: 10px 20px;
+  border-radius: 3px;
+  transition: all 0.15s;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.contact-link:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
 
 /* ── FOOTER ─────────────────────────────────────────────── */
 footer {
   border-top: 1px solid var(--rule);
-  padding: 32px 0 48px;
+  padding: 28px 0 40px;
 }
 
 .foot-inner {
@@ -289,125 +378,182 @@ footer {
   flex-wrap: wrap;
 }
 
-.foot-name {
+.foot-copy {
   font-family: 'DM Mono', monospace;
-  font-size: 10px;
+  font-size: 9px;
+  letter-spacing: 0.1em;
   color: var(--dim);
-  letter-spacing: 0.1em;
+  text-transform: uppercase;
 }
 
-.foot-links {
-  display: flex;
-  gap: 20px;
-  align-items: center;
-}
-
-.foot-link {
+.foot-note {
   font-family: 'DM Mono', monospace;
-  font-size: 10px;
-  letter-spacing: 0.1em;
-  color: var(--muted);
-  text-decoration: none;
-  transition: color 0.15s;
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  color: var(--dim);
 }
-
-.foot-link:hover { color: var(--accent); }
 
 /* ── ANIMATIONS ─────────────────────────────────────────── */
 @keyframes fadeUp {
-  from { opacity: 0; transform: translateY(16px); }
+  from { opacity: 0; transform: translateY(14px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
-.header-left  { animation: fadeUp 0.5s ease 0.0s both; }
-.header-right { animation: fadeUp 0.5s ease 0.1s both; }
-.projects     { animation: fadeUp 0.5s ease 0.2s both; }
-.about        { animation: fadeUp 0.5s ease 0.3s both; }
-footer        { animation: fadeUp 0.5s ease 0.4s both; }
+nav    { animation: fadeUp 0.45s ease 0.0s both; }
+.hero  { animation: fadeUp 0.45s ease 0.1s both; }
+.about { animation: fadeUp 0.45s ease 0.2s both; }
+.projects { animation: fadeUp 0.45s ease 0.25s both; }
+.contact  { animation: fadeUp 0.45s ease 0.3s both; }
+footer    { animation: fadeUp 0.45s ease 0.35s both; }
 
 /* ── RESPONSIVE ─────────────────────────────────────────── */
-@media (max-width: 560px) {
-  .header-inner { flex-direction: column; }
-  .header-right { align-items: flex-start; flex-direction: row; flex-wrap: wrap; gap: 12px; }
-  .nav-link::before { display: none; }
-  h1 { font-size: 36px; }
-  .about { grid-template-columns: 1fr; gap: 8px; }
+@media (max-width: 580px) {
+  .hero-top { flex-direction: column; gap: 24px; }
+  .hero-meta { align-items: flex-start; flex-direction: row; flex-wrap: wrap; gap: 12px; }
+  .meta-item::before { display: none; }
+  .about-stats { grid-template-columns: 1fr; }
+  .nav-links { gap: 16px; }
+  .hero-name { font-size: 38px; }
 }
+
 </style>
 </head>
 <body>
 <div class="wrap">
 
-  <!-- HEADER -->
-  <header>
-    <div class="header-inner">
-      <div class="header-left">
-        <div class="eyebrow">wblv.dev</div>
-        <h1>Harry<br>Wellbelove</h1>
-        <div class="role">
-          Cyber Security Professional
-          <span class="role-tag">SC Cleared</span>
+  <!-- NAV -->
+  <nav>
+    <div class="nav-mark">wblv.dev</div>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-top">
+      <h1 class="hero-name">
+        Harry<br>
+        <em>Wellbelove</em>
+      </h1>
+      <div class="hero-meta">
+        <div class="meta-item">
+          <a href="https://linkedin.com/in/harrywellbelove" target="_blank" rel="noopener">LinkedIn</a>
+        </div>
+        <div class="meta-item">
+          <a href="https://github.com/wblv-dev" target="_blank" rel="noopener">GitHub</a>
+        </div>
+        <div class="meta-item email">
+          <a href="mailto:harry@wellbelove.org">harry@wellbelove.org</a>
         </div>
       </div>
-      <div class="header-right">
-        <a class="nav-link" href="https://linkedin.com/in/harrywellbelove" target="_blank" rel="noopener">LinkedIn</a>
-        <a class="nav-link" href="https://github.com/wblv-dev" target="_blank" rel="noopener">GitHub</a>
-        <a class="nav-link" href="mailto:harry@wellbelove.org">harry@wellbelove.org</a>
+    </div>
+
+    <div class="hero-role">
+      Cyber Security Professional
+      <span class="sc-tag">SC Cleared</span>
+      <span class="location-tag">Milton Keynes, UK</span>
+    </div>
+
+    <p class="hero-statement">
+      Five years building and leading security operations across MSSP, regulated finance,
+      and Critical National Infrastructure — with a preference for hands-on work
+      over slide decks.
+    </p>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="about" id="about">
+    <div class="section-label">About</div>
+
+    <p class="about-body">
+      I'm a Cyber Security professional with experience spanning SOC analysis, detection engineering,
+      security engineering, and team leadership. My most significant delivery to date was a
+      <strong>multi-million-pound greenfield CNI programme</strong> for a major UK energy operator — covering
+      infrastructure security engineering, CIS Level 2 hardening across Linux and Windows estates,
+      OPNsense firewall deployment, and full production handover aligned to NCSC CAF and NIST CSF.
+      Alongside delivery work I've led a SOC team of five, built managed detection services from
+      scratch, and served as internal SME for Cloudflare Enterprise, Microsoft Sentinel, and
+      KQL detection engineering. I hold <strong>active SC clearance</strong> and am DV-vetting ready
+      with sole British citizenship.
+    </p>
+
+    <div class="about-stats">
+      <div class="stat">
+        <div class="stat-n">5+</div>
+        <div class="stat-l">Years in security</div>
+      </div>
+      <div class="stat">
+        <div class="stat-n">SC</div>
+        <div class="stat-l">Active clearance</div>
+      </div>
+      <div class="stat">
+        <div class="stat-n">CNI</div>
+        <div class="stat-l">Programme delivered</div>
       </div>
     </div>
-  </header>
+  </section>
 
   <!-- PROJECTS -->
-  <section class="projects">
-    <div class="lbl">Projects</div>
+  <section class="projects" id="projects">
+    <div class="section-label">Projects</div>
 
-    <!-- Private Cloud Lab -->
     <a class="project-card" href="https://github.com/wblv-dev/wblv-private-cloud-lab" target="_blank" rel="noopener">
-      <div class="project-top">
+      <div class="project-head">
         <div class="project-name">WBLV Private Cloud Lab</div>
         <span class="project-arrow">↗</span>
       </div>
       <p class="project-desc">
-        A production-grade homelab built on a three-node Proxmox/Ceph cluster with HA OPNsense firewalls,
-        VLAN-segmented networking, and CIS-hardened workloads throughout. Built to replicate enterprise
-        infrastructure patterns, test tooling before committing changes to client environments, and maintain
-        hands-on depth across platform engineering, network security, and Linux administration.
+        A production-grade homelab built on a three-node Proxmox/Ceph cluster with HA OPNsense
+        firewalls, VLAN-segmented networking, and CIS-hardened workloads throughout. Built to
+        replicate enterprise infrastructure patterns, test tooling before committing changes to
+        client environments, and maintain hands-on depth across platform engineering, network
+        security, and Linux administration.
       </p>
     </a>
 
-    <!-- Domain Security Toolkit -->
     <a class="project-card" href="https://github.com/wblv-dev/domain-security-toolkit" target="_blank" rel="noopener">
-      <div class="project-top">
+      <div class="project-head">
         <div class="project-name">Domain Security Toolkit</div>
         <span class="project-arrow">↗</span>
       </div>
       <p class="project-desc">
-        Open source Python tool that runs 35+ automated checks across TLS configuration, email authentication,
-        HTTP security headers, DNSSEC, certificate validity, and OSINT exposure. Produces customer-ready HTML
-        reports with remediation guidance aligned to NIST, OWASP, NCSC, CISA, and GDPR. Built against real
-        client domains — findings were production issues, not synthetic test cases.
+        Open source Python tool that runs 35+ automated checks across TLS configuration, email
+        authentication, HTTP security headers, DNSSEC, certificate validity, and OSINT exposure.
+        Produces customer-ready HTML reports with remediation guidance aligned to NIST, OWASP,
+        NCSC, CISA, and GDPR. Built against real client domains — findings were production
+        issues, not synthetic test cases.
       </p>
     </a>
-
   </section>
 
-  <!-- ABOUT STRIP -->
-  <div class="about">
-    <div class="about-ico">//</div>
-    <div class="about-txt">
-      Based in Milton Keynes. <strong>Five years across SOC analysis, security engineering, and team leadership</strong> — spanning MSSP environments, regulated finance, and Critical National Infrastructure. Delivered a multi-million-pound greenfield CNI programme covering infrastructure security engineering, CIS Level 2 hardening, and production handover against NCSC CAF and NIST CSF. Active SC clearance.
+  <!-- CONTACT -->
+  <section class="contact" id="contact">
+    <div class="section-label">Contact</div>
+    <p class="contact-body">
+      Available for Cyber Security Engineering and SOC leadership roles in the UK.
+      SC cleared and DV-vetting ready. Reach out directly or connect on LinkedIn.
+    </p>
+    <div class="contact-links">
+      <a class="contact-link" href="mailto:harry@wellbelove.org">
+        → harry@wellbelove.org
+      </a>
+      <a class="contact-link" href="https://linkedin.com/in/harrywellbelove" target="_blank" rel="noopener">
+        ↗ LinkedIn
+      </a>
+      <a class="contact-link" href="https://github.com/wblv-dev" target="_blank" rel="noopener">
+        ↗ GitHub
+      </a>
     </div>
-  </div>
+  </section>
 
   <!-- FOOTER -->
   <footer>
     <div class="foot-inner">
-      <div class="foot-name">HARRY WELLBELOVE · WELLBELOVE.ORG</div>
-      <div class="foot-links">
-        <a class="foot-link" href="https://linkedin.com/in/harrywellbelove" target="_blank" rel="noopener">LinkedIn ↗</a>
-        <a class="foot-link" href="https://github.com/wblv-dev" target="_blank" rel="noopener">GitHub ↗</a>
-        <a class="foot-link" href="mailto:harry@wellbelove.org">harry@wellbelove.org</a>
-      </div>
+      <div class="foot-copy">© 2026 Harry Wellbelove · wellbelove.org</div>
+      <div class="foot-note">Built with GitHub Pages</div>
     </div>
   </footer>
 
