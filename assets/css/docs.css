@@ -80,6 +80,15 @@
   margin-bottom: 2px;
 }
 
+/* Groups without a heading (standalone links) - remove extra spacing */
+.docs-nav-group:not(:has(.docs-nav-heading)) {
+  margin-bottom: 0;
+}
+
+.docs-nav-group:not(:has(.docs-nav-heading)) .docs-nav-items {
+  padding-bottom: 0;
+}
+
 /* Top-level standalone links (Overview, Automation, etc.) */
 .docs-nav > a {
   display: block;
