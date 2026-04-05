@@ -13,9 +13,9 @@
   --ruled:     #333;
   --ink:       #e8e8e8;
   --ink-2:     #c8c8c8;
-  --muted:     #888;
-  --dim:       #555;
-  --faint:     #333;
+  --muted:     #a0a0a0;
+  --dim:       #757575;
+  --faint:     #3a3a3a;
   --accent:    #c8f557;
   --accent-d:  rgba(200,245,87,0.08);
   --accent-d2: rgba(200,245,87,0.04);
@@ -277,6 +277,18 @@ em.accent { color: var(--accent); font-style: italic; }
   display: flex;
   gap: 6px;
   flex-wrap: wrap;
+}
+
+/* ── HOVER UTILITIES ─────────────────────────────────────────── */
+.hover-accent { transition: color 0.15s; }
+.hover-accent:hover { color: var(--accent); }
+
+.hover-card {
+  transition: border-color 0.15s, background 0.15s;
+}
+.hover-card:hover {
+  border-color: var(--accent) !important;
+  background: var(--s2) !important;
 }
 
 /* ── CARDS ───────────────────────────────────────────────────── */
@@ -654,6 +666,40 @@ em.accent { color: var(--accent); font-style: italic; }
 .fade-in-3 { animation: fadeUp 0.4s ease 0.15s both; }
 .fade-in-4 { animation: fadeUp 0.4s ease 0.20s both; }
 .fade-in-5 { animation: fadeUp 0.4s ease 0.25s both; }
+
+/* Respect user's motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ── FOCUS STATES (keyboard accessibility) ──────────────────── */
+*:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+.btn:focus-visible,
+.nav-toggle:focus-visible,
+.form-input:focus-visible,
+.form-textarea:focus-visible {
+  outline-offset: 0;
+}
+
+/* ── PAGE SECTION LABEL (mono eyebrow) ──────────────────────── */
+.page-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  color: var(--dim);
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
 
 /* ── UTILITY ─────────────────────────────────────────────────── */
 .text-muted   { color: var(--muted); }

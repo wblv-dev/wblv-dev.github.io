@@ -61,7 +61,7 @@ robots: "index, follow"
 
     <!-- Activity panel: summary stats + full-year contribution chart -->
     <div class="fade-in-2" style="padding:18px 20px;background:var(--s1);border:1px solid var(--rule);border-radius:var(--radius-lg);min-width:0;overflow:hidden;">
-      <a href="https://github.com/{{ github.username }}" target="_blank" rel="noopener" style="display:inline-block;font-family:var(--font-mono);font-size:9px;letter-spacing:0.12em;color:var(--dim);text-transform:uppercase;margin-bottom:14px;text-decoration:none;transition:color 0.15s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--dim)'">Project Activity ↗</a>
+      <a href="https://github.com/{{ github.username }}" target="_blank" rel="noopener" class="hover-accent" style="display:inline-block;font-family:var(--font-mono);font-size:9px;letter-spacing:0.12em;color:var(--dim);text-transform:uppercase;margin-bottom:14px;text-decoration:none;">Project Activity ↗</a>
       <div class="home-activity-stats" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,110px),1fr));gap:20px;margin-bottom:18px;">
         <div style="min-width:0;">
           <div style="height:24px;display:flex;align-items:flex-end;margin-bottom:6px;">
@@ -83,7 +83,7 @@ robots: "index, follow"
         </div>
         <div style="min-width:0;">
           <div style="height:24px;display:flex;align-items:flex-end;margin-bottom:6px;">
-            {% if github.currentRepoUrl %}<a href="{{ github.currentRepoUrl }}"{% if 'http' in github.currentRepoUrl %} target="_blank" rel="noopener"{% endif %} style="font-family:var(--font-mono);font-size:12px;font-weight:500;color:var(--ink);line-height:1;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0;max-width:100%;text-decoration:none;transition:color 0.15s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--ink)'">{{ github.currentRepo }}</a>{% else %}<span style="font-family:var(--font-mono);font-size:12px;font-weight:500;color:var(--ink);line-height:1;">—</span>{% endif %}
+            {% if github.currentRepoUrl %}<a href="{{ github.currentRepoUrl }}"{% if 'http' in github.currentRepoUrl %} target="_blank" rel="noopener"{% endif %} class="hover-accent" style="font-family:var(--font-mono);font-size:12px;font-weight:500;color:var(--ink);line-height:1;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0;max-width:100%;text-decoration:none;">{{ github.currentRepo }}</a>{% else %}<span style="font-family:var(--font-mono);font-size:12px;font-weight:500;color:var(--ink);line-height:1;">—</span>{% endif %}
           </div>
           <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.12em;color:var(--dim);text-transform:uppercase;">Most recent project</div>
         </div>
@@ -97,7 +97,7 @@ robots: "index, follow"
     <!-- Recent repos -->
     <div class="fade-in-2" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:12px;">
       {% for repo in github.recent %}
-      <a href="{{ repo.docs or repo.url }}"{% if not repo.docs %} target="_blank" rel="noopener"{% endif %} style="text-decoration:none;padding:12px 14px;background:var(--s1);border:1px solid var(--rule);border-radius:var(--radius-lg);transition:border-color 0.15s, background 0.15s;display:flex;flex-direction:column;gap:8px;" onmouseover="this.style.borderColor='var(--accent)';this.style.background='var(--s2)'" onmouseout="this.style.borderColor='var(--rule)';this.style.background='var(--s1)'">
+      <a href="{{ repo.docs or repo.url }}"{% if not repo.docs %} target="_blank" rel="noopener"{% endif %} class="hover-card" style="text-decoration:none;padding:12px 14px;background:var(--s1);border:1px solid var(--rule);border-radius:var(--radius-lg);display:flex;flex-direction:column;gap:8px;">
         <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;">
           <div style="font-family:var(--font-mono);font-size:11px;font-weight:500;color:var(--ink);overflow:hidden;text-overflow:ellipsis;">{{ repo.name }}</div>
           {% if repo.stars > 0 %}<div style="font-family:var(--font-mono);font-size:10px;color:var(--dim);flex-shrink:0;">★ {{ repo.stars }}</div>{% endif %}
