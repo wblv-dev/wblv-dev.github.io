@@ -1,9 +1,13 @@
 /* ============================================================
    WELLBELOVE.ORG — Docs Layout JS
 
-   Desktop/tablet: sidebar always visible, collapse arrow
-   Mobile (<800px): sidebar as overlay drawer with FAB toggle
-   Auto-generates sidebar nav from content headings if empty
+   - Populates current page's h2 sections into sidebar
+   - Global search (page titles + current page headings)
+   - Collapsible genre groups, sidebar collapse
+   - Cmd/Ctrl+K focuses search
+   - Copy-link on heading hover
+   - Copy-to-clipboard on code blocks
+   - Mobile drawer
    ============================================================ */
 
 (function () {
@@ -13,44 +17,41 @@
   var layout      = document.querySelector('.docs-layout');
   var searchInput = document.querySelector('.docs-search-input');
   var content     = document.querySelector('.docs-content');
+  var navRoot     = document.getElementById('docs-nav');
 
-  if (!sidebar || !layout) return;
-
-  // ── AUTO-GENERATE SIDEBAR NAV FROM HEADINGS ───────────────
-  var autoNav = document.getElementById('docs-auto-nav');
-  if (autoNav && autoNav.children.length === 0 && content) {
-    var headings = content.querySelectorAll('h2[id], h3[id]');
-    var html = '';
-    var inGroup = false;
-
-    headings.forEach(function (h) {
-      if (h.tagName === 'H2') {
-        // Close previous group if open
-        if (inGroup) html += '</ul></div>';
-        // Start new group — h2 becomes a standalone link
-        html += '<div class="docs-nav-group"><ul class="docs-nav-items">';
-        html += '<li><a href="#' + h.id + '">' + h.textContent.trim() + '</a></li>';
-        inGroup = true;
-      } else if (h.tagName === 'H3' && inGroup) {
-        html += '<li><a href="#' + h.id + '">' + h.textContent.trim() + '</a></li>';
-      }
-    });
-
-    if (inGroup) html += '</ul></div>';
-    autoNav.innerHTML = html;
-  }
-
-  // Re-query after auto-generation
-  var navGroups = document.querySelectorAll('.docs-nav-group');
-  var navLinks  = document.querySelectorAll('.docs-nav-items a');
+  if (!sidebar || !layout || !navRoot) return;
 
   var MOBILE_MAX = 799;
+  function isMobile() { return window.innerWidth <= MOBILE_MAX; }
 
-  function isMobile() {
-    return window.innerWidth <= MOBILE_MAX;
+  // ── POPULATE CURRENT PAGE'S H2 SECTIONS ─────────────────────
+  var sectionsContainer = document.getElementById('docs-nav-sections');
+  if (sectionsContainer && content) {
+    var headings = content.querySelectorAll('h2[id]');
+    var html = '';
+    headings.forEach(function (h) {
+      html += '<li><a href="#' + h.id + '" data-title="' + h.textContent.trim() + '">' + h.textContent.trim() + '</a></li>';
+    });
+    sectionsContainer.innerHTML = html;
   }
 
-  // ── COLLAPSE BUTTON (inside search bar) ────────────────────
+  // Re-query everything after section population
+  var navGroups   = navRoot.querySelectorAll('.docs-nav-group');
+  var navHeadings = navRoot.querySelectorAll('.docs-nav-heading');
+  var pageLinks   = navRoot.querySelectorAll('.docs-nav-page');
+  var sectionLinks= navRoot.querySelectorAll('.docs-nav-sections a');
+
+  // ── GENRE GROUP COLLAPSE / EXPAND ───────────────────────────
+  navHeadings.forEach(function (heading) {
+    heading.addEventListener('click', function () {
+      var group = heading.closest('.docs-nav-group');
+      if (!group) return;
+      var collapsed = group.classList.toggle('collapsed');
+      heading.setAttribute('aria-expanded', collapsed ? 'false' : 'true');
+    });
+  });
+
+  // ── SIDEBAR COLLAPSE BUTTON (inside search bar) ─────────────
   var collapseToggle = document.createElement('button');
   collapseToggle.className = 'docs-collapse-toggle';
   collapseToggle.setAttribute('aria-label', 'Collapse sidebar');
@@ -59,11 +60,8 @@
       '<polyline points="15 18 9 12 15 6"/>' +
     '</svg>';
   var searchArea = document.querySelector('.docs-search');
-  if (searchArea) {
-    searchArea.appendChild(collapseToggle);
-  }
+  if (searchArea) searchArea.appendChild(collapseToggle);
 
-  // ── REOPEN BUTTON (visible when collapsed) ────────────────
   var reopenToggle = document.createElement('button');
   reopenToggle.className = 'docs-reopen-toggle';
   reopenToggle.setAttribute('aria-label', 'Open sidebar');
@@ -81,7 +79,7 @@
   collapseToggle.addEventListener('click', toggleSidebar);
   reopenToggle.addEventListener('click', toggleSidebar);
 
-  // ── HAMBURGER FAB (mobile) ────────────────────────────────
+  // ── MOBILE DRAWER ───────────────────────────────────────────
   var drawerToggle = document.createElement('button');
   drawerToggle.className = 'docs-drawer-toggle';
   drawerToggle.setAttribute('aria-label', 'Toggle documentation sidebar');
@@ -102,7 +100,6 @@
     overlay.classList.add('visible');
     document.body.style.overflow = 'hidden';
   }
-
   function closeMobileDrawer() {
     sidebar.classList.remove('open');
     overlay.classList.remove('visible');
@@ -112,52 +109,34 @@
   drawerToggle.addEventListener('click', function () {
     sidebar.classList.contains('open') ? closeMobileDrawer() : openMobileDrawer();
   });
-
   overlay.addEventListener('click', closeMobileDrawer);
-
-  document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape') closeMobileDrawer();
-  });
-
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeMobileDrawer(); });
   window.addEventListener('resize', function () {
     if (!isMobile()) closeMobileDrawer();
   }, { passive: true });
 
-  // ── SECTION COLLAPSE / EXPAND ─────────────────────────────
-  navGroups.forEach(function (group) {
-    var heading = group.querySelector('.docs-nav-heading');
-    if (!heading) return;
-    heading.addEventListener('click', function () {
-      group.classList.toggle('collapsed');
-    });
-  });
-
-  // ── SMOOTH SCROLL ON LINK CLICK ───────────────────────────
+  // ── SMOOTH SCROLL ON SECTION-LINK CLICK ─────────────────────
   var navH = parseInt(
-    getComputedStyle(document.documentElement)
-      .getPropertyValue('--nav-h').trim(), 10
+    getComputedStyle(document.documentElement).getPropertyValue('--nav-h').trim(), 10
   ) || 64;
 
-  navLinks.forEach(function (link) {
+  sectionLinks.forEach(function (link) {
     link.addEventListener('click', function (e) {
       var href = link.getAttribute('href');
       if (!href || href.charAt(0) !== '#') return;
-
       var target = document.getElementById(href.substring(1));
       if (!target) return;
-
       e.preventDefault();
       var top = target.getBoundingClientRect().top + window.pageYOffset - navH - 16;
       window.scrollTo({ top: top, behavior: 'smooth' });
       history.pushState(null, '', href);
-
       if (isMobile()) closeMobileDrawer();
     });
   });
 
-  // ── SCROLL SPY ────────────────────────────────────────────
+  // ── SCROLL SPY (highlights current h2 in sidebar) ──────────
   var sections = [];
-  navLinks.forEach(function (link) {
+  sectionLinks.forEach(function (link) {
     var href = link.getAttribute('href');
     if (!href || href.charAt(0) !== '#') return;
     var el = document.getElementById(href.substring(1));
@@ -165,55 +144,122 @@
   });
 
   var scrollTick = false;
-
   function updateActiveSection() {
     var offset = navH + 40;
     var current = null;
     for (var i = 0; i < sections.length; i++) {
-      if (sections[i].el.getBoundingClientRect().top - offset <= 0) {
-        current = sections[i];
-      }
+      if (sections[i].el.getBoundingClientRect().top - offset <= 0) current = sections[i];
     }
-    navLinks.forEach(function (l) { l.classList.remove('active'); });
-    if (current) {
-      current.link.classList.add('active');
-      var pg = current.link.closest('.docs-nav-group');
-      if (pg && pg.classList.contains('collapsed')) pg.classList.remove('collapsed');
-    }
+    sectionLinks.forEach(function (l) { l.classList.remove('active'); });
+    if (current) current.link.classList.add('active');
     scrollTick = false;
   }
-
   window.addEventListener('scroll', function () {
     if (!scrollTick) { requestAnimationFrame(updateActiveSection); scrollTick = true; }
   }, { passive: true });
-
   updateActiveSection();
 
-  // ── SIDEBAR SEARCH / FILTER ───────────────────────────────
+  // ── SEARCH (across page titles + current page sections) ────
   if (searchInput) {
     searchInput.addEventListener('input', function () {
-      var query = searchInput.value.trim().toLowerCase();
+      var q = searchInput.value.trim().toLowerCase();
       navGroups.forEach(function (group) {
-        var items = group.querySelectorAll('.docs-nav-items li');
-        var vis = 0;
-        items.forEach(function (li) {
-          var a = li.querySelector('a');
-          var text = (a ? a.textContent : li.textContent).toLowerCase();
-          if (!query || text.indexOf(query) !== -1) { li.classList.remove('docs-hidden'); vis++; }
-          else { li.classList.add('docs-hidden'); }
+        var anyVisible = false;
+        var pageWraps = group.querySelectorAll('.docs-nav-page-wrap');
+        pageWraps.forEach(function (wrap) {
+          var pageLink = wrap.querySelector('.docs-nav-page');
+          var pageTitle = (pageLink.getAttribute('data-title') || pageLink.textContent).toLowerCase();
+          var secLinks = wrap.querySelectorAll('.docs-nav-sections a');
+          var pageMatch = !q || pageTitle.indexOf(q) !== -1;
+          var anySecMatch = false;
+          secLinks.forEach(function (sl) {
+            var st = (sl.getAttribute('data-title') || sl.textContent).toLowerCase();
+            var match = !q || st.indexOf(q) !== -1 || pageMatch;
+            sl.parentElement.classList.toggle('docs-hidden', !match);
+            if (match && q) anySecMatch = true;
+          });
+          var show = pageMatch || anySecMatch || !q;
+          wrap.classList.toggle('docs-hidden', !show);
+          if (show) anyVisible = true;
         });
-        if (query && vis === 0) group.classList.add('docs-hidden');
-        else { group.classList.remove('docs-hidden'); if (query && vis > 0) group.classList.remove('collapsed'); }
+        group.classList.toggle('docs-hidden', !anyVisible);
       });
+    });
+
+    // Cmd/Ctrl+K focuses search
+    document.addEventListener('keydown', function (e) {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        searchInput.focus();
+        searchInput.select();
+      }
     });
   }
 
-  // ── HANDLE INITIAL HASH ───────────────────────────────────
+  // ── ANCHOR LINK-ON-HOVER FOR CONTENT HEADINGS ──────────────
+  if (content) {
+    var contentHeadings = content.querySelectorAll('h2[id], h3[id]');
+    contentHeadings.forEach(function (h) {
+      var link = document.createElement('a');
+      link.className = 'docs-heading-anchor';
+      link.href = '#' + h.id;
+      link.setAttribute('aria-label', 'Copy link to this section');
+      link.innerHTML = '#';
+      link.addEventListener('click', function (e) {
+        e.preventDefault();
+        var url = window.location.origin + window.location.pathname + '#' + h.id;
+        history.pushState(null, '', '#' + h.id);
+        // Smooth scroll
+        var top = h.getBoundingClientRect().top + window.pageYOffset - navH - 16;
+        window.scrollTo({ top: top, behavior: 'smooth' });
+        // Copy to clipboard
+        if (navigator.clipboard) {
+          navigator.clipboard.writeText(url).then(function () {
+            link.classList.add('copied');
+            setTimeout(function () { link.classList.remove('copied'); }, 1500);
+          }).catch(function () {});
+        }
+      });
+      h.appendChild(link);
+    });
+  }
+
+  // ── COPY-TO-CLIPBOARD ON CODE BLOCKS ───────────────────────
+  if (content) {
+    var codeBlocks = content.querySelectorAll('pre > code');
+    codeBlocks.forEach(function (code) {
+      var pre = code.parentElement;
+      pre.style.position = 'relative';
+      var btn = document.createElement('button');
+      btn.className = 'docs-copy-code';
+      btn.setAttribute('aria-label', 'Copy code to clipboard');
+      btn.innerHTML = 'Copy';
+      btn.addEventListener('click', function () {
+        var text = code.textContent;
+        if (navigator.clipboard) {
+          navigator.clipboard.writeText(text).then(function () {
+            btn.innerHTML = 'Copied';
+            btn.classList.add('copied');
+            setTimeout(function () {
+              btn.innerHTML = 'Copy';
+              btn.classList.remove('copied');
+            }, 1500);
+          }).catch(function () {});
+        }
+      });
+      pre.appendChild(btn);
+    });
+  }
+
+  // ── HANDLE INITIAL HASH ────────────────────────────────────
   if (window.location.hash) {
     var ht = document.getElementById(window.location.hash.substring(1));
     if (ht) {
       setTimeout(function () {
-        window.scrollTo({ top: ht.getBoundingClientRect().top + window.pageYOffset - navH - 16, behavior: 'smooth' });
+        window.scrollTo({
+          top: ht.getBoundingClientRect().top + window.pageYOffset - navH - 16,
+          behavior: 'smooth'
+        });
       }, 100);
     }
   }
