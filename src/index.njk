@@ -59,10 +59,10 @@ robots: "index, follow"
       </div>
     </div>
 
-    <!-- 13-week contribution grid, built from GitHub public events -->
-    <div class="fade-in-2" style="padding:14px 16px;background:var(--s1);border:1px solid var(--rule);border-radius:var(--radius-lg);">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
-        <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.12em;color:var(--dim);text-transform:uppercase;">Contributions · {{ github.rangeLabel }}</div>
+    <!-- "Currently working on" panel: 13-week grid + summary stats -->
+    <div class="fade-in-2" style="padding:18px 20px;background:var(--s1);border:1px solid var(--rule);border-radius:var(--radius-lg);">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+        <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.12em;color:var(--dim);text-transform:uppercase;">Currently working on · {{ github.rangeLabel }}</div>
         <div style="display:flex;align-items:center;gap:4px;font-family:var(--font-mono);font-size:9px;letter-spacing:0.08em;color:var(--dim);text-transform:uppercase;">
           <span>less</span>
           <span style="width:9px;height:9px;border-radius:2px;background:var(--s2);"></span>
@@ -72,19 +72,41 @@ robots: "index, follow"
           <span>more</span>
         </div>
       </div>
-      <div style="display:grid;grid-template-columns:repeat(13,1fr);gap:3px;max-width:300px;">
-        {% for week in github.contributions %}
-        <div style="display:grid;grid-template-rows:repeat(7,1fr);gap:3px;">
-          {% for day in week %}
-          {%- if day.future %}{% set bg = 'transparent' %}{% set op = '0' %}
-          {%- elif day.count == 0 %}{% set bg = 'var(--s2)' %}{% set op = '1' %}
-          {%- elif day.count < 3 %}{% set bg = 'var(--accent)' %}{% set op = '0.35' %}
-          {%- elif day.count < 6 %}{% set bg = 'var(--accent)' %}{% set op = '0.65' %}
-          {%- else %}{% set bg = 'var(--accent)' %}{% set op = '1' %}{% endif %}
-          <div title="{{ day.date }}: {{ day.count }} commits" style="aspect-ratio:1;border-radius:2px;background:{{ bg }};opacity:{{ op }};"></div>
+      <div style="display:grid;grid-template-columns:auto 1fr;gap:28px;align-items:center;">
+        <!-- Contribution grid -->
+        <div style="display:grid;grid-template-columns:repeat(13,16px);gap:3px;">
+          {% for week in github.contributions %}
+          <div style="display:grid;grid-template-rows:repeat(7,16px);gap:3px;">
+            {% for day in week %}
+            {%- if day.future %}{% set bg = 'transparent' %}{% set op = '0' %}
+            {%- elif day.count == 0 %}{% set bg = 'var(--s2)' %}{% set op = '1' %}
+            {%- elif day.count < 3 %}{% set bg = 'var(--accent)' %}{% set op = '0.35' %}
+            {%- elif day.count < 6 %}{% set bg = 'var(--accent)' %}{% set op = '0.65' %}
+            {%- else %}{% set bg = 'var(--accent)' %}{% set op = '1' %}{% endif %}
+            <div title="{{ day.date }}: {{ day.count }} commits" style="border-radius:2px;background:{{ bg }};opacity:{{ op }};"></div>
+            {% endfor %}
+          </div>
           {% endfor %}
         </div>
-        {% endfor %}
+        <!-- Summary stats -->
+        <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:14px 20px;">
+          <div>
+            <div style="font-family:var(--font-display);font-size:22px;font-weight:700;color:var(--accent);line-height:1;margin-bottom:4px;">{{ github.totalCommits }}</div>
+            <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.12em;color:var(--dim);text-transform:uppercase;">Commits (90d)</div>
+          </div>
+          <div>
+            <div style="font-family:var(--font-display);font-size:22px;font-weight:700;color:var(--accent);line-height:1;margin-bottom:4px;">{{ github.activeDays }}</div>
+            <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.12em;color:var(--dim);text-transform:uppercase;">Active days</div>
+          </div>
+          <div>
+            <div style="font-family:var(--font-display);font-size:18px;font-weight:700;color:var(--ink);line-height:1.1;margin-bottom:4px;">{{ github.lastActivityLabel }}</div>
+            <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.12em;color:var(--dim);text-transform:uppercase;">Last push</div>
+          </div>
+          <div>
+            <div style="font-family:var(--font-mono);font-size:12px;font-weight:500;color:var(--ink);line-height:1.2;margin-bottom:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">{{ github.currentRepo or '—' }}</div>
+            <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.12em;color:var(--dim);text-transform:uppercase;">Most recent repo</div>
+          </div>
+        </div>
       </div>
     </div>
 

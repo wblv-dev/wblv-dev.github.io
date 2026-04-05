@@ -84,6 +84,27 @@ module.exports = async function () {
                     "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     const rangeLabel = `${months[startOfWeek.getMonth()]} – ${months[today.getMonth()]} ${today.getFullYear()}`;
 
+    // Summary stats derived from the same events data.
+    const totalCommits = Object.values(commitsByDay).reduce((a, b) => a + b, 0);
+    const activeDays = Object.values(commitsByDay).filter(c => c > 0).length;
+    const sortedDays = Object.keys(commitsByDay).sort();
+    const lastActivityDay = sortedDays[sortedDays.length - 1] || null;
+    // Most recently pushed repo (excluding the site itself).
+    const currentRepo = repos
+      .filter(r => !r.fork && !r.private && r.name !== "wblv-dev.github.io")
+      .sort((a, b) => new Date(b.pushed_at) - new Date(a.pushed_at))[0] || null;
+
+    // Format last-activity as a short relative string ("2 days ago").
+    let lastActivityLabel = "—";
+    if (lastActivityDay) {
+      const diffDays = Math.floor(
+        (today - new Date(lastActivityDay)) / (1000 * 60 * 60 * 24)
+      );
+      if (diffDays === 0) lastActivityLabel = "Today";
+      else if (diffDays === 1) lastActivityLabel = "Yesterday";
+      else lastActivityLabel = `${diffDays} days ago`;
+    }
+
     return {
       username: USERNAME,
       publicRepos: user.public_repos,
@@ -96,6 +117,10 @@ module.exports = async function () {
       createdYear,
       contributions,
       rangeLabel,
+      totalCommits,
+      activeDays,
+      lastActivityLabel,
+      currentRepo: currentRepo ? currentRepo.name : null,
     };
   } catch (err) {
     console.warn("GitHub data fetch failed:", err.message);
@@ -111,6 +136,10 @@ module.exports = async function () {
       createdYear: new Date().getFullYear(),
       contributions: [],
       rangeLabel: "",
+      totalCommits: 0,
+      activeDays: 0,
+      lastActivityLabel: "—",
+      currentRepo: null,
     };
   }
 };
