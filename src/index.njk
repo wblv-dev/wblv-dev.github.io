@@ -59,9 +59,33 @@ robots: "index, follow"
       </div>
     </div>
 
-    <!-- Contribution graph (inverted to work on dark bg; request inverse color so it inverts back to accent) -->
-    <div class="fade-in-2" style="padding:12px 16px;background:var(--s1);border:1px solid var(--rule);border-radius:var(--radius-lg);overflow-x:auto;">
-      <img src="https://ghchart.rshah.org/370aa8/{{ github.username }}" alt="GitHub contribution chart" style="width:100%;min-width:600px;filter:invert(1);" loading="lazy">
+    <!-- 13-week contribution grid, built from GitHub public events -->
+    <div class="fade-in-2" style="padding:14px 16px;background:var(--s1);border:1px solid var(--rule);border-radius:var(--radius-lg);">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+        <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.12em;color:var(--dim);text-transform:uppercase;">Contributions · {{ github.rangeLabel }}</div>
+        <div style="display:flex;align-items:center;gap:4px;font-family:var(--font-mono);font-size:9px;letter-spacing:0.08em;color:var(--dim);text-transform:uppercase;">
+          <span>less</span>
+          <span style="width:9px;height:9px;border-radius:2px;background:var(--s2);"></span>
+          <span style="width:9px;height:9px;border-radius:2px;background:var(--accent);opacity:0.35;"></span>
+          <span style="width:9px;height:9px;border-radius:2px;background:var(--accent);opacity:0.65;"></span>
+          <span style="width:9px;height:9px;border-radius:2px;background:var(--accent);"></span>
+          <span>more</span>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(13,1fr);gap:3px;">
+        {% for week in github.contributions %}
+        <div style="display:grid;grid-template-rows:repeat(7,1fr);gap:3px;">
+          {% for day in week %}
+          {%- if day.future %}{% set bg = 'transparent' %}{% set op = '0' %}
+          {%- elif day.count == 0 %}{% set bg = 'var(--s2)' %}{% set op = '1' %}
+          {%- elif day.count < 3 %}{% set bg = 'var(--accent)' %}{% set op = '0.35' %}
+          {%- elif day.count < 6 %}{% set bg = 'var(--accent)' %}{% set op = '0.65' %}
+          {%- else %}{% set bg = 'var(--accent)' %}{% set op = '1' %}{% endif %}
+          <div title="{{ day.date }}: {{ day.count }} commits" style="aspect-ratio:1;border-radius:2px;background:{{ bg }};opacity:{{ op }};"></div>
+          {% endfor %}
+        </div>
+        {% endfor %}
+      </div>
     </div>
 
     <!-- Recent repos -->

@@ -41,6 +41,49 @@ module.exports = async function () {
     const createdYear = new Date(user.created_at).getFullYear();
     const yearsActive = new Date().getFullYear() - createdYear;
 
+    // Public events (last 90 days, up to 100 events) — used to
+    // build a rolling 13-week contribution grid.
+    const eventsRes = await fetch(
+      `https://api.github.com/users/${USERNAME}/events/public?per_page=100`,
+      { headers }
+    );
+    const events = await eventsRes.json();
+
+    const commitsByDay = {};
+    for (const ev of events) {
+      if (ev.type === "PushEvent") {
+        const day = ev.created_at.slice(0, 10);
+        const count = (ev.payload && ev.payload.commits && ev.payload.commits.length) || 0;
+        commitsByDay[day] = (commitsByDay[day] || 0) + count;
+      }
+    }
+
+    // Build a 13-week × 7-day grid ending on the current week.
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const startOfWeek = new Date(today);
+    startOfWeek.setDate(today.getDate() - today.getDay() - 12 * 7);
+
+    const contributions = [];
+    for (let w = 0; w < 13; w++) {
+      const week = [];
+      for (let d = 0; d < 7; d++) {
+        const date = new Date(startOfWeek);
+        date.setDate(startOfWeek.getDate() + w * 7 + d);
+        const key = date.toISOString().slice(0, 10);
+        week.push({
+          date: key,
+          count: commitsByDay[key] || 0,
+          future: date > today,
+        });
+      }
+      contributions.push(week);
+    }
+
+    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+                    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    const rangeLabel = `${months[startOfWeek.getMonth()]} – ${months[today.getMonth()]} ${today.getFullYear()}`;
+
     return {
       username: USERNAME,
       publicRepos: user.public_repos,
@@ -51,6 +94,8 @@ module.exports = async function () {
       recent,
       yearsActive,
       createdYear,
+      contributions,
+      rangeLabel,
     };
   } catch (err) {
     console.warn("GitHub data fetch failed:", err.message);
@@ -64,6 +109,8 @@ module.exports = async function () {
       recent: [],
       yearsActive: 0,
       createdYear: new Date().getFullYear(),
+      contributions: [],
+      rangeLabel: "",
     };
   }
 };
