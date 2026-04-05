@@ -6,10 +6,10 @@ robots: "index, follow"
 ---
 
 <main>
-<div class="wrap page-content">
+<div class="wrap page-content" style="padding-top:calc(var(--nav-h) + 24px);padding-bottom:24px;">
 
-  <section class="section-lg fade-in">
-    <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:32px;margin-bottom:28px;">
+  <section class="section fade-in" style="margin-bottom:0;">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:32px;margin-bottom:20px;">
       <h1 class="display-xl" style="color:var(--ink)">
         Harry<br><em class="accent">Wellbelove</em>
       </h1>
@@ -26,13 +26,13 @@ robots: "index, follow"
       </div>
     </div>
 
-    <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:36px;margin-top:8px;">
+    <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:20px;margin-top:8px;">
       <span style="font-size:14px;color:var(--muted);">Cyber Security Professional</span>
       <span class="tag tag-accent">SC Cleared</span>
       <span class="tag tag-dim">Milton Keynes, UK</span>
     </div>
 
-    <p class="italic-statement" style="font-size:clamp(17px,2vw,22px);margin-bottom:28px;">
+    <p class="italic-statement" style="font-size:clamp(17px,2vw,22px);margin-bottom:20px;">
       Five years building and leading security operations across MSSP,
       regulated finance, and Critical National Infrastructure. I prefer
       hands-on work over slide decks.
@@ -41,8 +41,8 @@ robots: "index, follow"
     <a href="/projects/" class="link" style="font-size:13px;">View projects →</a>
   </section>
 
-  <section class="section fade-in-2" style="margin-top:48px;margin-bottom:24px;">
-    <div style="display:flex;align-items:baseline;justify-content:space-between;gap:16px;margin-bottom:20px;flex-wrap:wrap;">
+  <section class="section fade-in-2" style="margin-top:20px;margin-bottom:0;">
+    <div style="display:flex;align-items:baseline;justify-content:space-between;gap:16px;margin-bottom:10px;flex-wrap:wrap;">
       <div class="label" style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.18em;color:var(--dim);text-transform:uppercase;">GitHub activity</div>
       <a class="link" href="https://github.com/{{ github.username }}" target="_blank" rel="noopener" style="font-size:12px;">
         <span class="link-arr">↗</span> @{{ github.username }}
@@ -50,48 +50,46 @@ robots: "index, follow"
     </div>
 
     <!-- Stats row -->
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:var(--radius-lg);overflow:hidden;margin-bottom:20px;">
-      <div style="padding:18px 20px;background:var(--s1);">
-        <div style="font-family:var(--font-display);font-size:28px;font-weight:700;color:var(--accent);line-height:1;margin-bottom:6px;">{{ github.publicRepos }}</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:var(--radius-lg);overflow:hidden;margin-bottom:12px;">
+      <div style="padding:12px 16px;background:var(--s1);">
+        <div style="font-family:var(--font-display);font-size:22px;font-weight:700;color:var(--accent);line-height:1;margin-bottom:4px;">{{ github.publicRepos }}</div>
         <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.12em;color:var(--dim);text-transform:uppercase;">Public repos</div>
       </div>
-      <div style="padding:18px 20px;background:var(--s1);">
-        <div style="font-family:var(--font-display);font-size:28px;font-weight:700;color:var(--accent);line-height:1;margin-bottom:6px;">{{ github.totalStars }}</div>
+      <div style="padding:12px 16px;background:var(--s1);">
+        <div style="font-family:var(--font-display);font-size:22px;font-weight:700;color:var(--accent);line-height:1;margin-bottom:4px;">{{ github.totalStars }}</div>
         <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.12em;color:var(--dim);text-transform:uppercase;">Stars earned</div>
       </div>
-      <div style="padding:18px 20px;background:var(--s1);">
-        <div style="font-family:var(--font-display);font-size:28px;font-weight:700;color:var(--accent);line-height:1;margin-bottom:6px;">{{ github.languages.length }}</div>
+      <div style="padding:12px 16px;background:var(--s1);">
+        <div style="font-family:var(--font-display);font-size:22px;font-weight:700;color:var(--accent);line-height:1;margin-bottom:4px;">{{ github.languages.length }}</div>
         <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.12em;color:var(--dim);text-transform:uppercase;">Languages</div>
       </div>
-      <div style="padding:18px 20px;background:var(--s1);">
-        <div style="font-family:var(--font-display);font-size:28px;font-weight:700;color:var(--accent);line-height:1;margin-bottom:6px;">{{ github.yearsActive }}y</div>
+      <div style="padding:12px 16px;background:var(--s1);">
+        <div style="font-family:var(--font-display);font-size:22px;font-weight:700;color:var(--accent);line-height:1;margin-bottom:4px;">{{ github.yearsActive }}y</div>
         <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.12em;color:var(--dim);text-transform:uppercase;">On GitHub</div>
       </div>
     </div>
 
-    <!-- Contribution graph (GitHub's actual SVG chart, color-matched) -->
-    <div style="padding:20px;background:var(--s1);border:1px solid var(--rule);border-radius:var(--radius-lg);margin-bottom:20px;overflow-x:auto;">
-      <img src="https://ghchart.rshah.org/c8f557/{{ github.username }}" alt="GitHub contribution chart" style="width:100%;min-width:600px;filter:brightness(0.95);" loading="lazy">
+    <!-- Contribution graph (inverted to work on dark bg; request inverse color so it inverts back to accent) -->
+    <div style="padding:12px 16px;background:var(--s1);border:1px solid var(--rule);border-radius:var(--radius-lg);margin-bottom:12px;overflow-x:auto;">
+      <img src="https://ghchart.rshah.org/370aa8/{{ github.username }}" alt="GitHub contribution chart" style="width:100%;min-width:600px;filter:invert(1);" loading="lazy">
     </div>
 
     <!-- Recent repos -->
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px;">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px;">
       {% for repo in github.recent %}
-      <a href="{{ repo.url }}" target="_blank" rel="noopener" style="text-decoration:none;padding:16px 18px;background:var(--s1);border:1px solid var(--rule);border-radius:var(--radius-lg);transition:border-color 0.15s, background 0.15s;display:block;" onmouseover="this.style.borderColor='var(--accent)';this.style.background='var(--s2)'" onmouseout="this.style.borderColor='var(--rule)';this.style.background='var(--s1)'">
-        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:8px;">
-          <div style="font-family:var(--font-mono);font-size:12px;font-weight:500;color:var(--ink);overflow:hidden;text-overflow:ellipsis;">{{ repo.name }}</div>
+      <a href="{{ repo.url }}" target="_blank" rel="noopener" style="text-decoration:none;padding:12px 14px;background:var(--s1);border:1px solid var(--rule);border-radius:var(--radius-lg);transition:border-color 0.15s, background 0.15s;display:block;" onmouseover="this.style.borderColor='var(--accent)';this.style.background='var(--s2)'" onmouseout="this.style.borderColor='var(--rule)';this.style.background='var(--s1)'">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:6px;">
+          <div style="font-family:var(--font-mono);font-size:11px;font-weight:500;color:var(--ink);overflow:hidden;text-overflow:ellipsis;">{{ repo.name }}</div>
           {% if repo.stars > 0 %}<div style="font-family:var(--font-mono);font-size:10px;color:var(--dim);flex-shrink:0;">★ {{ repo.stars }}</div>{% endif %}
         </div>
-        {% if repo.description %}<div style="font-size:12px;color:var(--muted);line-height:1.5;margin-bottom:10px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">{{ repo.description }}</div>{% endif %}
-        <div style="display:flex;align-items:center;gap:8px;">
-          {% if repo.language %}<div style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.12em;color:var(--dim);text-transform:uppercase;">{{ repo.language }}</div>{% endif %}
-        </div>
+        {% if repo.description %}<div style="font-size:11px;color:var(--muted);line-height:1.45;margin-bottom:8px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">{{ repo.description }}</div>{% endif %}
+        {% if repo.language %}<div style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.12em;color:var(--dim);text-transform:uppercase;">{{ repo.language }}</div>{% endif %}
       </a>
       {% endfor %}
     </div>
   </section>
 
-  <section class="section fade-in-3" style="display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap;padding:32px;background:var(--s1);border:1px solid var(--rule);border-radius:var(--radius-lg);">
+  <section class="section fade-in-3" style="margin-top:20px;margin-bottom:0;display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap;padding:24px 28px;background:var(--s1);border:1px solid var(--rule);border-radius:var(--radius-lg);">
     <div>
       <div style="font-family:var(--font-display);font-size:20px;font-weight:700;margin-bottom:6px;">
         If you've got something worth <em class="accent">talking about.</em>
