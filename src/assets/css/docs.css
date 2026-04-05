@@ -2,6 +2,12 @@
    WELLBELOVE.ORG — Docs Layout Stylesheet
    ============================================================ */
 
+/* Full-width nav on docs pages — WBLV-DEV aligns with sidebar padding */
+.nav.nav-full .nav-inner {
+  max-width: none;
+  padding: 0 20px;
+}
+
 .docs-layout {
   --sidebar-w: 280px;
   --sidebar-w-sm: 260px;
