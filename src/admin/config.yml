@@ -22,3 +22,17 @@ collections:
       - { label: "Date", name: "date", widget: "datetime" }
       - { label: "Tags", name: "tags", widget: "list", default: ["post"] }
       - { label: "Body", name: "body", widget: "markdown" }
+
+  - name: "docs"
+    label: "Documentation"
+    folder: "src/docs"
+    create: true
+    slug: "{{slug}}"
+    extension: "md"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Description", name: "description", widget: "string" }
+      - { label: "URL Path", name: "permalink", widget: "string" }
+      - { label: "Tags", name: "tags", widget: "list", default: ["doc"] }
+      - { label: "GitHub URL", name: "github_url", widget: "string", required: false }
+      - { label: "Body", name: "body", widget: "markdown" }

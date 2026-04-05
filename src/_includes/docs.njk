@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="{{ description | default(site.description) }}">
+<meta name="robots" content="noindex">
+<title>{{ title }}</title>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;1,9..144,300&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/style.css">
+<link rel="stylesheet" href="/assets/css/docs.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-mark" href="/">wblv-dev</a>
+    <button class="nav-toggle" aria-label="Menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links">
+      <li><a href="/">Home</a></li>
+      <li><a href="/about/">About</a></li>
+      <li><a href="/projects/">Projects</a></li>
+      <li><a href="/blog/">Blog</a></li>
+      <li><a href="/contact/">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="docs-layout">
+  <aside class="docs-sidebar">
+    <div class="docs-search">
+      <input type="text" class="docs-search-input" placeholder="Search docs...">
+    </div>
+    <nav class="docs-nav" id="docs-auto-nav">
+      <!-- Auto-generated from content headings by docs.js -->
+    </nav>
+  </aside>
+
+  <main class="docs-content">
+    {%- set displayTags = [] %}
+    {%- for tag in tags %}
+      {%- if tag != "doc" %}{%- set displayTags = (displayTags.push(tag), displayTags) %}{%- endif %}
+    {%- endfor %}
+    {%- if displayTags.length %}
+    <div class="project-meta-row" style="margin-bottom:16px;">
+      {%- for tag in displayTags %}
+      <span class="tag {% if tag == 'Active' %}tag-accent{% else %}tag-dim{% endif %}">{{ tag }}</span>
+      {%- endfor %}
+    </div>
+    {%- endif %}
+
+    {{ content | safe }}
+
+    {%- if github_url %}
+    <div class="project-links" style="margin-top:48px; padding-top:32px; border-top:1px solid var(--rule);">
+      <a class="btn btn-outline" href="{{ github_url }}" target="_blank" rel="noopener">
+        ↗ View on GitHub
+      </a>
+      <a class="btn btn-ghost" href="/projects/">
+        ← All projects
+      </a>
+    </div>
+    {%- endif %}
+  </main>
+</div>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-left">&copy; 2026 Harry Wellbelove &middot; wellbelove.org</div>
+    <div class="footer-right">
+      <a href="/about/">About</a>
+      <a href="/projects/">Projects</a>
+      <a href="/contact/">Contact</a>
+      <a href="https://github.com/wblv-dev" target="_blank" rel="noopener">GitHub ↗</a>
+    </div>
+  </div>
+</footer>
+
+<script src="/assets/js/nav.js"></script>
+<script src="/assets/js/docs.js"></script>
+</body>
+</html>

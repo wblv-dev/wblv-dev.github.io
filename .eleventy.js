@@ -1,4 +1,20 @@
+const markdownIt = require("markdown-it");
+const markdownItAnchor = require("markdown-it-anchor");
+
 module.exports = function (eleventyConfig) {
+  // Configure markdown with auto heading IDs
+  eleventyConfig.setLibrary(
+    "md",
+    markdownIt({ html: true, linkify: true }).use(markdownItAnchor, {
+      level: [2, 3],
+      slugify: function (s) {
+        return s.trim().toLowerCase()
+          .replace(/[^\w\s-]/g, '')
+          .replace(/\s+/g, '-');
+      },
+    })
+  );
+
   // Passthrough copy — keep assets, favicon, CNAME, .nojekyll, .well-known
   eleventyConfig.addPassthroughCopy("src/assets");
   eleventyConfig.addPassthroughCopy("src/favicon.svg");
@@ -16,9 +32,14 @@ module.exports = function (eleventyConfig) {
     });
   });
 
-  // Blog collection (empty for now — will pick up Markdown posts later)
+  // Blog collection
   eleventyConfig.addCollection("posts", function (collectionApi) {
     return collectionApi.getFilteredByTag("post");
+  });
+
+  // Docs collection
+  eleventyConfig.addCollection("docs", function (collectionApi) {
+    return collectionApi.getFilteredByTag("doc");
   });
 
   return {

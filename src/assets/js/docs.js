@@ -3,6 +3,7 @@
 
    Desktop/tablet: sidebar always visible, collapse arrow
    Mobile (<800px): sidebar as overlay drawer with FAB toggle
+   Auto-generates sidebar nav from content headings if empty
    ============================================================ */
 
 (function () {
@@ -11,10 +12,37 @@
   var sidebar     = document.querySelector('.docs-sidebar');
   var layout      = document.querySelector('.docs-layout');
   var searchInput = document.querySelector('.docs-search-input');
-  var navGroups   = document.querySelectorAll('.docs-nav-group');
-  var navLinks    = document.querySelectorAll('.docs-nav-items a');
+  var content     = document.querySelector('.docs-content');
 
   if (!sidebar || !layout) return;
+
+  // ── AUTO-GENERATE SIDEBAR NAV FROM HEADINGS ───────────────
+  var autoNav = document.getElementById('docs-auto-nav');
+  if (autoNav && autoNav.children.length === 0 && content) {
+    var headings = content.querySelectorAll('h2[id], h3[id]');
+    var html = '';
+    var inGroup = false;
+
+    headings.forEach(function (h) {
+      if (h.tagName === 'H2') {
+        // Close previous group if open
+        if (inGroup) html += '</ul></div>';
+        // Start new group — h2 becomes a standalone link
+        html += '<div class="docs-nav-group"><ul class="docs-nav-items">';
+        html += '<li><a href="#' + h.id + '">' + h.textContent.trim() + '</a></li>';
+        inGroup = true;
+      } else if (h.tagName === 'H3' && inGroup) {
+        html += '<li><a href="#' + h.id + '">' + h.textContent.trim() + '</a></li>';
+      }
+    });
+
+    if (inGroup) html += '</ul></div>';
+    autoNav.innerHTML = html;
+  }
+
+  // Re-query after auto-generation
+  var navGroups = document.querySelectorAll('.docs-nav-group');
+  var navLinks  = document.querySelectorAll('.docs-nav-items a');
 
   var MOBILE_MAX = 799;
 
@@ -65,7 +93,6 @@
     '</svg>';
   document.body.appendChild(drawerToggle);
 
-  // ── OVERLAY (mobile only) ─────────────────────────────────
   var overlay = document.createElement('div');
   overlay.className = 'docs-overlay';
   document.body.appendChild(overlay);
@@ -83,11 +110,7 @@
   }
 
   drawerToggle.addEventListener('click', function () {
-    if (sidebar.classList.contains('open')) {
-      closeMobileDrawer();
-    } else {
-      openMobileDrawer();
-    }
+    sidebar.classList.contains('open') ? closeMobileDrawer() : openMobileDrawer();
   });
 
   overlay.addEventListener('click', closeMobileDrawer);
@@ -96,11 +119,8 @@
     if (e.key === 'Escape') closeMobileDrawer();
   });
 
-  // Clean up state on resize between mobile/desktop
   window.addEventListener('resize', function () {
-    if (!isMobile()) {
-      closeMobileDrawer();
-    }
+    if (!isMobile()) closeMobileDrawer();
   }, { passive: true });
 
   // ── SECTION COLLAPSE / EXPAND ─────────────────────────────
