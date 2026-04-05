@@ -28,7 +28,7 @@ module.exports = async function () {
     const languages = [...new Set(repos.map(r => r.language).filter(Boolean))];
 
     const recent = repos
-      .filter(r => !r.fork && !r.private)
+      .filter(r => !r.fork && !r.private && r.name !== "wblv-dev.github.io")
       .slice(0, 6)
       .map(r => ({
         name: r.name,
