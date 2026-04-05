@@ -9,11 +9,11 @@ robots: "index, follow"
 <div class="wrap page-content" style="padding-top:calc(var(--nav-h) + 24px);padding-bottom:16px;flex:1;display:flex;flex-direction:column;gap:12px;">
 
   <section class="section fade-in" style="margin-bottom:0;">
-    <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:32px;margin-bottom:20px;">
+    <div class="home-hero-row" style="display:flex;justify-content:space-between;align-items:flex-start;gap:32px;margin-bottom:20px;">
       <h1 class="display-xl" style="color:var(--ink)">
         Harry<br><em class="accent">Wellbelove</em>
       </h1>
-      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:12px;flex-shrink:0;padding-top:8px;">
+      <div class="home-hero-links" style="display:flex;flex-direction:column;align-items:flex-end;gap:12px;flex-shrink:0;padding-top:8px;">
         <a class="link" href="https://linkedin.com/in/harrywellbelove" target="_blank" rel="noopener">
           <span class="link-arr">↗</span> LinkedIn
         </a>
@@ -62,7 +62,7 @@ robots: "index, follow"
     <!-- Activity panel: summary stats + full-year contribution chart -->
     <div class="fade-in-2" style="padding:18px 20px;background:var(--s1);border:1px solid var(--rule);border-radius:var(--radius-lg);">
       <a href="https://github.com/{{ github.username }}" target="_blank" rel="noopener" style="display:inline-block;font-family:var(--font-mono);font-size:9px;letter-spacing:0.12em;color:var(--dim);text-transform:uppercase;margin-bottom:14px;text-decoration:none;transition:color 0.15s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--dim)'">Project Activity ↗</a>
-      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-bottom:18px;">
+      <div class="home-activity-stats" style="display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-bottom:18px;">
         <div>
           <div style="height:24px;display:flex;align-items:flex-end;margin-bottom:6px;">
             <span style="font-family:var(--font-display);font-size:22px;font-weight:700;color:var(--accent);line-height:1;">{{ github.totalCommits }}</span>
@@ -107,7 +107,7 @@ robots: "index, follow"
       {% endfor %}
     </div>
 
-  <section class="section fade-in-3" style="margin-top:auto;margin-bottom:0;display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap;padding:24px 28px;background:var(--s1);border:1px solid var(--rule);border-radius:var(--radius-lg);">
+  <section class="section fade-in-3 home-cta" style="margin-top:auto;margin-bottom:0;display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap;padding:24px 28px;background:var(--s1);border:1px solid var(--rule);border-radius:var(--radius-lg);">
     <div>
       <div style="font-family:var(--font-display);font-size:20px;font-weight:700;margin-bottom:6px;">
         If you've got something worth <em class="accent">talking about.</em>

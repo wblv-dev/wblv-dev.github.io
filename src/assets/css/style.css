@@ -603,7 +603,7 @@ em.accent { color: var(--accent); font-style: italic; }
 /* ── FOOTER ──────────────────────────────────────────────────── */
 .footer {
   border-top: 1px solid var(--rule);
-  padding: 24px 0 40px;
+  padding: 16px 0 20px;
 }
 
 .footer-inner {
@@ -625,13 +625,7 @@ em.accent { color: var(--accent); font-style: italic; }
   text-transform: uppercase;
 }
 
-.footer-right {
-  display: flex;
-  gap: 20px;
-  align-items: center;
-}
-
-.footer-right a {
+.footer-gh {
   font-family: var(--font-mono);
   font-size: 9px;
   letter-spacing: 0.1em;
@@ -641,7 +635,7 @@ em.accent { color: var(--accent); font-style: italic; }
   transition: color 0.15s;
 }
 
-.footer-right a:hover { color: var(--accent); }
+.footer-gh:hover { color: var(--accent); }
 
 /* ── PAGE TRANSITIONS ────────────────────────────────────────── */
 @keyframes fadeUp {
@@ -668,9 +662,22 @@ em.accent { color: var(--accent); font-style: italic; }
 .mb-md  { margin-bottom: 28px; }
 .mb-lg  { margin-bottom: 48px; }
 
+/* ── CONTACT PAGE GRID ───────────────────────────────────────── */
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: start;
+}
+
 /* ── RESPONSIVE ──────────────────────────────────────────────── */
 @media (max-width: 860px) {
   :root { --pad: 32px; }
+  .contact-grid { gap: 48px; }
+}
+
+@media (max-width: 799px) {
+  .contact-grid { grid-template-columns: 1fr; gap: 32px; }
 }
 
 @media (max-width: 640px) {
@@ -688,7 +695,21 @@ em.accent { color: var(--accent); font-style: italic; }
   }
   .nav-toggle { display: flex; }
 
-  .display-xl { font-size: 36px; }
-  .display-lg { font-size: 28px; }
+  .display-xl { font-size: clamp(30px, 8vw, 42px); }
+  .display-lg { font-size: clamp(24px, 6.5vw, 32px); }
   .spec-table td:first-child { width: 100px; }
+
+  /* About page: kill justify on mobile (ugly gaps at narrow widths) */
+  .about-prose p { text-align: left !important; font-size: 15px !important; }
+
+  /* Homepage hero: let name + links stack if they'd overflow */
+  .home-hero-row { flex-wrap: wrap; }
+  .home-hero-links { align-items: flex-start !important; padding-top: 0 !important; }
+
+  /* Homepage activity stats: drop to 2 columns on narrow screens */
+  .home-activity-stats { grid-template-columns: repeat(2, 1fr) !important; gap: 16px !important; }
+
+  /* Homepage CTA card: stack vertically */
+  .home-cta { flex-direction: column; align-items: flex-start !important; }
+  .home-cta .btn { width: 100%; justify-content: center; }
 }
