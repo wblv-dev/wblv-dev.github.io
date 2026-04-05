@@ -34,6 +34,11 @@ module.exports = function (eleventyConfig) {
     });
   });
 
+  // ISO date filter (YYYY-MM-DD) — used by sitemap.xml
+  eleventyConfig.addFilter("isoDate", function (date) {
+    return new Date(date).toISOString().slice(0, 10);
+  });
+
   // Blog collection
   eleventyConfig.addCollection("posts", function (collectionApi) {
     return collectionApi.getFilteredByTag("post");
