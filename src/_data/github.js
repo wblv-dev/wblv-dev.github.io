@@ -41,13 +41,19 @@ module.exports = async function () {
     const createdYear = new Date(user.created_at).getFullYear();
     const yearsActive = new Date().getFullYear() - createdYear;
 
-    // Public events (last 90 days, up to 100 events) — used to
-    // build a rolling 13-week contribution grid.
-    const eventsRes = await fetch(
-      `https://api.github.com/users/${USERNAME}/events/public?per_page=100`,
-      { headers }
-    );
-    const events = await eventsRes.json();
+    // Public events (last 90 days, GitHub caps at 300 events across
+    // 3 pages of 100) — used to build a rolling 13-week activity grid.
+    const events = [];
+    for (let page = 1; page <= 3; page++) {
+      const eventsRes = await fetch(
+        `https://api.github.com/users/${USERNAME}/events/public?per_page=100&page=${page}`,
+        { headers }
+      );
+      const pageEvents = await eventsRes.json();
+      if (!Array.isArray(pageEvents) || pageEvents.length === 0) break;
+      events.push(...pageEvents);
+      if (pageEvents.length < 100) break;
+    }
 
     // GitHub's public events feed strips commit-count fields out of
     // PushEvent payloads, so count each push as one unit of activity.
