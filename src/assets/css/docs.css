@@ -354,7 +354,7 @@
     padding-top: 0;
     transform: none;
     box-shadow: none;
-    z-index: 100;
+    z-index: 160;                      /* above ::before background (150) */
     transition: none;
   }
 
