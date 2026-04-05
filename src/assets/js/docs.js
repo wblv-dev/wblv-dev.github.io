@@ -1,71 +1,91 @@
 /* ============================================================
    WELLBELOVE.ORG — Docs Layout JS
-   Sidebar drawer toggle, scroll tracking, search
+
+   Desktop/tablet: sidebar always visible, collapse arrow
+   Mobile (<800px): sidebar as overlay drawer with FAB toggle
    ============================================================ */
 
 (function () {
   'use strict';
 
-  // ── DOM REFS ──────────────────────────────────────────────
   var sidebar     = document.querySelector('.docs-sidebar');
+  var layout      = document.querySelector('.docs-layout');
   var searchInput = document.querySelector('.docs-search-input');
   var navGroups   = document.querySelectorAll('.docs-nav-group');
   var navLinks    = document.querySelectorAll('.docs-nav-items a');
 
-  if (!sidebar) return;
+  if (!sidebar || !layout) return;
 
-  // ── CREATE TOGGLE BUTTON ──────────────────────────────────
-  var drawerToggle = document.querySelector('.docs-drawer-toggle');
-  if (!drawerToggle) {
-    drawerToggle = document.createElement('button');
-    drawerToggle.className = 'docs-drawer-toggle';
-    drawerToggle.setAttribute('aria-label', 'Toggle documentation sidebar');
-    drawerToggle.innerHTML =
-      '<svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' +
-        '<line x1="3" y1="6" x2="21" y2="6"/>' +
-        '<line x1="3" y1="12" x2="21" y2="12"/>' +
-        '<line x1="3" y1="18" x2="21" y2="18"/>' +
-      '</svg>';
-    document.body.appendChild(drawerToggle);
+  var MOBILE_MAX = 799;
+
+  function isMobile() {
+    return window.innerWidth <= MOBILE_MAX;
   }
 
-  // ── CREATE OVERLAY BACKDROP ────────────────────────────────
-  var overlay = document.querySelector('.docs-overlay');
-  if (!overlay) {
-    overlay = document.createElement('div');
-    overlay.className = 'docs-overlay';
-    document.body.appendChild(overlay);
-  }
+  // ── COLLAPSE ARROW (desktop/tablet) ───────────────────────
+  var collapseToggle = document.createElement('button');
+  collapseToggle.className = 'docs-collapse-toggle';
+  collapseToggle.setAttribute('aria-label', 'Collapse sidebar');
+  collapseToggle.innerHTML =
+    '<svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' +
+      '<polyline points="15 18 9 12 15 6"/>' +
+    '</svg>';
+  document.body.appendChild(collapseToggle);
 
-  // ── DRAWER OPEN / CLOSE ───────────────────────────────────
-  function openDrawer() {
+  collapseToggle.addEventListener('click', function () {
+    sidebar.classList.toggle('collapsed');
+    layout.classList.toggle('sidebar-collapsed');
+  });
+
+  // ── HAMBURGER FAB (mobile) ────────────────────────────────
+  var drawerToggle = document.createElement('button');
+  drawerToggle.className = 'docs-drawer-toggle';
+  drawerToggle.setAttribute('aria-label', 'Toggle documentation sidebar');
+  drawerToggle.innerHTML =
+    '<svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' +
+      '<line x1="3" y1="6" x2="21" y2="6"/>' +
+      '<line x1="3" y1="12" x2="21" y2="12"/>' +
+      '<line x1="3" y1="18" x2="21" y2="18"/>' +
+    '</svg>';
+  document.body.appendChild(drawerToggle);
+
+  // ── OVERLAY (mobile only) ─────────────────────────────────
+  var overlay = document.createElement('div');
+  overlay.className = 'docs-overlay';
+  document.body.appendChild(overlay);
+
+  function openMobileDrawer() {
     sidebar.classList.add('open');
     overlay.classList.add('visible');
     document.body.style.overflow = 'hidden';
   }
 
-  function closeDrawer() {
+  function closeMobileDrawer() {
     sidebar.classList.remove('open');
     overlay.classList.remove('visible');
     document.body.style.overflow = '';
   }
 
-  function toggleDrawer() {
+  drawerToggle.addEventListener('click', function () {
     if (sidebar.classList.contains('open')) {
-      closeDrawer();
+      closeMobileDrawer();
     } else {
-      openDrawer();
-    }
-  }
-
-  drawerToggle.addEventListener('click', toggleDrawer);
-  overlay.addEventListener('click', closeDrawer);
-
-  document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape' && sidebar.classList.contains('open')) {
-      closeDrawer();
+      openMobileDrawer();
     }
   });
+
+  overlay.addEventListener('click', closeMobileDrawer);
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') closeMobileDrawer();
+  });
+
+  // Clean up state on resize between mobile/desktop
+  window.addEventListener('resize', function () {
+    if (!isMobile()) {
+      closeMobileDrawer();
+    }
+  }, { passive: true });
 
   // ── SECTION COLLAPSE / EXPAND ─────────────────────────────
   navGroups.forEach(function (group) {
@@ -79,9 +99,7 @@
   // ── SMOOTH SCROLL ON LINK CLICK ───────────────────────────
   var navH = parseInt(
     getComputedStyle(document.documentElement)
-      .getPropertyValue('--nav-h')
-      .trim(),
-    10
+      .getPropertyValue('--nav-h').trim(), 10
   ) || 64;
 
   navLinks.forEach(function (link) {
@@ -96,13 +114,13 @@
       var top = target.getBoundingClientRect().top + window.pageYOffset - navH - 16;
       window.scrollTo({ top: top, behavior: 'smooth' });
       history.pushState(null, '', href);
-      closeDrawer();
+
+      if (isMobile()) closeMobileDrawer();
     });
   });
 
-  // ── SCROLL SPY — ACTIVE SECTION TRACKING ──────────────────
+  // ── SCROLL SPY ────────────────────────────────────────────
   var sections = [];
-
   navLinks.forEach(function (link) {
     var href = link.getAttribute('href');
     if (!href || href.charAt(0) !== '#') return;
@@ -115,31 +133,22 @@
   function updateActiveSection() {
     var offset = navH + 40;
     var current = null;
-
     for (var i = 0; i < sections.length; i++) {
-      var rect = sections[i].el.getBoundingClientRect();
-      if (rect.top - offset <= 0) {
+      if (sections[i].el.getBoundingClientRect().top - offset <= 0) {
         current = sections[i];
       }
     }
-
     navLinks.forEach(function (l) { l.classList.remove('active'); });
     if (current) {
       current.link.classList.add('active');
-      var parentGroup = current.link.closest('.docs-nav-group');
-      if (parentGroup && parentGroup.classList.contains('collapsed')) {
-        parentGroup.classList.remove('collapsed');
-      }
+      var pg = current.link.closest('.docs-nav-group');
+      if (pg && pg.classList.contains('collapsed')) pg.classList.remove('collapsed');
     }
-
     scrollTick = false;
   }
 
   window.addEventListener('scroll', function () {
-    if (!scrollTick) {
-      requestAnimationFrame(updateActiveSection);
-      scrollTick = true;
-    }
+    if (!scrollTick) { requestAnimationFrame(updateActiveSection); scrollTick = true; }
   }, { passive: true });
 
   updateActiveSection();
@@ -148,41 +157,27 @@
   if (searchInput) {
     searchInput.addEventListener('input', function () {
       var query = searchInput.value.trim().toLowerCase();
-
       navGroups.forEach(function (group) {
         var items = group.querySelectorAll('.docs-nav-items li');
-        var visibleCount = 0;
-
+        var vis = 0;
         items.forEach(function (li) {
           var a = li.querySelector('a');
           var text = (a ? a.textContent : li.textContent).toLowerCase();
-          if (!query || text.indexOf(query) !== -1) {
-            li.classList.remove('docs-hidden');
-            visibleCount++;
-          } else {
-            li.classList.add('docs-hidden');
-          }
+          if (!query || text.indexOf(query) !== -1) { li.classList.remove('docs-hidden'); vis++; }
+          else { li.classList.add('docs-hidden'); }
         });
-
-        if (query && visibleCount === 0) {
-          group.classList.add('docs-hidden');
-        } else {
-          group.classList.remove('docs-hidden');
-          if (query && visibleCount > 0) {
-            group.classList.remove('collapsed');
-          }
-        }
+        if (query && vis === 0) group.classList.add('docs-hidden');
+        else { group.classList.remove('docs-hidden'); if (query && vis > 0) group.classList.remove('collapsed'); }
       });
     });
   }
 
   // ── HANDLE INITIAL HASH ───────────────────────────────────
   if (window.location.hash) {
-    var hashTarget = document.getElementById(window.location.hash.substring(1));
-    if (hashTarget) {
+    var ht = document.getElementById(window.location.hash.substring(1));
+    if (ht) {
       setTimeout(function () {
-        var top = hashTarget.getBoundingClientRect().top + window.pageYOffset - navH - 16;
-        window.scrollTo({ top: top, behavior: 'smooth' });
+        window.scrollTo({ top: ht.getBoundingClientRect().top + window.pageYOffset - navH - 16, behavior: 'smooth' });
       }, 100);
     }
   }
