@@ -9,6 +9,22 @@ permalink: /blog/
 <div class="wrap page-content">
   <section class="section fade-in">
     <div class="label">Blog</div>
+    {% if collections.posts.length %}
+    <h1 class="display-lg" style="margin-bottom:24px;">
+      Blog
+    </h1>
+    <ul style="list-style:none;padding:0;margin:0;">
+      {% for post in collections.posts | reverse %}
+      <li style="margin-bottom:24px;">
+        <a href="{{ post.url }}" style="font-size:18px;font-weight:600;">{{ post.data.title }}</a>
+        <time style="display:block;font-size:13px;color:var(--muted);margin-top:4px;">{{ post.date | dateFormat }}</time>
+        {% if post.data.description %}
+        <p style="font-size:15px;color:var(--muted);line-height:1.6;margin-top:6px;">{{ post.data.description }}</p>
+        {% endif %}
+      </li>
+      {% endfor %}
+    </ul>
+    {% else %}
     <h1 class="display-lg" style="margin-bottom:24px;">
       Nothing here <em class="accent">yet.</em>
     </h1>
@@ -18,6 +34,7 @@ permalink: /blog/
       When there's something worth reading, it'll be here.
     </p>
     <a class="btn btn-ghost" href="/">← Back home</a>
+    {% endif %}
   </section>
 </div>
 </main>
