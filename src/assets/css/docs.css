@@ -355,6 +355,7 @@
     box-shadow: none;
     z-index: 100;
     transition: none;                  /* no slide animation on desktop */
+    align-self: flex-start;            /* prevent flex stretch breaking sticky */
   }
 
   /* Remove 'open' class behaviour on desktop — sidebar is always in-flow */
