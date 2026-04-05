@@ -30,36 +30,7 @@
   </div>
 </nav>
 
-{# Build the full sorted, genre-grouped list of docs once #}
-{%- set allDocs = collections.docs %}
-{%- set genres = [] %}
-{%- for doc in allDocs %}
-  {%- set g = doc.data.genre or "Other" %}
-  {%- if g not in genres %}{% set genres = (genres.push(g), genres) %}{% endif %}
-{%- endfor %}
-{%- set genres = genres | sort %}
-
-{# Flat ordered list (for prev/next) built in the same iteration order used in the sidebar #}
-{%- set orderedDocs = [] %}
-{%- for g in genres %}
-  {%- set groupDocs = [] %}
-  {%- for doc in allDocs %}
-    {%- if (doc.data.genre or "Other") == g %}{% set groupDocs = (groupDocs.push(doc), groupDocs) %}{% endif %}
-  {%- endfor %}
-  {%- set groupDocs = groupDocs | sort(false, false, "data.order") %}
-  {%- for doc in groupDocs %}{% set orderedDocs = (orderedDocs.push(doc), orderedDocs) %}{% endfor %}
-{%- endfor %}
-
-{# Find current page index for prev/next #}
-{%- set currentIdx = -1 %}
-{%- for doc in orderedDocs %}
-  {%- if doc.url == page.url %}{% set currentIdx = loop.index0 %}{% endif %}
-{%- endfor %}
-{%- set prevDoc = orderedDocs[currentIdx - 1] if currentIdx > 0 else null %}
-{%- set nextDoc = orderedDocs[currentIdx + 1] if currentIdx < (orderedDocs.length - 1) else null %}
-
-{%- set currentDoc = orderedDocs[currentIdx] if currentIdx >= 0 else null %}
-{%- set currentGenre = currentDoc.data.genre if currentDoc else "Other" %}
+{%- set currentGenre = genre or "Other" %}
 {%- set titleShort = title | replace(" — Harry Wellbelove", "") %}
 
 <div class="docs-layout">
@@ -102,30 +73,6 @@
     {%- endif %}
 
     {{ content | safe }}
-
-    {# Prev / Next nav #}
-    {%- if prevDoc or nextDoc %}
-    <nav class="docs-pagination" aria-label="Docs navigation">
-      {%- if prevDoc %}
-      <a href="{{ prevDoc.url }}" class="docs-pagination-link docs-pagination-prev">
-        <span class="docs-pagination-arrow">←</span>
-        <span class="docs-pagination-inner">
-          <span class="docs-pagination-label">Previous</span>
-          <span class="docs-pagination-title">{{ prevDoc.data.title | replace(" — Harry Wellbelove", "") }}</span>
-        </span>
-      </a>
-      {%- else %}<span></span>{%- endif %}
-      {%- if nextDoc %}
-      <a href="{{ nextDoc.url }}" class="docs-pagination-link docs-pagination-next">
-        <span class="docs-pagination-inner">
-          <span class="docs-pagination-label">Next</span>
-          <span class="docs-pagination-title">{{ nextDoc.data.title | replace(" — Harry Wellbelove", "") }}</span>
-        </span>
-        <span class="docs-pagination-arrow">→</span>
-      </a>
-      {%- else %}<span></span>{%- endif %}
-    </nav>
-    {%- endif %}
 
   </main>
   <footer class="docs-footer">
