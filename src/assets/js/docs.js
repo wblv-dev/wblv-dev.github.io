@@ -27,10 +27,14 @@
   // ── POPULATE CURRENT PAGE'S H2 SECTIONS ─────────────────────
   var sectionsContainer = document.getElementById('docs-nav-sections');
   if (sectionsContainer && content) {
-    var headings = content.querySelectorAll('h2[id]');
+    var headings = content.querySelectorAll('h2[id], h3[id]');
     var html = '';
     headings.forEach(function (h) {
-      html += '<li><a href="#' + h.id + '" data-title="' + h.textContent.trim() + '">' + h.textContent.trim() + '</a></li>';
+      var level = h.tagName.toLowerCase(); // "h2" or "h3"
+      var label = h.textContent.trim();
+      html += '<li class="docs-nav-' + level + '">' +
+              '<a href="#' + h.id + '" data-title="' + label + '">' + label + '</a>' +
+              '</li>';
     });
     sectionsContainer.innerHTML = html;
   }

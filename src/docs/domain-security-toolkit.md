@@ -41,12 +41,14 @@ domain-audit --domains-file domains.txt
 
 Output lands in the current directory as:
 
-- `AUDIT_REPORT.html` — interactive dashboard with all findings
+- `audit_report.html` — interactive dashboard with all findings
 - `AUDIT_REPORT.md` — markdown report, git-friendly
-- `AUDIT_REPORT.csv` — compliance summary, one row per domain
+- `audit_report.csv` — compliance summary, one row per domain
 - `audit_history.db` — SQLite database with historical data
 
-## Email Security
+## Security Checks
+
+### Email Security
 
 - **SPF** — validates DNS TXT records for authorised senders
 - **DMARC** — policy and reporting configuration
@@ -56,7 +58,7 @@ Output lands in the current directory as:
 - **TLSRPT** — monitors TLS negotiation failures
 - **BIMI** — brand logo indicators for supporting clients
 
-## DNS & Certificate Security
+### DNS & Certificate Security
 
 - **DNSSEC** — DNSKEY and DS record validation
 - **CAA** — certificate authority authorisation records
@@ -66,18 +68,30 @@ Output lands in the current directory as:
 - **Transfer Lock** — domain lock status validation
 - **Reverse DNS** — FCrDNS (Forward-Confirmed reverse DNS) validation
 
-## Web Security
+### Web Security
 
 - **HTTP Security Headers** — X-Frame-Options, CSP, X-Content-Type-Options, Referrer-Policy, Permissions-Policy, HSTS
 - **security.txt** — vulnerability disclosure policy at `/.well-known/security.txt`
 - **Technology Fingerprint** — identifies web technologies and frameworks
 
-## OSINT & Threat Intelligence
+### OSINT & Threat Intelligence
 
 - **Shodan Internet DB** — open ports and exposed services
 - **Mozilla Observatory** — website security header scoring
 - **DNSBL** — checks against multiple spam blacklist databases
 - **Optional integrations** — VirusTotal, AlienVault OTX, AbuseIPDB (API keys supported)
+
+Optional integrations activate when the corresponding environment variable is set:
+
+<div class="card mb-md">
+<table class="spec-table">
+<tr><td>SHODAN_API_KEY</td><td>Enables Shodan Internet DB lookups</td></tr>
+<tr><td>VIRUSTOTAL_KEY</td><td>Domain reputation + detection history</td></tr>
+<tr><td>OTX_KEY</td><td>AlienVault OTX pulse/indicator lookups</td></tr>
+<tr><td>ABUSEIPDB_KEY</td><td>AbuseIPDB reputation scoring</td></tr>
+<tr><td>CF_API_TOKEN</td><td>Cloudflare zone settings (alternative to --cloudflare-token)</td></tr>
+</table>
+</div>
 
 ## Cloudflare Integration
 
@@ -111,18 +125,23 @@ Each finding includes remediation guidance with references to the relevant stand
 
 ## Advanced Usage
 
+### Command Flags
+
 <div class="card mb-md">
 <table class="spec-table">
+<tr><td>--domains</td><td>One or more domains to audit</td></tr>
+<tr><td>--domains-file</td><td>Read domains from a file (one per line)</td></tr>
 <tr><td>--output-dir</td><td>Custom output directory for reports</td></tr>
 <tr><td>--format</td><td>Select output formats: html, md, csv (default: all three)</td></tr>
 <tr><td>--verbose</td><td>Debug logging</td></tr>
 <tr><td>--log-file</td><td>Write detailed logs to file</td></tr>
 <tr><td>--no-diff</td><td>Skip comparison with previous run</td></tr>
 <tr><td>--concurrency</td><td>Parallel domain count (default: 20)</td></tr>
+<tr><td>--cloudflare-token</td><td>Cloudflare API token for zone settings check</td></tr>
 </table>
 </div>
 
-## Exit Codes
+### Exit Codes
 
 - `0` — all checks passed or warned (no failures)
 - `1` — configuration or runtime error

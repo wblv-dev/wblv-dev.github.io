@@ -26,6 +26,8 @@ The tool runs entirely in your browser. No server, no database, no tracking. Bri
 
 ## The Framework
 
+### Outputs
+
 The ATS-CVC Framework produces five structured outputs from any CV + JD pair:
 
 <div class="card mb-md">
@@ -38,7 +40,7 @@ The ATS-CVC Framework produces five structured outputs from any CV + JD pair:
 </table>
 </div>
 
-## Four Guardrails
+### Four Guardrails
 
 The framework operates under four non-negotiable constraints to prevent CV fraud:
 
@@ -49,7 +51,7 @@ The framework operates under four non-negotiable constraints to prevent CV fraud
 
 These exist because the tool is supposed to make candidates more competitive honestly, not help them misrepresent themselves. A candidate following the tool's advice should still be able to defend every claim on their CV in an interview.
 
-## AI Provider Support
+### AI Provider Support
 
 Bring your own API key from any of:
 
@@ -60,55 +62,7 @@ Bring your own API key from any of:
 
 API keys are never stored. They live only in memory during the session and are explicitly cleared on page close. No keys are logged, persisted, or transmitted anywhere except to the chosen provider's API.
 
-## Architecture
-
-The tool is a **single HTML file** (~60KB) with no build step, no bundler, no server, and no dependencies to install. This is deliberate.
-
-<div class="card mb-md">
-<table class="spec-table">
-<tr><td>Architecture</td><td>Single-file HTML/CSS/JavaScript</td></tr>
-<tr><td>PDF parsing</td><td>PDF.js v3.11.174 (browser-side)</td></tr>
-<tr><td>Hosting</td><td>GitHub Pages (static only)</td></tr>
-<tr><td>State</td><td>No localStorage, no cookies, no backend</td></tr>
-<tr><td>CSP</td><td>Connections restricted to 4 AI provider domains</td></tr>
-</table>
-</div>
-
-The single-file design is intentional: the entire tool is auditable in one view. You can open it, read it, understand what it does, and verify the security claims yourself.
-
-## Security Model
-
-<div class="arch-block">DATA FLOW
-
-CV/JD upload  →  browser text extraction  →  prompt injection sanitisation
-                                             ↓
-                                    HTTPS to chosen provider
-                                             ↓
-                                    Response rendered in browser
-                                             ↓
-                              Explicit cleanup on page close</div>
-
-**What leaves your machine:** Only the CV text, JD text, and your API key, sent directly to the provider you chose. Nothing else.
-
-**What's on disk:** Nothing. No cookies, no localStorage, no logs, no database.
-
-**Input validation:** Magic number checks, extension validation, size limits (CV 5MB, JD 2MB), text truncation for cost control (CV 8,000 chars, JD 4,000 chars).
-
-**Prompt injection protection:** Text sanitisation patterns to prevent the uploaded CV/JD from manipulating the prompt.
-
-## Usage
-
-1. Go to the [live tool](https://wellbelove.org/ATS-CVC/tool/)
-2. Choose an AI provider (Mistral has a free tier)
-3. Get an API key from your chosen provider — links provided in the UI
-4. Upload your CV (PDF, max 5MB)
-5. Upload or paste the job description
-6. Confirm the extracted name and role title
-7. Click **Analyze** to run
-8. Review the five-part report
-9. Save as PDF using the browser print function
-
-## Evidence Base
+### Evidence Base
 
 The framework is backed by primary research sources. It explicitly debunks common CV myths — for example, the widely-repeated "75% ATS auto-rejection" statistic, which turns out to be fabricated and not traceable to any published study.
 
@@ -120,7 +74,59 @@ The methodology documentation (`METHODOLOGY.md` in the repo) includes:
 - ATS-safe CV format specification
 - Full evidence base with primary sources and URLs
 
-## Local Development
+## Architecture
+
+### Design
+
+The tool is a **single HTML file** (~60KB) with no build step, no bundler, no server, and no dependencies to install. This is deliberate.
+
+<div class="card mb-md">
+<table class="spec-table">
+<tr><td>Architecture</td><td>Single-file HTML/CSS/JavaScript</td></tr>
+<tr><td>PDF parsing</td><td>PDF.js v3.11.174 (browser-side)</td></tr>
+<tr><td>Hosting</td><td>GitHub Pages (static only)</td></tr>
+<tr><td>State</td><td>No localStorage, no cookies, no backend (sessionStorage used only to cache the framework prompt, auto-cleared on tab close)</td></tr>
+<tr><td>CSP</td><td>connect-src restricted to 5 domains: 4 AI providers + raw.githubusercontent.com (for framework prompt fetch)</td></tr>
+</table>
+</div>
+
+The single-file design is intentional: the entire tool is auditable in one view. You can open it, read it, understand what it does, and verify the security claims yourself.
+
+### Security Model
+
+<div class="arch-block">DATA FLOW
+
+CV/JD upload  →  browser text extraction  →  prompt injection sanitisation
+                                             ↓
+                                    HTTPS to chosen provider
+                                             ↓
+                                    Response rendered in browser
+                                             ↓
+                              Explicit cleanup on page close</div>
+
+**What leaves your machine:** Only the CV text, JD text, and your API key, sent directly to the provider you chose. On first load, the framework prompt is also fetched from `raw.githubusercontent.com` and cached in sessionStorage for the tab lifetime.
+
+**What's on disk:** Nothing. No cookies, no localStorage, no logs, no database.
+
+**Input validation:** Magic number checks, extension validation, size limits (CV 5MB, JD 2MB), text truncation for cost control (CV 8,000 chars, JD 4,000 chars).
+
+**Prompt injection protection:** Text sanitisation patterns to prevent the uploaded CV/JD from manipulating the prompt.
+
+## Usage
+
+### Running the Tool
+
+1. Go to the [live tool](https://wellbelove.org/ATS-CVC/tool/)
+2. Choose an AI provider (Mistral has a free tier)
+3. Get an API key from your chosen provider — links provided in the UI
+4. Upload your CV (PDF, max 5MB)
+5. Upload or paste the job description
+6. Confirm the extracted name and role title
+7. Click **Analyze** to run
+8. Review the five-part report
+9. Save as PDF using the browser print function
+
+### Local Development
 
 The tool has no build step. Run with any static file server:
 

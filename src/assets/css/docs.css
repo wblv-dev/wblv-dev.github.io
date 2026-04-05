@@ -134,6 +134,14 @@
   font-weight: 400;
 }
 .docs-nav-sections li.docs-hidden { display: none; }
+.docs-nav-sections li.docs-nav-h3 a {
+  padding-left: 36px;
+  font-size: 12px;
+  color: var(--dim);
+}
+.docs-nav-sections li.docs-nav-h3 a.active {
+  color: var(--ink);
+}
 
 /* ── CONTENT AREA ───────────────────────────────────────────── */
 .docs-content {
