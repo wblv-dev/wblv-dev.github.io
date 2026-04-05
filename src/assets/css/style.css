@@ -78,13 +78,16 @@ a { color: inherit; }
   max-width: var(--max-w);
   margin: 0 auto;
   padding: 0 var(--pad);
+  overflow-x: clip;
 }
 
 .page-content {
   padding-top: calc(var(--nav-h) + 48px);
   padding-bottom: 80px;
-  overflow-x: hidden;
+  overflow-x: clip;
 }
+
+main { overflow-x: clip; }
 
 /* ── NAVIGATION ──────────────────────────────────────────────── */
 .nav {
