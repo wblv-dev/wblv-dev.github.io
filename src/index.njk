@@ -21,7 +21,7 @@ robots: "index, follow"
           <span class="link-arr">↗</span> GitHub
         </a>
         <a class="link" href="mailto:harry@wellbelove.org">
-          <span class="link-arr">↗</span> harry@wellbelove.org
+          <span class="link-arr">→</span> harry@wellbelove.org
         </a>
       </div>
     </div>
@@ -89,8 +89,8 @@ robots: "index, follow"
         </div>
       </div>
       <!-- Full-year chart via ghchart; inverted so dark-mode friendly -->
-      <div style="overflow-x:auto;">
-        <img src="https://ghchart.rshah.org/370aa8/{{ github.username }}" alt="GitHub contribution chart" style="width:100%;min-width:600px;filter:invert(1);" loading="lazy">
+      <div style="overflow-x:auto;max-width:100%;-webkit-overflow-scrolling:touch;">
+        <img src="https://ghchart.rshah.org/370aa8/{{ github.username }}" alt="GitHub contribution chart" style="display:block;width:100%;max-width:none;min-width:600px;filter:invert(1);" loading="lazy">
       </div>
     </div>
 

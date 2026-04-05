@@ -41,7 +41,7 @@
 
 /* ── RESET ───────────────────────────────────────────────────── */
 *,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; font-size: 15px; overflow-y: scroll; scrollbar-width: none; -ms-overflow-style: none; }
+html { scroll-behavior: smooth; font-size: 15px; overflow-y: scroll; overflow-x: hidden; scrollbar-width: none; -ms-overflow-style: none; }
 html::-webkit-scrollbar { width: 0; height: 0; display: none; }
 
 body {
@@ -54,6 +54,8 @@ body {
   -webkit-font-smoothing: antialiased;
   display: flex;
   flex-direction: column;
+  overflow-x: hidden;
+  max-width: 100vw;
 }
 
 main { flex: 1; }
@@ -607,9 +609,9 @@ em.accent { color: var(--accent); font-style: italic; }
 }
 
 .footer-inner {
-  max-width: var(--max-w);
-  margin: 0 auto;
-  padding: 0 var(--pad);
+  max-width: none;
+  margin: 0;
+  padding: 0 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -678,6 +680,9 @@ em.accent { color: var(--accent); font-style: italic; }
 
 @media (max-width: 799px) {
   .contact-grid { grid-template-columns: 1fr; gap: 32px; }
+  .home-hero-row { flex-wrap: wrap; }
+  .home-hero-links { align-items: flex-start !important; padding-top: 0 !important; }
+  .home-activity-stats { grid-template-columns: repeat(2, 1fr) !important; gap: 16px !important; }
 }
 
 @media (max-width: 640px) {
@@ -701,13 +706,6 @@ em.accent { color: var(--accent); font-style: italic; }
 
   /* About page: kill justify on mobile (ugly gaps at narrow widths) */
   .about-prose p { text-align: left !important; font-size: 15px !important; }
-
-  /* Homepage hero: let name + links stack if they'd overflow */
-  .home-hero-row { flex-wrap: wrap; }
-  .home-hero-links { align-items: flex-start !important; padding-top: 0 !important; }
-
-  /* Homepage activity stats: drop to 2 columns on narrow screens */
-  .home-activity-stats { grid-template-columns: repeat(2, 1fr) !important; gap: 16px !important; }
 
   /* Homepage CTA card: stack vertically */
   .home-cta { flex-direction: column; align-items: flex-start !important; }
