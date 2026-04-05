@@ -1,32 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="About Harry Wellbelove — Cyber Security Professional. SC Cleared.">
-<title>About — Harry Wellbelove</title>
-<link rel="icon" type="image/svg+xml" href="/favicon.svg">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;1,9..144,300&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/css/style.css">
-</head>
-<body>
-
-<nav class="nav">
-  <div class="nav-inner">
-    <a class="nav-mark" href="/">wblv-dev</a>
-    <button class="nav-toggle" aria-label="Menu" aria-expanded="false">
-      <span></span><span></span><span></span>
-    </button>
-    <ul class="nav-links">
-      <li><a href="/">Home</a></li>
-      <li><a href="/about/">About</a></li>
-      <li><a href="/projects/">Projects</a></li>
-      <li><a href="/blog/">Blog</a></li>
-      <li><a href="/contact/">Contact</a></li>
-    </ul>
-  </div>
-</nav>
+---
+layout: base.njk
+title: "About — Harry Wellbelove"
+description: "About Harry Wellbelove — Cyber Security Professional. SC Cleared."
+permalink: /about/
+---
 
 <main>
 <div class="wrap page-content">
@@ -72,15 +49,15 @@
     <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;">
 
       <div class="card">
-        <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.18em;color:var(--dim);text-transform:uppercase;margin-bottom:12px;">Detection & Response</div>
+        <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.18em;color:var(--dim);text-transform:uppercase;margin-bottom:12px;">Detection &amp; Response</div>
         <p style="font-size:13px;color:var(--muted);line-height:1.7;">
           Microsoft Sentinel, KQL detection engineering, Defender for Endpoint,
-          Recorded Future, MITRE ATT&CK, OSINT, incident response.
+          Recorded Future, MITRE ATT&amp;CK, OSINT, incident response.
         </p>
       </div>
 
       <div class="card">
-        <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.18em;color:var(--dim);text-transform:uppercase;margin-bottom:12px;">Network & Firewall</div>
+        <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.18em;color:var(--dim);text-transform:uppercase;margin-bottom:12px;">Network &amp; Firewall</div>
         <p style="font-size:13px;color:var(--muted);line-height:1.7;">
           OPNsense HA, VLAN architecture, Cloudflare Enterprise,
           Suricata IDS/IPS, network segmentation, DNS security.
@@ -96,7 +73,7 @@
       </div>
 
       <div class="card">
-        <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.18em;color:var(--dim);text-transform:uppercase;margin-bottom:12px;">Cloud & Identity</div>
+        <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.18em;color:var(--dim);text-transform:uppercase;margin-bottom:12px;">Cloud &amp; Identity</div>
         <p style="font-size:13px;color:var(--muted);line-height:1.7;">
           Microsoft Azure, Entra ID, M365 E5, Conditional Access,
           Logic Apps, SOAR playbook development.
@@ -106,13 +83,13 @@
       <div class="card">
         <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.18em;color:var(--dim);text-transform:uppercase;margin-bottom:12px;">Frameworks</div>
         <p style="font-size:13px;color:var(--muted);line-height:1.7;">
-          NCSC CAF, NIST CSF, CIS Controls, MITRE ATT&CK,
+          NCSC CAF, NIST CSF, CIS Controls, MITRE ATT&amp;CK,
           OWASP, ISO 27001 awareness, GDPR Article 32.
         </p>
       </div>
 
       <div class="card">
-        <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.18em;color:var(--dim);text-transform:uppercase;margin-bottom:12px;">Automation & Tooling</div>
+        <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.18em;color:var(--dim);text-transform:uppercase;margin-bottom:12px;">Automation &amp; Tooling</div>
         <p style="font-size:13px;color:var(--muted);line-height:1.7;">
           Python, PowerShell, Ansible, Git, 1Password CLI,
           Claude Code, MCP server integration.
@@ -139,19 +116,3 @@
 
 </div>
 </main>
-
-<footer class="footer">
-  <div class="footer-inner">
-    <div class="footer-left">© 2026 Harry Wellbelove · wellbelove.org</div>
-    <div class="footer-right">
-      <a href="/about/">About</a>
-      <a href="/projects/">Projects</a>
-      <a href="/contact/">Contact</a>
-      <a href="https://github.com/wblv-dev" target="_blank" rel="noopener">GitHub ↗</a>
-    </div>
-  </div>
-</footer>
-
-<script src="/assets/js/nav.js"></script>
-</body>
-</html>
