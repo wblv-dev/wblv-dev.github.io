@@ -6,101 +6,98 @@ permalink: /about/
 ---
 
 <main>
-<div class="wrap page-content">
+<div class="wrap page-content" style="padding-top:calc(var(--nav-h) + 48px);padding-bottom:80px;">
 
-  <section class="section fade-in">
-    <div class="label">About</div>
+  <section class="section fade-in" style="margin-bottom:48px;">
+    <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.18em;color:var(--dim);text-transform:uppercase;margin-bottom:16px;">About</div>
     <h1 class="display-lg" style="margin-bottom:32px;">
       Who I <em class="accent">am.</em>
     </h1>
 
-    <!-- Replace everything below this comment with your own words -->
-    <div>
-      <p style="font-size:16px;color:var(--muted);line-height:1.9;margin-bottom:20px;">
-        I've spent five years in cyber security across a range of environments. I started in a
-        two-person SOC handling thousands of alerts a month and ended up leading a team of five,
-        delivering managed detection services, and running a multi-million-pound greenfield CNI
-        programme for a major UK energy operator.
+    <div style="max-width:720px;">
+      <p style="font-size:16px;color:var(--muted);line-height:1.8;margin-bottom:20px;">
+        I started in cyber straight out of college at a two-person SOC, triaging around 2,000 alerts
+        a month across finance, education, and energy customers on a week-on/week-off on-call rota.
+        There's no gentle introduction to the industry when it's just you and one other person —
+        you learn fast or you fall behind.
       </p>
-      <p style="font-size:16px;color:var(--muted);line-height:1.9;margin-bottom:20px;">
-        My strongest ground is the intersection of security engineering and operations. I care
-        about understanding how systems are actually built, not just
-        monitoring them from a distance. The CNI programme brought that into focus: deploying
-        OPNsense HA firewall pairs, CIS Level 2 hardening across Linux and Windows estates,
-        out-of-band management architecture, and full production handover against NCSC CAF and
-        NIST CSF.
+      <p style="font-size:16px;color:var(--muted);line-height:1.8;margin-bottom:20px;">
+        I joined Meridian IT in 2023 to build the managed SOC service from scratch — KQL detections,
+        runbooks, reporting templates, the lot. A year in I took over as the senior escalation point,
+        then jumped across to the engineering side for about 16 months to work on a greenfield
+        CNI programme for a UK energy operator. End of 2025 I came back to the SOC as Manager and
+        inherited a team of five.
       </p>
-      <p style="font-size:16px;color:var(--muted);line-height:1.9;margin-bottom:20px;">
-        Outside of work I run an extensive homelab, a three-node Proxmox/Ceph cluster that
-        mirrors the infrastructure I work with professionally. It's where I test tooling before
-        it goes anywhere near a client environment, and where I dig into things
-        that don't come up in the day-to-day.
+      <p style="font-size:16px;color:var(--muted);line-height:1.8;margin-bottom:20px;">
+        The engineering detour was deliberate. I care about knowing how systems are actually put
+        together, not just watching telemetry from them — you can't detect what you don't understand,
+        and the best SOC work I've seen comes from people who know the infrastructure well enough to
+        predict where it'll break.
       </p>
-      <p style="font-size:16px;color:var(--muted);line-height:1.9;">
-        <!-- Add something personal here in your own words -->
+      <p style="font-size:16px;color:var(--muted);line-height:1.8;">
+        Outside of that — home lab, bike, too many side projects. I run a three-node Proxmox/Ceph
+        cluster at home that mirrors the kit I work with professionally, mainly so I can break things
+        without bricking a client environment. I also do the 300-in-30 cycling challenge for Cancer
+        Research every June. If my legs hurt, it's probably that.
       </p>
     </div>
-    <!-- End of placeholder text -->
 
   </section>
 
-  <section class="section fade-in-2">
-    <div class="label">Capabilities</div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;">
+  <section class="section fade-in-2" style="margin-bottom:48px;">
+    <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.18em;color:var(--dim);text-transform:uppercase;margin-bottom:20px;">Journey</div>
 
-      <div class="card">
-        <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.18em;color:var(--dim);text-transform:uppercase;margin-bottom:12px;">Detection &amp; Response</div>
-        <p style="font-size:13px;color:var(--muted);line-height:1.7;">
-          Microsoft Sentinel, KQL detection engineering, Defender for Endpoint,
-          Recorded Future, MITRE ATT&amp;CK, OSINT, incident response.
-        </p>
-      </div>
+    <div style="position:relative;padding-left:24px;border-left:1px solid var(--rule);">
 
-      <div class="card">
-        <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.18em;color:var(--dim);text-transform:uppercase;margin-bottom:12px;">Network &amp; Firewall</div>
-        <p style="font-size:13px;color:var(--muted);line-height:1.7;">
-          OPNsense HA, VLAN architecture, Cloudflare Enterprise,
-          Suricata IDS/IPS, network segmentation, DNS security.
-        </p>
-      </div>
+      {% set journey = [
+        { dates: "Dec 2025 — Now", title: "SOC Manager", company: "Meridian IT", blurb: "Redesigned the SOC operating model and commercial framework. Leading a team of five across a regulated customer estate.", current: true },
+        { dates: "Aug 2024 — Dec 2025", title: "Cyber Security Engineer", company: "Meridian IT", blurb: "Greenfield CNI programme on behalf of a UK energy operator — CIS Level 2 hardening, OPNsense HA firewall pairs, internal PKI, out-of-band management, full SAT sign-off against NCSC CAF and NIST CSF." },
+        { dates: "Feb 2024 — Aug 2024", title: "Senior Cyber Security Analyst", company: "Meridian IT", blurb: "Sole operational ownership of the managed SOC. Built the detection runbook library, trained junior analysts, moved a regulated finance customer onto Recorded Future." },
+        { dates: "Feb 2023 — Feb 2024", title: "Cyber Security Analyst", company: "Meridian IT", blurb: "Built the managed SOC service from scratch — detection queries, runbooks, reporting templates. Scaled across finance and education customers." },
+        { dates: "Feb 2021 — Feb 2023", title: "Cyber Security Analyst", company: "CyberFit Security", blurb: "First role out of college. Two-person SOC, ~2,000 alerts a month across finance, education, and energy. Week-on/week-off on-call throughout." }
+      ] %}
 
-      <div class="card">
-        <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.18em;color:var(--dim);text-transform:uppercase;margin-bottom:12px;">Infrastructure</div>
-        <p style="font-size:13px;color:var(--muted);line-height:1.7;">
-          Proxmox, Ceph, VMware ESXi/vCenter, Linux, Windows Server,
-          CIS Level 2 hardening, Ansible, internal PKI.
-        </p>
+      {% for role in journey %}
+      <div style="position:relative;padding-bottom:28px;">
+        <div style="position:absolute;left:-30px;top:6px;width:11px;height:11px;border-radius:50%;background:{% if role.current %}var(--accent){% else %}var(--s2){% endif %};border:2px solid var(--bg);box-shadow:0 0 0 1px var(--rule);"></div>
+        <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.08em;color:var(--dim);text-transform:uppercase;margin-bottom:6px;">{{ role.dates }}</div>
+        <div style="font-family:var(--font-display);font-size:18px;font-weight:700;color:var(--ink);line-height:1.2;margin-bottom:2px;">{{ role.title }}</div>
+        <div style="font-family:var(--font-mono);font-size:11px;color:var(--accent);margin-bottom:8px;">{{ role.company }}</div>
+        <p style="font-size:14px;color:var(--muted);line-height:1.7;max-width:640px;">{{ role.blurb }}</p>
       </div>
-
-      <div class="card">
-        <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.18em;color:var(--dim);text-transform:uppercase;margin-bottom:12px;">Cloud &amp; Identity</div>
-        <p style="font-size:13px;color:var(--muted);line-height:1.7;">
-          Microsoft Azure, Entra ID, M365 E5, Conditional Access,
-          Logic Apps, SOAR playbook development.
-        </p>
-      </div>
-
-      <div class="card">
-        <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.18em;color:var(--dim);text-transform:uppercase;margin-bottom:12px;">Frameworks</div>
-        <p style="font-size:13px;color:var(--muted);line-height:1.7;">
-          NCSC CAF, NIST CSF, CIS Controls, MITRE ATT&amp;CK,
-          OWASP, ISO 27001 awareness, GDPR Article 32.
-        </p>
-      </div>
-
-      <div class="card">
-        <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.18em;color:var(--dim);text-transform:uppercase;margin-bottom:12px;">Automation &amp; Tooling</div>
-        <p style="font-size:13px;color:var(--muted);line-height:1.7;">
-          Python, PowerShell, Ansible, Git, 1Password CLI,
-          Claude Code, MCP server integration.
-        </p>
-      </div>
+      {% endfor %}
 
     </div>
   </section>
 
-  <section class="section fade-in-3" style="border-top:1px solid var(--rule);padding-top:48px;">
-    <div class="label">Find me</div>
+  <section class="section fade-in-3" style="margin-bottom:48px;">
+    <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.18em;color:var(--dim);text-transform:uppercase;margin-bottom:20px;">Certifications</div>
+
+    <div style="display:grid;gap:8px;">
+
+      {% set certs = [
+        { name: "CISSP", issuer: "ISC2", year: "In progress", pending: true },
+        { name: "SC-200 · Security Operations Analyst Associate", issuer: "Microsoft", year: "2021" },
+        { name: "Google Cybersecurity Professional Certificate", issuer: "Coursera", year: "2023" },
+        { name: "Jira Fundamentals", issuer: "Atlassian", year: "2024" },
+        { name: "L3 Extended Diploma · Computer Science", issuer: "Milton Keynes College", year: "2021" }
+      ] %}
+
+      {% for cert in certs %}
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 16px;background:var(--s1);border:1px solid var(--rule);border-radius:var(--radius-lg);">
+        <div style="min-width:0;flex:1;">
+          <div style="font-family:var(--font-mono);font-size:12px;font-weight:500;color:var(--ink);line-height:1.3;margin-bottom:2px;">{{ cert.name }}</div>
+          <div style="font-family:var(--font-mono);font-size:10px;color:var(--dim);">{{ cert.issuer }}</div>
+        </div>
+        <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.1em;color:{% if cert.pending %}var(--accent){% else %}var(--dim){% endif %};text-transform:uppercase;flex-shrink:0;">{{ cert.year }}</div>
+      </div>
+      {% endfor %}
+
+    </div>
+  </section>
+
+  <section class="section fade-in-4" style="border-top:1px solid var(--rule);padding-top:32px;">
+    <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.18em;color:var(--dim);text-transform:uppercase;margin-bottom:20px;">Find me</div>
     <div style="display:flex;gap:32px;flex-wrap:wrap;">
       <a class="link" href="https://linkedin.com/in/harrywellbelove" target="_blank" rel="noopener">
         <span class="link-arr">↗</span> linkedin.com/in/harrywellbelove
@@ -109,7 +106,7 @@ permalink: /about/
         <span class="link-arr">↗</span> github.com/wblv-dev
       </a>
       <a class="link" href="mailto:harry@wellbelove.org">
-        <span class="link-arr">→</span> harry@wellbelove.org
+        <span class="link-arr">↗</span> harry@wellbelove.org
       </a>
     </div>
   </section>
