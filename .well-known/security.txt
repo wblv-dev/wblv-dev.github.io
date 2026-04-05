@@ -1,8 +1,0 @@
-Contact: mailto:harry@wellbelove.org
-Expires: 2027-04-01T00:00:00.000Z
-Preferred-Languages: en
-Canonical: https://wellbelove.org/.well-known/security.txt
-Policy: https://wellbelove.org/.well-known/security.txt
-
-# This is a personal portfolio site with no user data, no backend, and no database.
-# If you find something worth reporting, please get in touch directly.
