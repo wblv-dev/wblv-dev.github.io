@@ -36,10 +36,10 @@ permalink: /projects/
       {%- set groupDocs = groupDocs | sort(false, false, "data.order") %}
     <div>
       <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.18em;color:var(--dim);text-transform:uppercase;margin-bottom:14px;">{{ g }}</div>
-      <div style="display:grid;gap:12px;">
+      <div style="display:grid;gap:12px;grid-auto-rows:1fr;">
         {%- for doc in groupDocs %}
           {%- set titleShort = doc.data.title | replace(" — Harry Wellbelove", "") %}
-          {%- set repoName = (doc.data.github_url or "") | replace("https://github.com/wblv-dev/", "") %}
+          {%- set repoName = (doc.data.github_url or "") | replace("https://github.com/wblv-dev/", "") | lower %}
           {%- set meta = github.projectMeta[repoName] %}
         <a href="{{ doc.url }}" style="text-decoration:none;display:block;padding:22px 26px;background:var(--s1);border:1px solid var(--rule);border-radius:var(--radius-lg);transition:border-color 0.15s, background 0.15s;min-height:150px;" onmouseover="this.style.borderColor='var(--accent)';this.style.background='var(--s2)'" onmouseout="this.style.borderColor='var(--rule)';this.style.background='var(--s1)'">
           <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:16px;">
