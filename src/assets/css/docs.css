@@ -216,7 +216,7 @@
    A small arrow tab on the sidebar's right edge                */
 .docs-collapse-toggle {
   position: fixed;
-  top: calc(var(--nav-h) + 16px);
+  top: calc(var(--nav-h) + 60px);
   left: var(--sidebar-w);
   z-index: 170;
   width: 24px;
