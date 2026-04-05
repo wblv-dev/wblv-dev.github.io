@@ -50,11 +50,19 @@ module.exports = async function () {
     const events = await eventsRes.json();
 
     const commitsByDay = {};
-    for (const ev of events) {
-      if (ev.type === "PushEvent") {
-        const day = ev.created_at.slice(0, 10);
-        const count = (ev.payload && ev.payload.commits && ev.payload.commits.length) || 0;
-        commitsByDay[day] = (commitsByDay[day] || 0) + count;
+    if (Array.isArray(events)) {
+      for (const ev of events) {
+        if (ev.type === "PushEvent") {
+          const day = ev.created_at.slice(0, 10);
+          // payload.distinct_size is the authoritative count of new
+          // commits in the push. Fall back to commits.length or size.
+          const count =
+            (ev.payload && ev.payload.distinct_size) ||
+            (ev.payload && ev.payload.size) ||
+            (ev.payload && ev.payload.commits && ev.payload.commits.length) ||
+            0;
+          if (count > 0) commitsByDay[day] = (commitsByDay[day] || 0) + count;
+        }
       }
     }
 
