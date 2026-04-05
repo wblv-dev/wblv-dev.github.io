@@ -111,6 +111,12 @@
     getComputedStyle(document.documentElement).getPropertyValue('--nav-h').trim(), 10
   ) || 64;
 
+  // Flag that suppresses scroll-spy updates while a click-triggered
+  // smooth scroll is in flight — otherwise the spy fights the click
+  // and the highlight ends up on a neighbouring section.
+  var suppressSpy = false;
+  var suppressSpyTimer;
+
   sectionLinks.forEach(function (link) {
     link.addEventListener('click', function (e) {
       var href = link.getAttribute('href');
@@ -118,6 +124,12 @@
       var target = document.getElementById(href.substring(1));
       if (!target) return;
       e.preventDefault();
+      // Lock the highlight to the clicked link immediately
+      sectionLinks.forEach(function (l) { l.classList.remove('active'); });
+      link.classList.add('active');
+      suppressSpy = true;
+      clearTimeout(suppressSpyTimer);
+      suppressSpyTimer = setTimeout(function () { suppressSpy = false; }, 700);
       var top = target.getBoundingClientRect().top + window.pageYOffset - navH - 16;
       window.scrollTo({ top: top, behavior: 'smooth' });
       history.pushState(null, '', href);
@@ -138,6 +150,7 @@
   function updateActiveSection() {
     scrollTick = false;
     if (!sections.length) return;
+    if (suppressSpy) return;
 
     var offset = navH + 40;
     var scrollY = window.pageYOffset || document.documentElement.scrollTop;
