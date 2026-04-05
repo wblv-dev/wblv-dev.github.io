@@ -83,6 +83,9 @@
   padding: 16px 20px 12px;
   border-bottom: 1px solid var(--rule);
   flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .docs-search-input {
@@ -382,17 +385,33 @@
     display: none;
   }
 
-  /* Toggle: always visible on desktop, top-left */
+  /* Toggle: always visible on desktop */
   .docs-drawer-toggle {
     display: flex;
-    top: calc(var(--nav-h) + 12px);
-    left: var(--sidebar-w);
-    transition: left 0.3s var(--transition-fn);
+    top: calc(var(--nav-h) + 14px);
+    left: calc(var(--sidebar-w) - 52px);
+    width: 32px;
+    height: 32px;
+    box-shadow: none;
+    background: transparent;
+    border: 1px solid var(--rule);
+    transition: left 0.3s var(--transition-fn), background 0.15s;
+  }
+
+  .docs-drawer-toggle:hover {
+    background: var(--s2);
+  }
+
+  .docs-drawer-toggle svg {
+    width: 14px;
+    height: 14px;
   }
 
   /* Move toggle when sidebar is collapsed */
   .docs-sidebar.collapsed ~ .docs-drawer-toggle {
     left: 12px;
+    background: var(--s2);
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
   }
 
   /* Overlay not needed on desktop */
