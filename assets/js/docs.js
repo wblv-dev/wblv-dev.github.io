@@ -1,20 +1,103 @@
 /* ============================================================
    WELLBELOVE.ORG — Docs Layout JS
    Sidebar toggle, scroll tracking, search, mobile drawer
+
+   Responsive behaviour:
+     Desktop  (>1200px)  Sidebar in-flow, no toggle needed
+     Medium   (800-1200) Sidebar is overlay drawer with toggle
+     Small    (<800px)   Same drawer, toggle at bottom-left
    ============================================================ */
 
 (function () {
   'use strict';
 
   // ── DOM REFS ──────────────────────────────────────────────
-  const sidebar      = document.querySelector('.docs-sidebar');
-  const overlay      = document.querySelector('.docs-overlay');
-  const drawerToggle = document.querySelector('.docs-drawer-toggle');
-  const searchInput  = document.querySelector('.docs-search-input');
-  const navGroups    = document.querySelectorAll('.docs-nav-group');
-  const navLinks     = document.querySelectorAll('.docs-nav-items a');
+  var sidebar     = document.querySelector('.docs-sidebar');
+  var searchInput = document.querySelector('.docs-search-input');
+  var navGroups   = document.querySelectorAll('.docs-nav-group');
+  var navLinks    = document.querySelectorAll('.docs-nav-items a');
 
   if (!sidebar) return; // bail if no docs layout on this page
+
+  // ── CREATE TOGGLE BUTTON (injected by JS so HTML stays clean) ──
+  var drawerToggle = document.querySelector('.docs-drawer-toggle');
+  if (!drawerToggle) {
+    drawerToggle = document.createElement('button');
+    drawerToggle.className = 'docs-drawer-toggle';
+    drawerToggle.setAttribute('aria-label', 'Toggle documentation sidebar');
+    drawerToggle.innerHTML =
+      '<svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' +
+        '<line x1="3" y1="6" x2="21" y2="6"/>' +
+        '<line x1="3" y1="12" x2="21" y2="12"/>' +
+        '<line x1="3" y1="18" x2="21" y2="18"/>' +
+      '</svg>';
+    document.body.appendChild(drawerToggle);
+  }
+
+  // ── CREATE OVERLAY BACKDROP ────────────────────────────────
+  var overlay = document.querySelector('.docs-overlay');
+  if (!overlay) {
+    overlay = document.createElement('div');
+    overlay.className = 'docs-overlay';
+    document.body.appendChild(overlay);
+  }
+
+  // ── RESPONSIVE STATE ──────────────────────────────────────
+  var DESKTOP_MIN = 1201;
+
+  function isDesktop() {
+    return window.innerWidth >= DESKTOP_MIN;
+  }
+
+  // ── DRAWER OPEN / CLOSE ───────────────────────────────────
+  function openDrawer() {
+    if (isDesktop()) return;            // sidebar is in-flow on desktop
+    sidebar.classList.add('open');
+    overlay.classList.add('visible');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeDrawer() {
+    sidebar.classList.remove('open');
+    overlay.classList.remove('visible');
+    document.body.style.overflow = '';
+  }
+
+  function toggleDrawer() {
+    if (sidebar.classList.contains('open')) {
+      closeDrawer();
+    } else {
+      openDrawer();
+    }
+  }
+
+  // Toggle button click
+  drawerToggle.addEventListener('click', toggleDrawer);
+
+  // Overlay backdrop click
+  overlay.addEventListener('click', closeDrawer);
+
+  // Escape key closes drawer
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && sidebar.classList.contains('open')) {
+      closeDrawer();
+    }
+  });
+
+  // On resize: if we cross into desktop territory, clean up drawer state
+  var resizeTick = false;
+
+  window.addEventListener('resize', function () {
+    if (resizeTick) return;
+    resizeTick = true;
+    requestAnimationFrame(function () {
+      if (isDesktop()) {
+        // Clean up any leftover drawer state on desktop
+        closeDrawer();
+      }
+      resizeTick = false;
+    });
+  }, { passive: true });
 
   // ── SECTION COLLAPSE / EXPAND ─────────────────────────────
   navGroups.forEach(function (group) {
@@ -50,8 +133,10 @@
       // Update URL hash without jumping
       history.pushState(null, '', href);
 
-      // Close mobile drawer if open
-      closeMobileDrawer();
+      // Close drawer on link click (medium/small)
+      if (!isDesktop()) {
+        closeDrawer();
+      }
     });
   });
 
@@ -68,7 +153,6 @@
   var scrollTick = false;
 
   function updateActiveSection() {
-    var scrollY = window.pageYOffset;
     var offset = navH + 40;
     var current = null;
 
@@ -113,8 +197,8 @@
         var visibleCount = 0;
 
         items.forEach(function (li) {
-          var link = li.querySelector('a');
-          var text = (link ? link.textContent : li.textContent).toLowerCase();
+          var a = li.querySelector('a');
+          var text = (a ? a.textContent : li.textContent).toLowerCase();
           if (!query || text.indexOf(query) !== -1) {
             li.classList.remove('docs-hidden');
             visibleCount++;
@@ -123,7 +207,7 @@
           }
         });
 
-        // Hide entire group if no items match; also auto-expand matching groups
+        // Hide entire group if no items match; auto-expand matching groups
         if (query && visibleCount === 0) {
           group.classList.add('docs-hidden');
         } else {
@@ -135,40 +219,6 @@
       });
     });
   }
-
-  // ── MOBILE DRAWER ─────────────────────────────────────────
-  function openMobileDrawer() {
-    sidebar.classList.add('open');
-    if (overlay) overlay.classList.add('visible');
-    document.body.style.overflow = 'hidden';
-  }
-
-  function closeMobileDrawer() {
-    sidebar.classList.remove('open');
-    if (overlay) overlay.classList.remove('visible');
-    document.body.style.overflow = '';
-  }
-
-  if (drawerToggle) {
-    drawerToggle.addEventListener('click', function () {
-      if (sidebar.classList.contains('open')) {
-        closeMobileDrawer();
-      } else {
-        openMobileDrawer();
-      }
-    });
-  }
-
-  if (overlay) {
-    overlay.addEventListener('click', closeMobileDrawer);
-  }
-
-  // Close drawer on Escape key
-  document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape' && sidebar.classList.contains('open')) {
-      closeMobileDrawer();
-    }
-  });
 
   // ── HANDLE INITIAL HASH ───────────────────────────────────
   if (window.location.hash) {
