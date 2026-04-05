@@ -95,6 +95,12 @@
     </div>
     <h1 class="docs-title">{{ titleShort }}</h1>
 
+    {%- if github_url %}
+    <div class="docs-source-link">
+      <a href="{{ github_url }}" target="_blank" rel="noopener">↗ View Source on GitHub</a>
+    </div>
+    {%- endif %}
+
     {{ content | safe }}
 
     {# Prev / Next nav #}
@@ -121,13 +127,6 @@
     </nav>
     {%- endif %}
 
-    {%- if github_url %}
-    <div class="project-links">
-      <a class="btn btn-outline" href="{{ github_url }}" target="_blank" rel="noopener">
-        ↗ View on GitHub
-      </a>
-    </div>
-    {%- endif %}
   </main>
   <footer class="docs-footer">
     <div class="docs-footer-inner">
