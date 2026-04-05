@@ -4,6 +4,11 @@ on:
   push:
     branches:
       - main
+  schedule:
+    # Rebuild daily at 06:00 UTC so the contribution grid
+    # and repo list pick up activity from other repos.
+    - cron: "0 6 * * *"
+  workflow_dispatch:
 
 permissions:
   contents: read
