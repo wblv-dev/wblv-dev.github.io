@@ -54,9 +54,12 @@
 
 /* ── SIDEBAR SEARCH ─────────────────────────────────────────── */
 .docs-search {
-  padding: 16px 20px 12px;
+  padding: 12px 12px 12px 20px;
   border-bottom: 1px solid var(--rule);
   flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .docs-search-input {
@@ -214,29 +217,25 @@
 
 /* ── COLLAPSE / EXPAND TOGGLE ────────────────────────────────
    A small arrow tab on the sidebar's right edge                */
+/* Inline collapse button — sits inside .docs-search via JS */
 .docs-collapse-toggle {
-  position: fixed;
-  top: calc(var(--nav-h) + 60px);
-  left: var(--sidebar-w);
-  z-index: 170;
-  width: 24px;
-  height: 40px;
-  background: var(--s1);
+  width: 34px;
+  height: 34px;
+  min-width: 34px;
+  background: var(--s2);
   border: 1px solid var(--rule);
-  border-left: none;
-  border-radius: 0 6px 6px 0;
+  border-radius: var(--radius);
   color: var(--dim);
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: left var(--transition-speed) var(--transition-fn),
-              color 0.15s, background 0.15s;
+  transition: color 0.15s, background 0.15s;
 }
 
 .docs-collapse-toggle:hover {
   color: var(--ink);
-  background: var(--s2);
+  background: var(--s3);
 }
 
 .docs-collapse-toggle svg {
@@ -247,14 +246,44 @@
   transition: transform 0.2s ease;
 }
 
-/* When collapsed, move toggle to left edge and flip arrow */
-.docs-layout.sidebar-collapsed .docs-collapse-toggle {
-  left: 0;
-  border-left: 1px solid var(--rule);
-}
-
 .docs-layout.sidebar-collapsed .docs-collapse-toggle svg {
   transform: rotate(180deg);
+}
+
+/* Floating reopen button — visible only when sidebar is collapsed */
+.docs-reopen-toggle {
+  display: none;
+  position: fixed;
+  top: calc(var(--nav-h) + 12px);
+  left: 12px;
+  z-index: 170;
+  width: 36px;
+  height: 36px;
+  background: var(--s2);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  color: var(--dim);
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+  transition: color 0.15s, background 0.15s;
+}
+
+.docs-reopen-toggle:hover {
+  color: var(--ink);
+  background: var(--s3);
+}
+
+.docs-reopen-toggle svg {
+  width: 14px;
+  height: 14px;
+  stroke: currentColor;
+  fill: none;
+}
+
+.docs-layout.sidebar-collapsed .docs-reopen-toggle {
+  display: flex;
 }
 
 /* ── MOBILE OVERLAY (hidden on desktop) ───────────────────── */

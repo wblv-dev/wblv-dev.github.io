@@ -22,7 +22,7 @@
     return window.innerWidth <= MOBILE_MAX;
   }
 
-  // ── COLLAPSE ARROW (desktop/tablet) ───────────────────────
+  // ── COLLAPSE BUTTON (inside search bar) ────────────────────
   var collapseToggle = document.createElement('button');
   collapseToggle.className = 'docs-collapse-toggle';
   collapseToggle.setAttribute('aria-label', 'Collapse sidebar');
@@ -30,12 +30,28 @@
     '<svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' +
       '<polyline points="15 18 9 12 15 6"/>' +
     '</svg>';
-  document.body.appendChild(collapseToggle);
+  var searchArea = document.querySelector('.docs-search');
+  if (searchArea) {
+    searchArea.appendChild(collapseToggle);
+  }
 
-  collapseToggle.addEventListener('click', function () {
+  // ── REOPEN BUTTON (visible when collapsed) ────────────────
+  var reopenToggle = document.createElement('button');
+  reopenToggle.className = 'docs-reopen-toggle';
+  reopenToggle.setAttribute('aria-label', 'Open sidebar');
+  reopenToggle.innerHTML =
+    '<svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' +
+      '<polyline points="9 18 15 12 9 6"/>' +
+    '</svg>';
+  layout.appendChild(reopenToggle);
+
+  function toggleSidebar() {
     sidebar.classList.toggle('collapsed');
     layout.classList.toggle('sidebar-collapsed');
-  });
+  }
+
+  collapseToggle.addEventListener('click', toggleSidebar);
+  reopenToggle.addEventListener('click', toggleSidebar);
 
   // ── HAMBURGER FAB (mobile) ────────────────────────────────
   var drawerToggle = document.createElement('button');
