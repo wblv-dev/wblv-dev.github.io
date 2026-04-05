@@ -5,73 +5,55 @@ description: "Projects — Harry Wellbelove."
 permalink: /projects/
 ---
 
-<main>
-<div class="wrap page-content">
+<main style="display:flex;flex-direction:column;">
+<div class="wrap page-content" style="padding-top:calc(var(--nav-h) + 48px);padding-bottom:16px;flex:1;display:flex;flex-direction:column;">
 
-  <section class="section fade-in">
-    <div class="label">Projects</div>
-    <h1 class="display-lg" style="margin-bottom:16px;">
+  <section class="section fade-in" style="margin-bottom:40px;">
+    <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.18em;color:var(--dim);text-transform:uppercase;margin-bottom:16px;">Projects</div>
+    <h1 class="display-lg" style="margin-bottom:20px;">
       Things I've <em class="accent">built.</em>
     </h1>
-    <p style="font-size:15px;color:var(--muted);max-width:560px;margin-bottom:48px;">
+    <p style="font-size:15px;color:var(--muted);line-height:1.7;">
       Personal projects, open source tooling, and infrastructure work.
       Solving real problems, documented to be useful to others.
     </p>
   </section>
 
-  <section class="section fade-in-2">
-    <a class="card card-link" href="/wblv-private-cloud-lab/" style="margin-bottom:12px;">
-      <div class="card-head">
-        <div>
-          <div class="card-title" style="margin-bottom:6px;">WBLV Private Cloud Lab</div>
-          <div class="tag-group">
-            <span class="tag tag-dim">Infrastructure</span>
-            <span class="tag tag-dim">Active</span>
+  <section class="section fade-in-2" style="margin-bottom:40px;display:grid;gap:12px;">
+    {%- set sortedDocs = collections.docs | sort(false, false, "data.order") %}
+    {%- for doc in sortedDocs %}
+      {%- set titleShort = doc.data.title | replace(" — Harry Wellbelove", "") %}
+      {%- set displayTags = [] %}
+      {%- for tag in doc.data.tags %}
+        {%- if tag != "doc" %}{% set displayTags = (displayTags.push(tag), displayTags) %}{% endif %}
+      {%- endfor %}
+    <a href="{{ doc.url }}" style="text-decoration:none;display:block;padding:22px 26px;background:var(--s1);border:1px solid var(--rule);border-radius:var(--radius-lg);transition:border-color 0.15s, background 0.15s;" onmouseover="this.style.borderColor='var(--accent)';this.style.background='var(--s2)'" onmouseout="this.style.borderColor='var(--rule)';this.style.background='var(--s1)'">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:16px;">
+        <div style="min-width:0;">
+          <div style="font-family:var(--font-display);font-size:22px;font-weight:700;color:var(--ink);line-height:1.2;margin-bottom:10px;">{{ titleShort }}</div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap;">
+            {%- for tag in displayTags %}
+            <span class="tag {% if tag == 'Active' %}tag-accent{% else %}tag-dim{% endif %}">{{ tag }}</span>
+            {%- endfor %}
           </div>
         </div>
-        <span class="card-arrow" style="margin-top:0;">↗</span>
+        <span style="font-family:var(--font-mono);font-size:14px;color:var(--dim);flex-shrink:0;line-height:1;padding-top:4px;">↗</span>
       </div>
-      <p class="card-desc" style="margin-top:14px;">
-        Three-node Proxmox/Ceph cluster with HA OPNsense firewalls,
-        VLAN architecture, Ansible provisioning, and CIS-hardened workloads throughout.
-      </p>
+      {%- if doc.data.summary %}
+      <p style="font-size:14px;color:var(--muted);line-height:1.7;margin-top:16px;">{{ doc.data.summary }}</p>
+      {%- endif %}
     </a>
+    {%- endfor %}
+  </section>
 
-    <a class="card card-link" href="/domain-security-toolkit/" style="margin-bottom:12px;">
-      <div class="card-head">
-        <div>
-          <div class="card-title" style="margin-bottom:6px;">Domain Security Toolkit</div>
-          <div class="tag-group">
-            <span class="tag tag-dim">Open Source</span>
-            <span class="tag tag-dim">Python</span>
-          </div>
-        </div>
-        <span class="card-arrow" style="margin-top:0;">↗</span>
+  <section class="section fade-in-3" style="margin-top:auto;margin-bottom:0;display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap;padding:24px 28px;background:var(--s1);border:1px solid var(--rule);border-radius:var(--radius-lg);">
+    <div>
+      <div style="font-family:var(--font-display);font-size:20px;font-weight:700;margin-bottom:6px;">
+        If you've got something worth <em class="accent">talking about.</em>
       </div>
-      <p class="card-desc" style="margin-top:14px;">
-        35+ automated security checks across TLS, email authentication, HTTP headers,
-        DNSSEC, and OSINT exposure. Generates customer-ready HTML reports covering NIST, OWASP,
-        NCSC, CISA, and GDPR.
-      </p>
-    </a>
-
-    <a class="card card-link" href="/ATS-CVC/">
-      <div class="card-head">
-        <div>
-          <div class="card-title" style="margin-bottom:6px;">ATS-CVC</div>
-          <div class="tag-group">
-            <span class="tag tag-dim">Tool</span>
-            <span class="tag tag-dim">AI</span>
-          </div>
-        </div>
-        <span class="card-arrow" style="margin-top:0;">↗</span>
-      </div>
-      <p class="card-desc" style="margin-top:14px;">
-        CV gap analysis tool. Compares your CV against a job description
-        using the ATS-CVC Framework, highlighting what's missing, undersold, and
-        what a hiring manager will probe on.
-      </p>
-    </a>
+      <div style="font-size:13px;color:var(--muted);">Get in touch directly or via the contact page.</div>
+    </div>
+    <a class="btn btn-outline" href="/contact/">Get in touch →</a>
   </section>
 
 </div>
