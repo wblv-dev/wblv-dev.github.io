@@ -6,9 +6,9 @@ module.exports = async function () {
   // Internal docs page per repo. When set, the homepage card links
   // here instead of GitHub. Leave as null to fall back to GitHub.
   const docsPaths = {
-    "domain-security-toolkit": "/docs/domain-security-toolkit/",
-    "ats-cvc": "/docs/ATS-CVC/",
-    "wblv-private-cloud-lab": "/docs/wblv-private-cloud-lab/",
+    "domain-security-toolkit": "/domain-security-toolkit/",
+    "ats-cvc": "/ATS-CVC/",
+    "wblv-private-cloud-lab": "/wblv-private-cloud-lab/",
   };
 
   try {
