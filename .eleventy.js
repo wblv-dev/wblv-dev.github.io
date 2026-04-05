@@ -22,6 +22,8 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy("src/.nojekyll");
   eleventyConfig.addPassthroughCopy("src/.well-known");
   eleventyConfig.addPassthroughCopy("src/admin");
+  eleventyConfig.addPassthroughCopy("src/ATS-CVC");
+  eleventyConfig.addPassthroughCopy("src/wblv-private-cloud-lab");
 
   // Date filter for templates
   eleventyConfig.addFilter("dateFormat", function (date) {
