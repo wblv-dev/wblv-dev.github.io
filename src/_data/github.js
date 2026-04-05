@@ -21,7 +21,7 @@ module.exports = async function () {
 
     const recent = repos
       .filter(r => !r.fork && !r.private)
-      .slice(0, 4)
+      .slice(0, 6)
       .map(r => ({
         name: r.name,
         description: r.description,
