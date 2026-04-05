@@ -73,8 +73,7 @@ robots: "index, follow"
           <div style="font-family:var(--font-mono);font-size:11px;font-weight:500;color:var(--ink);overflow:hidden;text-overflow:ellipsis;">{{ repo.name }}</div>
           {% if repo.stars > 0 %}<div style="font-family:var(--font-mono);font-size:10px;color:var(--dim);flex-shrink:0;">★ {{ repo.stars }}</div>{% endif %}
         </div>
-        {% if repo.description %}<div style="font-size:11px;color:var(--muted);line-height:1.45;margin-bottom:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ repo.description }}</div>{% endif %}
-        {% if repo.language %}<div style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.12em;color:var(--dim);text-transform:uppercase;">{{ repo.language }}</div>{% endif %}
+        {% if repo.description %}<div style="font-size:11px;color:var(--muted);line-height:1.45;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ repo.description }}</div>{% endif %}
       </a>
       {% endfor %}
     </div>

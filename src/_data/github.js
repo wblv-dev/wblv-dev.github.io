@@ -3,6 +3,15 @@ module.exports = async function () {
   const USERNAME = "wblv-dev";
   const headers = { "User-Agent": "wblv-dev-site" };
 
+  // Hand-written one-liners shown on the homepage repo cards.
+  // Falls back to the repo's GitHub description if no entry here.
+  const summaries = {
+    "wblv-dev.github.io": "Personal site, blog and project write-ups.",
+    "domain-security-toolkit": "35+ domain checks across TLS, email auth, DNS and OSINT.",
+    "ats-cvc": "Gap analysis between a CV and a job description.",
+    "wblv-private-cloud-lab": "Three-node Proxmox/Ceph cluster with HA OPNsense firewalls.",
+  };
+
   try {
     // User info
     const userRes = await fetch(`https://api.github.com/users/${USERNAME}`, { headers });
@@ -24,7 +33,7 @@ module.exports = async function () {
       .slice(0, 6)
       .map(r => ({
         name: r.name,
-        description: r.description,
+        description: summaries[r.name] || r.description,
         url: r.html_url,
         stars: r.stargazers_count,
         language: r.language,
