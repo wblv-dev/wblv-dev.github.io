@@ -35,21 +35,8 @@
     sectionsContainer.innerHTML = html;
   }
 
-  // Re-query everything after section population
-  var navGroups   = navRoot.querySelectorAll('.docs-nav-group');
-  var navHeadings = navRoot.querySelectorAll('.docs-nav-heading');
-  var pageLinks   = navRoot.querySelectorAll('.docs-nav-page');
-  var sectionLinks= navRoot.querySelectorAll('.docs-nav-sections a');
-
-  // ── GENRE GROUP COLLAPSE / EXPAND ───────────────────────────
-  navHeadings.forEach(function (heading) {
-    heading.addEventListener('click', function () {
-      var group = heading.closest('.docs-nav-group');
-      if (!group) return;
-      var collapsed = group.classList.toggle('collapsed');
-      heading.setAttribute('aria-expanded', collapsed ? 'false' : 'true');
-    });
-  });
+  // Re-query section links after population
+  var sectionLinks = navRoot.querySelectorAll('.docs-nav-sections a');
 
   // ── SIDEBAR COLLAPSE BUTTON (inside search bar) ─────────────
   var collapseToggle = document.createElement('button');
@@ -189,30 +176,14 @@
   }, { passive: true });
   updateActiveSection();
 
-  // ── SEARCH (across page titles + current page sections) ────
+  // ── SEARCH (filters current page's sections) ──────────────
   if (searchInput) {
     searchInput.addEventListener('input', function () {
       var q = searchInput.value.trim().toLowerCase();
-      navGroups.forEach(function (group) {
-        var anyVisible = false;
-        var pageWraps = group.querySelectorAll('.docs-nav-page-wrap');
-        pageWraps.forEach(function (wrap) {
-          var pageLink = wrap.querySelector('.docs-nav-page');
-          var pageTitle = (pageLink.getAttribute('data-title') || pageLink.textContent).toLowerCase();
-          var secLinks = wrap.querySelectorAll('.docs-nav-sections a');
-          var pageMatch = !q || pageTitle.indexOf(q) !== -1;
-          var anySecMatch = false;
-          secLinks.forEach(function (sl) {
-            var st = (sl.getAttribute('data-title') || sl.textContent).toLowerCase();
-            var match = !q || st.indexOf(q) !== -1 || pageMatch;
-            sl.parentElement.classList.toggle('docs-hidden', !match);
-            if (match && q) anySecMatch = true;
-          });
-          var show = pageMatch || anySecMatch || !q;
-          wrap.classList.toggle('docs-hidden', !show);
-          if (show) anyVisible = true;
-        });
-        group.classList.toggle('docs-hidden', !anyVisible);
+      sectionLinks.forEach(function (a) {
+        var t = (a.getAttribute('data-title') || a.textContent).toLowerCase();
+        var match = !q || t.indexOf(q) !== -1;
+        a.parentElement.classList.toggle('docs-hidden', !match);
       });
     });
 

@@ -19,24 +19,51 @@ permalink: /projects/
     </p>
   </section>
 
-  <section class="section fade-in-2" style="margin-bottom:40px;display:grid;gap:12px;">
-    {%- set sortedDocs = collections.docs | sort(false, false, "data.order") %}
-    {%- for doc in sortedDocs %}
-      {%- set titleShort = doc.data.title | replace(" — Harry Wellbelove", "") %}
-    <a href="{{ doc.url }}" style="text-decoration:none;display:block;padding:22px 26px;background:var(--s1);border:1px solid var(--rule);border-radius:var(--radius-lg);transition:border-color 0.15s, background 0.15s;min-height:150px;" onmouseover="this.style.borderColor='var(--accent)';this.style.background='var(--s2)'" onmouseout="this.style.borderColor='var(--rule)';this.style.background='var(--s1)'">
-      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:16px;">
-        <div style="min-width:0;">
-          <div style="font-family:var(--font-display);font-size:22px;font-weight:700;color:var(--ink);line-height:1.2;margin-bottom:10px;">{{ titleShort }}</div>
-          {%- if doc.data.genre %}
-          <span class="tag tag-dim">{{ doc.data.genre }}</span>
+  {# Gather unique genres from docs collection, sorted alphabetically #}
+  {%- set genres = [] %}
+  {%- for doc in collections.docs %}
+    {%- set g = doc.data.genre or "Other" %}
+    {%- if g not in genres %}{% set genres = (genres.push(g), genres) %}{% endif %}
+  {%- endfor %}
+  {%- set genres = genres | sort %}
+
+  <section class="section fade-in-2" style="margin-bottom:40px;display:grid;gap:32px;">
+    {%- for g in genres %}
+      {%- set groupDocs = [] %}
+      {%- for doc in collections.docs %}
+        {%- if (doc.data.genre or "Other") == g %}{% set groupDocs = (groupDocs.push(doc), groupDocs) %}{% endif %}
+      {%- endfor %}
+      {%- set groupDocs = groupDocs | sort(false, false, "data.order") %}
+    <div>
+      <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.18em;color:var(--dim);text-transform:uppercase;margin-bottom:14px;">{{ g }}</div>
+      <div style="display:grid;gap:12px;">
+        {%- for doc in groupDocs %}
+          {%- set titleShort = doc.data.title | replace(" — Harry Wellbelove", "") %}
+          {%- set repoName = (doc.data.github_url or "") | replace("https://github.com/wblv-dev/", "") %}
+          {%- set meta = github.projectMeta[repoName] %}
+        <a href="{{ doc.url }}" style="text-decoration:none;display:block;padding:22px 26px;background:var(--s1);border:1px solid var(--rule);border-radius:var(--radius-lg);transition:border-color 0.15s, background 0.15s;min-height:150px;" onmouseover="this.style.borderColor='var(--accent)';this.style.background='var(--s2)'" onmouseout="this.style.borderColor='var(--rule)';this.style.background='var(--s1)'">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:16px;">
+            <div style="min-width:0;">
+              <div style="font-family:var(--font-display);font-size:22px;font-weight:700;color:var(--ink);line-height:1.2;margin-bottom:10px;">{{ titleShort }}</div>
+              {%- if doc.data.summary %}
+              <p style="font-size:14px;color:var(--muted);line-height:1.7;margin:0;">{{ doc.data.summary }}</p>
+              {%- endif %}
+            </div>
+            <span style="font-family:var(--font-mono);font-size:14px;color:var(--dim);flex-shrink:0;line-height:1;padding-top:4px;">↗</span>
+          </div>
+          {%- if meta %}
+          <div style="display:flex;align-items:center;gap:18px;margin-top:14px;padding-top:14px;border-top:1px solid var(--rule);font-family:var(--font-mono);font-size:10px;letter-spacing:0.08em;color:var(--dim);text-transform:uppercase;">
+            <span>Updated {{ meta.pushedRelative }}</span>
+            {%- if meta.stars > 0 %}
+            <span>★ {{ meta.stars }}</span>
+            {%- endif %}
+            <span style="margin-left:auto;color:var(--dim);">{{ repoName }}</span>
+          </div>
           {%- endif %}
-        </div>
-        <span style="font-family:var(--font-mono);font-size:14px;color:var(--dim);flex-shrink:0;line-height:1;padding-top:4px;">↗</span>
+        </a>
+        {%- endfor %}
       </div>
-      {%- if doc.data.summary %}
-      <p style="font-size:14px;color:var(--muted);line-height:1.7;margin-top:16px;">{{ doc.data.summary }}</p>
-      {%- endif %}
-    </a>
+    </div>
     {%- endfor %}
   </section>
 

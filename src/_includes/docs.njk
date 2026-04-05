@@ -64,37 +64,20 @@
 
 <div class="docs-layout">
   <aside class="docs-sidebar">
+    <a href="/projects/" class="docs-back-link">
+      <span class="docs-back-arrow">←</span> All projects
+    </a>
     <div class="docs-search">
-      <input type="text" class="docs-search-input" placeholder="Search docs..." aria-label="Search docs">
+      <input type="text" class="docs-search-input" placeholder="Search sections..." aria-label="Search sections">
+    </div>
+    <div class="docs-sidebar-header">
+      <div class="docs-sidebar-genre">{{ currentGenre }}</div>
+      <div class="docs-sidebar-title">{{ titleShort }}</div>
     </div>
     <nav class="docs-nav" id="docs-nav">
-      {%- for g in genres %}
-      <div class="docs-nav-group" data-genre="{{ g }}">
-        <button class="docs-nav-heading" aria-expanded="true">
-          <span>{{ g }}</span>
-          <svg class="docs-nav-chevron" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-        </button>
-        <ul class="docs-nav-items">
-          {%- set groupDocs = [] %}
-          {%- for doc in allDocs %}
-            {%- if (doc.data.genre or "Other") == g %}{% set groupDocs = (groupDocs.push(doc), groupDocs) %}{% endif %}
-          {%- endfor %}
-          {%- set groupDocs = groupDocs | sort(false, false, "data.order") %}
-          {%- for doc in groupDocs %}
-            {%- set pageTitleShort = doc.data.title | replace(" — Harry Wellbelove", "") %}
-            {%- set isActive = doc.url == page.url %}
-          <li class="docs-nav-page-wrap{% if isActive %} active{% endif %}">
-            <a href="{{ doc.url }}" class="docs-nav-page{% if isActive %} active{% endif %}" data-title="{{ pageTitleShort }}">{{ pageTitleShort }}</a>
-            {%- if isActive %}
-            <ul class="docs-nav-sections" id="docs-nav-sections">
-              <!-- Populated by docs.js with h2 headings from current page -->
-            </ul>
-            {%- endif %}
-          </li>
-          {%- endfor %}
-        </ul>
-      </div>
-      {%- endfor %}
+      <ul class="docs-nav-sections" id="docs-nav-sections">
+        <!-- Populated by docs.js with h2 headings from current page -->
+      </ul>
     </nav>
   </aside>
 

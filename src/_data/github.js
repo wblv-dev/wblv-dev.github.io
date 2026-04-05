@@ -108,6 +108,33 @@ module.exports = async function () {
       else lastActivityLabel = `${diffDays} days ago`;
     }
 
+    // Per-repo metadata keyed by name — used by the projects page
+    // to show last-updated dates and star counts alongside each card.
+    function relativeDate(iso) {
+      if (!iso) return "—";
+      var d = new Date(iso);
+      var diffDays = Math.floor((new Date() - d) / (1000 * 60 * 60 * 24));
+      if (diffDays === 0) return "Today";
+      if (diffDays === 1) return "Yesterday";
+      if (diffDays < 7) return diffDays + " days ago";
+      if (diffDays < 30) return Math.floor(diffDays / 7) + " weeks ago";
+      if (diffDays < 365) return Math.floor(diffDays / 30) + " months ago";
+      return Math.floor(diffDays / 365) + " years ago";
+    }
+
+    const projectMeta = {};
+    repos.forEach(function (r) {
+      if (r.fork || r.private) return;
+      projectMeta[r.name] = {
+        name: r.name,
+        url: r.html_url,
+        stars: r.stargazers_count,
+        pushedAt: r.pushed_at,
+        pushedRelative: relativeDate(r.pushed_at),
+        description: r.description,
+      };
+    });
+
     return {
       username: USERNAME,
       publicRepos: user.public_repos,
@@ -127,6 +154,7 @@ module.exports = async function () {
       currentRepoUrl: currentRepo
         ? (docsPaths[currentRepo.name] || currentRepo.html_url)
         : null,
+      projectMeta,
     };
   } catch (err) {
     console.warn("GitHub data fetch failed:", err.message);
@@ -147,6 +175,7 @@ module.exports = async function () {
       lastActivityLabel: "—",
       currentRepo: null,
       currentRepoUrl: null,
+      projectMeta: {},
     };
   }
 };
