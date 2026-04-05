@@ -50,7 +50,6 @@ body {
   font-weight: 300;
   line-height: 1.7;
   min-height: 100vh;
-  overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   display: flex;
   flex-direction: column;
@@ -81,6 +80,7 @@ a { color: inherit; }
 .page-content {
   padding-top: calc(var(--nav-h) + 48px);
   padding-bottom: 80px;
+  overflow-x: hidden;
 }
 
 /* ── NAVIGATION ──────────────────────────────────────────────── */

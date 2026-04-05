@@ -242,6 +242,7 @@
   min-width: 0;
   max-width: 860px;
   padding: 48px 60px 80px;
+  overflow-x: hidden;
 }
 
 /* Content typography spacing */
