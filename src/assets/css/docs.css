@@ -325,6 +325,37 @@
   fill: none;
 }
 
+/* ── FLOATING TOGGLE (visible when sidebar collapsed on desktop) ── */
+.docs-floating-toggle {
+  display: none;
+  position: fixed;
+  top: calc(var(--nav-h) + 12px);
+  left: 12px;
+  z-index: 260;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius);
+  background: var(--s2);
+  border: 1px solid var(--rule);
+  color: var(--ink);
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+  transition: background 0.15s;
+}
+
+.docs-floating-toggle:hover {
+  background: var(--s3);
+}
+
+.docs-floating-toggle svg {
+  width: 16px;
+  height: 16px;
+  stroke: currentColor;
+  fill: none;
+}
+
 /* ── BACKDROP OVERLAY ──────────────────────────────────────── */
 .docs-overlay {
   position: fixed;
@@ -385,17 +416,16 @@
     display: none;
   }
 
-  /* Toggle: always visible on desktop */
+  /* Toggle: inline inside sidebar search area on desktop */
   .docs-drawer-toggle {
-    display: flex;
-    top: calc(var(--nav-h) + 14px);
-    left: calc(var(--sidebar-w) - 52px);
+    position: static;
     width: 32px;
     height: 32px;
+    min-width: 32px;
     box-shadow: none;
     background: transparent;
     border: 1px solid var(--rule);
-    transition: left 0.3s var(--transition-fn), background 0.15s;
+    border-radius: var(--radius);
   }
 
   .docs-drawer-toggle:hover {
@@ -405,13 +435,6 @@
   .docs-drawer-toggle svg {
     width: 14px;
     height: 14px;
-  }
-
-  /* Move toggle when sidebar is collapsed */
-  .docs-sidebar.collapsed ~ .docs-drawer-toggle {
-    left: 12px;
-    background: var(--s2);
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
   }
 
   /* Overlay not needed on desktop */

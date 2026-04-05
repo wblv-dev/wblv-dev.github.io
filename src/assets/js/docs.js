@@ -19,7 +19,7 @@
 
   if (!sidebar) return; // bail if no docs layout on this page
 
-  // ── CREATE TOGGLE BUTTON (injected by JS so HTML stays clean) ──
+  // ── CREATE TOGGLE BUTTON (inside sidebar search area on desktop) ──
   var drawerToggle = document.querySelector('.docs-drawer-toggle');
   if (!drawerToggle) {
     drawerToggle = document.createElement('button');
@@ -31,8 +31,22 @@
         '<line x1="3" y1="12" x2="21" y2="12"/>' +
         '<line x1="3" y1="18" x2="21" y2="18"/>' +
       '</svg>';
-    document.body.appendChild(drawerToggle);
+    // Insert into sidebar search area so it's part of the layout
+    var searchArea = document.querySelector('.docs-search');
+    if (searchArea) {
+      searchArea.insertBefore(drawerToggle, searchArea.firstChild);
+    } else {
+      document.body.appendChild(drawerToggle);
+    }
   }
+
+  // Create a separate floating toggle for when sidebar is collapsed on desktop
+  var floatingToggle = document.createElement('button');
+  floatingToggle.className = 'docs-floating-toggle';
+  floatingToggle.setAttribute('aria-label', 'Open documentation sidebar');
+  floatingToggle.innerHTML = drawerToggle.innerHTML;
+  floatingToggle.style.display = 'none';
+  document.body.appendChild(floatingToggle);
 
   // ── CREATE OVERLAY BACKDROP ────────────────────────────────
   var overlay = document.querySelector('.docs-overlay');
@@ -52,9 +66,9 @@
   // ── DRAWER OPEN / CLOSE ───────────────────────────────────
   function openDrawer() {
     if (isDesktop()) {
-      // Desktop: remove collapsed state
       sidebar.classList.remove('collapsed');
       sidebar.closest('.docs-layout').classList.remove('sidebar-collapsed');
+      floatingToggle.style.display = 'none';
       return;
     }
     sidebar.classList.add('open');
@@ -64,9 +78,9 @@
 
   function closeDrawer() {
     if (isDesktop()) {
-      // Desktop: add collapsed state
       sidebar.classList.add('collapsed');
       sidebar.closest('.docs-layout').classList.add('sidebar-collapsed');
+      floatingToggle.style.display = 'flex';
       return;
     }
     sidebar.classList.remove('open');
@@ -90,8 +104,9 @@
     }
   }
 
-  // Toggle button click
+  // Toggle button clicks
   drawerToggle.addEventListener('click', toggleDrawer);
+  floatingToggle.addEventListener('click', toggleDrawer);
 
   // Overlay backdrop click
   overlay.addEventListener('click', closeDrawer);
