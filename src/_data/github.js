@@ -41,29 +41,23 @@ module.exports = async function () {
     const createdYear = new Date(user.created_at).getFullYear();
     const yearsActive = new Date().getFullYear() - createdYear;
 
-    // Public events (last 90 days, GitHub caps at 300 events across
-    // 3 pages of 100) — used to build a rolling 13-week activity grid.
-    const events = [];
-    for (let page = 1; page <= 3; page++) {
-      const eventsRes = await fetch(
-        `https://api.github.com/users/${USERNAME}/events/public?per_page=100&page=${page}`,
+    // Pull actual commit history per public repo over the last 90
+    // days. One API call per repo — cheap for a small repo count.
+    const sinceISO = new Date(
+      Date.now() - 90 * 24 * 60 * 60 * 1000
+    ).toISOString();
+    const commitsByDay = {};
+    const publicRepos = repos.filter(r => !r.fork && !r.private);
+    for (const repo of publicRepos) {
+      const commitsRes = await fetch(
+        `https://api.github.com/repos/${repo.full_name}/commits?author=${USERNAME}&since=${sinceISO}&per_page=100`,
         { headers }
       );
-      const pageEvents = await eventsRes.json();
-      if (!Array.isArray(pageEvents) || pageEvents.length === 0) break;
-      events.push(...pageEvents);
-      if (pageEvents.length < 100) break;
-    }
-
-    // GitHub's public events feed strips commit-count fields out of
-    // PushEvent payloads, so count each push as one unit of activity.
-    const pushesByDay = {};
-    if (Array.isArray(events)) {
-      for (const ev of events) {
-        if (ev.type === "PushEvent") {
-          const day = ev.created_at.slice(0, 10);
-          pushesByDay[day] = (pushesByDay[day] || 0) + 1;
-        }
+      const commits = await commitsRes.json();
+      if (!Array.isArray(commits)) continue;
+      for (const c of commits) {
+        const day = (c.commit && c.commit.author && c.commit.author.date || "").slice(0, 10);
+        if (day) commitsByDay[day] = (commitsByDay[day] || 0) + 1;
       }
     }
 
@@ -82,7 +76,7 @@ module.exports = async function () {
         const key = date.toISOString().slice(0, 10);
         week.push({
           date: key,
-          count: pushesByDay[key] || 0,
+          count: commitsByDay[key] || 0,
           future: date > today,
         });
       }
@@ -94,9 +88,9 @@ module.exports = async function () {
     const rangeLabel = `${months[startOfWeek.getMonth()]} – ${months[today.getMonth()]} ${today.getFullYear()}`;
 
     // Summary stats derived from the same events data.
-    const totalPushes = Object.values(pushesByDay).reduce((a, b) => a + b, 0);
-    const activeDays = Object.values(pushesByDay).filter(c => c > 0).length;
-    const sortedDays = Object.keys(pushesByDay).sort();
+    const totalCommits = Object.values(commitsByDay).reduce((a, b) => a + b, 0);
+    const activeDays = Object.values(commitsByDay).filter(c => c > 0).length;
+    const sortedDays = Object.keys(commitsByDay).sort();
     const lastActivityDay = sortedDays[sortedDays.length - 1] || null;
     // Most recently pushed repo (excluding the site itself).
     const currentRepo = repos
@@ -126,7 +120,7 @@ module.exports = async function () {
       createdYear,
       contributions,
       rangeLabel,
-      totalPushes,
+      totalCommits,
       activeDays,
       lastActivityLabel,
       currentRepo: currentRepo ? currentRepo.name : null,
@@ -145,7 +139,7 @@ module.exports = async function () {
       createdYear: new Date().getFullYear(),
       contributions: [],
       rangeLabel: "",
-      totalPushes: 0,
+      totalCommits: 0,
       activeDays: 0,
       lastActivityLabel: "—",
       currentRepo: null,

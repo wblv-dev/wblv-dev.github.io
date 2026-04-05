@@ -62,10 +62,10 @@ robots: "index, follow"
     <!-- Activity panel: summary stats + full-year contribution chart -->
     <div class="fade-in-2" style="padding:18px 20px;background:var(--s1);border:1px solid var(--rule);border-radius:var(--radius-lg);">
       <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.12em;color:var(--dim);text-transform:uppercase;margin-bottom:14px;">Activity</div>
-      <div style="display:flex;align-items:flex-start;gap:32px;flex-wrap:wrap;margin-bottom:18px;">
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:24px;align-items:flex-start;margin-bottom:18px;">
         <div>
-          <div style="font-family:var(--font-display);font-size:22px;font-weight:700;color:var(--accent);line-height:1;margin-bottom:4px;">{{ github.totalPushes }}</div>
-          <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.12em;color:var(--dim);text-transform:uppercase;">Pushes (90d)</div>
+          <div style="font-family:var(--font-display);font-size:22px;font-weight:700;color:var(--accent);line-height:1;margin-bottom:4px;">{{ github.totalCommits }}</div>
+          <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.12em;color:var(--dim);text-transform:uppercase;">Commits (90d)</div>
         </div>
         <div>
           <div style="font-family:var(--font-display);font-size:22px;font-weight:700;color:var(--accent);line-height:1;margin-bottom:4px;">{{ github.activeDays }}</div>
@@ -75,7 +75,7 @@ robots: "index, follow"
           <div style="font-family:var(--font-display);font-size:18px;font-weight:700;color:var(--ink);line-height:1.1;margin-bottom:4px;">{{ github.lastActivityLabel }}</div>
           <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.12em;color:var(--dim);text-transform:uppercase;">Last push</div>
         </div>
-        <div style="min-width:0;flex:1;">
+        <div style="min-width:0;">
           <div style="font-family:var(--font-mono);font-size:12px;font-weight:500;color:var(--ink);line-height:1.2;margin-bottom:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">{{ github.currentRepo or '—' }}</div>
           <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.12em;color:var(--dim);text-transform:uppercase;">Most recent project</div>
         </div>
