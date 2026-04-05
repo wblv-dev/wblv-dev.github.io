@@ -161,7 +161,7 @@
 .docs-content {
   flex: 1;
   min-width: 0;
-  max-width: 900px;
+  max-width: 1200px;
   padding: 36px 60px 48px;
   margin-left: var(--sidebar-w);
   transition: margin-left var(--transition-speed) var(--transition-fn);
@@ -186,7 +186,7 @@
   align-items: center;
   gap: 16px;
   flex-wrap: wrap;
-  max-width: 900px;
+  max-width: 1200px;
 }
 .docs-footer-left {
   font-family: var(--font-mono);
