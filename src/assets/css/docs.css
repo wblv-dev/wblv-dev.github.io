@@ -345,22 +345,27 @@
     display: block;
   }
 
-  /* Sidebar: static in flow, not a drawer */
+  /* Sidebar: fixed panel on desktop, always visible */
   .docs-sidebar {
-    position: sticky;
+    position: fixed;
     top: var(--nav-h);
+    left: 0;
     height: calc(100vh - var(--nav-h));
     padding-top: 0;
     transform: none;
     box-shadow: none;
     z-index: 100;
-    transition: none;                  /* no slide animation on desktop */
-    align-self: flex-start;            /* prevent flex stretch breaking sticky */
+    transition: none;
   }
 
-  /* Remove 'open' class behaviour on desktop — sidebar is always in-flow */
+  /* Remove 'open' class behaviour on desktop — sidebar is always visible */
   .docs-sidebar.open {
     box-shadow: none;
+  }
+
+  /* Offset content to make room for fixed sidebar */
+  .docs-content {
+    margin-left: var(--sidebar-w);
   }
 
   /* Hide toggle — not needed on desktop */
