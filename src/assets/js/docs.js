@@ -1,11 +1,6 @@
 /* ============================================================
    WELLBELOVE.ORG — Docs Layout JS
-   Sidebar toggle, scroll tracking, search, mobile drawer
-
-   Responsive behaviour:
-     Desktop  (>1200px)  Sidebar in-flow, no toggle needed
-     Medium   (800-1200) Sidebar is overlay drawer with toggle
-     Small    (<800px)   Same drawer, toggle at bottom-left
+   Sidebar drawer toggle, scroll tracking, search
    ============================================================ */
 
 (function () {
@@ -17,9 +12,9 @@
   var navGroups   = document.querySelectorAll('.docs-nav-group');
   var navLinks    = document.querySelectorAll('.docs-nav-items a');
 
-  if (!sidebar) return; // bail if no docs layout on this page
+  if (!sidebar) return;
 
-  // ── CREATE TOGGLE BUTTON (inside sidebar search area on desktop) ──
+  // ── CREATE TOGGLE BUTTON ──────────────────────────────────
   var drawerToggle = document.querySelector('.docs-drawer-toggle');
   if (!drawerToggle) {
     drawerToggle = document.createElement('button');
@@ -31,22 +26,8 @@
         '<line x1="3" y1="12" x2="21" y2="12"/>' +
         '<line x1="3" y1="18" x2="21" y2="18"/>' +
       '</svg>';
-    // Insert into sidebar search area so it's part of the layout
-    var searchArea = document.querySelector('.docs-search');
-    if (searchArea) {
-      searchArea.insertBefore(drawerToggle, searchArea.firstChild);
-    } else {
-      document.body.appendChild(drawerToggle);
-    }
+    document.body.appendChild(drawerToggle);
   }
-
-  // Create a separate floating toggle for when sidebar is collapsed on desktop
-  var floatingToggle = document.createElement('button');
-  floatingToggle.className = 'docs-floating-toggle';
-  floatingToggle.setAttribute('aria-label', 'Open documentation sidebar');
-  floatingToggle.innerHTML = drawerToggle.innerHTML;
-  floatingToggle.style.display = 'none';
-  document.body.appendChild(floatingToggle);
 
   // ── CREATE OVERLAY BACKDROP ────────────────────────────────
   var overlay = document.querySelector('.docs-overlay');
@@ -56,47 +37,20 @@
     document.body.appendChild(overlay);
   }
 
-  // ── RESPONSIVE STATE ──────────────────────────────────────
-  var DESKTOP_MIN = 1201;
-
-  function isDesktop() {
-    return window.innerWidth >= DESKTOP_MIN;
-  }
-
   // ── DRAWER OPEN / CLOSE ───────────────────────────────────
   function openDrawer() {
-    if (isDesktop()) {
-      sidebar.classList.remove('collapsed');
-      sidebar.closest('.docs-layout').classList.remove('sidebar-collapsed');
-      floatingToggle.style.display = 'none';
-      return;
-    }
     sidebar.classList.add('open');
     overlay.classList.add('visible');
     document.body.style.overflow = 'hidden';
   }
 
   function closeDrawer() {
-    if (isDesktop()) {
-      sidebar.classList.add('collapsed');
-      sidebar.closest('.docs-layout').classList.add('sidebar-collapsed');
-      floatingToggle.style.display = 'flex';
-      return;
-    }
     sidebar.classList.remove('open');
     overlay.classList.remove('visible');
     document.body.style.overflow = '';
   }
 
   function toggleDrawer() {
-    if (isDesktop()) {
-      if (sidebar.classList.contains('collapsed')) {
-        openDrawer();
-      } else {
-        closeDrawer();
-      }
-      return;
-    }
     if (sidebar.classList.contains('open')) {
       closeDrawer();
     } else {
@@ -104,47 +58,19 @@
     }
   }
 
-  // Toggle button clicks
   drawerToggle.addEventListener('click', toggleDrawer);
-  floatingToggle.addEventListener('click', toggleDrawer);
-
-  // Overlay backdrop click
   overlay.addEventListener('click', closeDrawer);
 
-  // Escape key closes drawer
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape' && sidebar.classList.contains('open')) {
       closeDrawer();
     }
   });
 
-  // On resize: if we cross into desktop territory, clean up drawer state
-  var resizeTick = false;
-
-  window.addEventListener('resize', function () {
-    if (resizeTick) return;
-    resizeTick = true;
-    requestAnimationFrame(function () {
-      if (isDesktop()) {
-        // Clean up mobile drawer state on desktop
-        sidebar.classList.remove('open');
-        overlay.classList.remove('visible');
-        document.body.style.overflow = '';
-      } else {
-        // Clean up desktop collapsed state on mobile
-        sidebar.classList.remove('collapsed');
-        var layout = sidebar.closest('.docs-layout');
-        if (layout) layout.classList.remove('sidebar-collapsed');
-      }
-      resizeTick = false;
-    });
-  }, { passive: true });
-
   // ── SECTION COLLAPSE / EXPAND ─────────────────────────────
   navGroups.forEach(function (group) {
     var heading = group.querySelector('.docs-nav-heading');
     if (!heading) return;
-
     heading.addEventListener('click', function () {
       group.classList.toggle('collapsed');
     });
@@ -167,17 +93,10 @@
       if (!target) return;
 
       e.preventDefault();
-
       var top = target.getBoundingClientRect().top + window.pageYOffset - navH - 16;
       window.scrollTo({ top: top, behavior: 'smooth' });
-
-      // Update URL hash without jumping
       history.pushState(null, '', href);
-
-      // Close drawer on link click (medium/small)
-      if (!isDesktop()) {
-        closeDrawer();
-      }
+      closeDrawer();
     });
   });
 
@@ -207,8 +126,6 @@
     navLinks.forEach(function (l) { l.classList.remove('active'); });
     if (current) {
       current.link.classList.add('active');
-
-      // Ensure the active link's parent group is expanded
       var parentGroup = current.link.closest('.docs-nav-group');
       if (parentGroup && parentGroup.classList.contains('collapsed')) {
         parentGroup.classList.remove('collapsed');
@@ -225,7 +142,6 @@
     }
   }, { passive: true });
 
-  // Initial highlight
   updateActiveSection();
 
   // ── SIDEBAR SEARCH / FILTER ───────────────────────────────
@@ -248,7 +164,6 @@
           }
         });
 
-        // Hide entire group if no items match; auto-expand matching groups
         if (query && visibleCount === 0) {
           group.classList.add('docs-hidden');
         } else {

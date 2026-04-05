@@ -1,12 +1,6 @@
 /* ============================================================
    WELLBELOVE.ORG — Docs Layout Stylesheet
-   Cloudflare-docs-style sidebar + content layout
-   Scoped under .docs-layout to avoid conflicts with style.css
-
-   Breakpoints:
-     Desktop  > 1200px   Sidebar always visible, no toggle
-     Medium   800–1200px Sidebar collapsed, overlay drawer
-     Small    < 800px    Sidebar collapsed, drawer, compact padding
+   Sidebar is always a collapsible drawer, toggled by hamburger.
    ============================================================ */
 
 /* ── CUSTOM PROPERTIES (docs-scoped) ───────────────────────── */
@@ -19,28 +13,11 @@
 
 /* ── LAYOUT SHELL ───────────────────────────────────────────── */
 .docs-layout {
-  display: flex;
   min-height: calc(100vh - var(--nav-h));
   padding-top: var(--nav-h);
 }
 
-/* Continuous sidebar background column — DESKTOP ONLY
-   Rendered via media query below, hidden by default */
-.docs-layout::before {
-  content: '';
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: var(--sidebar-w);
-  height: 100vh;
-  background: var(--s1);
-  border-right: 1px solid var(--rule);
-  z-index: 150;
-  pointer-events: none;
-  display: none;                       /* hidden until desktop MQ */
-}
-
-/* ── SIDEBAR ────────────────────────────────────────────────── */
+/* ── SIDEBAR (always a drawer) ─────────────────────────────── */
 .docs-sidebar {
   width: var(--sidebar-w);
   min-width: var(--sidebar-w);
@@ -52,8 +29,6 @@
   flex-direction: column;
   scrollbar-width: thin;
   scrollbar-color: var(--rule) transparent;
-
-  /* Default: fixed drawer, off-screen (medium + small) */
   position: fixed;
   top: 0;
   left: 0;
@@ -83,9 +58,6 @@
   padding: 16px 20px 12px;
   border-bottom: 1px solid var(--rule);
   flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  gap: 8px;
 }
 
 .docs-search-input {
@@ -120,12 +92,10 @@
   flex: 1;
 }
 
-/* Section group */
 .docs-nav-group {
   margin-bottom: 2px;
 }
 
-/* Groups without a heading (standalone links) - remove extra spacing */
 .docs-nav-group:not(:has(.docs-nav-heading)) {
   margin-bottom: 0;
 }
@@ -134,7 +104,6 @@
   padding-bottom: 0;
 }
 
-/* Top-level standalone links (Overview, Automation, etc.) */
 .docs-nav > a {
   display: block;
   padding: 8px 20px;
@@ -159,7 +128,6 @@
   background: rgba(200, 245, 87, 0.04);
 }
 
-/* Section heading (collapsible) */
 .docs-nav-heading {
   display: flex;
   align-items: center;
@@ -194,7 +162,6 @@
   transform: rotate(-90deg);
 }
 
-/* Subsection links list */
 .docs-nav-items {
   list-style: none;
   margin: 0;
@@ -235,7 +202,6 @@
   background: rgba(200, 245, 87, 0.04);
 }
 
-/* Hidden state for search filtering */
 .docs-nav-group.docs-hidden { display: none; }
 .docs-nav-items li.docs-hidden { display: none; }
 
@@ -248,58 +214,24 @@
   overflow-x: hidden;
 }
 
-/* Content typography spacing */
-.docs-content h2 {
-  margin-top: 56px;
-  margin-bottom: 16px;
-}
+.docs-content h2 { margin-top: 56px; margin-bottom: 16px; }
+.docs-content h2:first-child { margin-top: 0; }
+.docs-content h3 { margin-top: 40px; margin-bottom: 12px; }
+.docs-content p { margin-bottom: 16px; line-height: 1.7; }
+.docs-content p + p { margin-top: 0; }
+.docs-content ul, .docs-content ol { margin-bottom: 20px; }
+.docs-content li { margin-bottom: 6px; line-height: 1.65; }
+.docs-content .callout { margin: 24px 0; }
+.docs-content .spec-table { margin: 20px 0 28px; }
+.docs-content .arch-block { margin: 20px 0 28px; }
 
-.docs-content h2:first-child {
-  margin-top: 0;
-}
-
-.docs-content h3 {
-  margin-top: 40px;
-  margin-bottom: 12px;
-}
-
-.docs-content p {
-  margin-bottom: 16px;
-  line-height: 1.7;
-}
-
-.docs-content p + p {
-  margin-top: 0;
-}
-
-.docs-content ul, .docs-content ol {
-  margin-bottom: 20px;
-}
-
-.docs-content li {
-  margin-bottom: 6px;
-  line-height: 1.65;
-}
-
-.docs-content .callout {
-  margin: 24px 0;
-}
-
-.docs-content .spec-table {
-  margin: 20px 0 28px;
-}
-
-.docs-content .arch-block {
-  margin: 20px 0 28px;
-}
-
-/* ── DRAWER TOGGLE BUTTON ──────────────────────────────────── */
+/* ── HAMBURGER TOGGLE (always visible, fixed position) ─────── */
 .docs-drawer-toggle {
-  display: flex;                       /* visible by default (medium/small) */
+  display: flex;
   position: fixed;
   top: calc(var(--nav-h) + 16px);
   left: 16px;
-  z-index: 260;                        /* above sidebar and nav */
+  z-index: 260;
   width: 40px;
   height: 40px;
   border-radius: var(--radius);
@@ -310,7 +242,7 @@
   align-items: center;
   justify-content: center;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
-  transition: background 0.15s, border-color 0.15s, opacity 0.2s;
+  transition: background 0.15s, border-color 0.15s;
 }
 
 .docs-drawer-toggle:hover {
@@ -325,42 +257,11 @@
   fill: none;
 }
 
-/* ── FLOATING TOGGLE (visible when sidebar collapsed on desktop) ── */
-.docs-floating-toggle {
-  display: none;
-  position: fixed;
-  top: calc(var(--nav-h) + 12px);
-  left: 12px;
-  z-index: 260;
-  width: 36px;
-  height: 36px;
-  border-radius: var(--radius);
-  background: var(--s2);
-  border: 1px solid var(--rule);
-  color: var(--ink);
-  cursor: pointer;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
-  transition: background 0.15s;
-}
-
-.docs-floating-toggle:hover {
-  background: var(--s3);
-}
-
-.docs-floating-toggle svg {
-  width: 16px;
-  height: 16px;
-  stroke: currentColor;
-  fill: none;
-}
-
 /* ── BACKDROP OVERLAY ──────────────────────────────────────── */
 .docs-overlay {
   position: fixed;
   inset: 0;
-  z-index: 240;                        /* behind sidebar, above content */
+  z-index: 240;
   background: rgba(0, 0, 0, 0.6);
   opacity: 0;
   pointer-events: none;
@@ -372,82 +273,10 @@
   pointer-events: auto;
 }
 
-/* ── RESPONSIVE: DESKTOP (above 1200px) ────────────────────── */
-@media (min-width: 1201px) {
-  /* Show the fixed sidebar background column */
-  .docs-layout::before {
-    display: block;
-  }
-
-  /* Sidebar: fixed panel on desktop, always visible */
-  .docs-sidebar {
-    position: fixed;
-    top: var(--nav-h);
-    left: 0;
-    height: calc(100vh - var(--nav-h));
-    padding-top: 0;
-    transform: none;
-    box-shadow: none;
-    z-index: 160;                      /* above ::before background (150) */
-    transition: transform 0.3s var(--transition-fn);
-  }
-
-  /* Remove 'open' class behaviour on desktop — sidebar is always visible */
-  .docs-sidebar.open {
-    box-shadow: none;
-  }
-
-  /* Offset content to make room for fixed sidebar */
-  .docs-content {
-    margin-left: var(--sidebar-w);
-    transition: margin-left 0.3s var(--transition-fn);
-  }
-
-  /* Sidebar collapsed state on desktop */
-  .docs-sidebar.collapsed {
-    transform: translateX(-100%);
-  }
-
-  .docs-sidebar.collapsed ~ .docs-content {
-    margin-left: 0;
-  }
-
-  .docs-layout.sidebar-collapsed::before {
-    display: none;
-  }
-
-  /* Toggle: inline inside sidebar search area on desktop */
-  .docs-drawer-toggle {
-    position: static;
-    width: 32px;
-    height: 32px;
-    min-width: 32px;
-    box-shadow: none;
-    background: transparent;
-    border: 1px solid var(--rule);
-    border-radius: var(--radius);
-  }
-
-  .docs-drawer-toggle:hover {
-    background: var(--s2);
-  }
-
-  .docs-drawer-toggle svg {
-    width: 14px;
-    height: 14px;
-  }
-
-  /* Overlay not needed on desktop */
-  .docs-overlay {
-    display: none;
-  }
-}
-
 /* ── RESPONSIVE: MEDIUM (800px–1200px) ─────────────────────── */
 @media (min-width: 800px) and (max-width: 1200px) {
   .docs-content {
     padding: 40px 48px 64px;
-    width: 100%;
   }
 }
 
@@ -455,7 +284,6 @@
 @media (max-width: 799px) {
   .docs-content {
     padding: 36px 24px 56px;
-    width: 100%;
   }
 
   .docs-drawer-toggle {
@@ -486,14 +314,14 @@
   }
 }
 
-/* ── RESPONSIVE: LARGE (1440px+) — wider content breathing room ── */
+/* ── RESPONSIVE: LARGE (1440px+) ───────────────────────────── */
 @media (min-width: 1440px) {
   .docs-content {
     padding: 48px 80px 80px;
   }
 }
 
-/* ── RESPONSIVE: 4K (2560px+) — prevent content from feeling lost ── */
+/* ── RESPONSIVE: 4K (2560px+) ──────────────────────────────── */
 @media (min-width: 2560px) {
   .docs-content {
     padding: 56px 100px 96px;
