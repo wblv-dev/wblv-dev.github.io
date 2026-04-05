@@ -14,7 +14,7 @@ permalink: /about/
       Who I <em class="accent">am.</em>
     </h1>
 
-    <div style="max-width:720px;">
+    <div>
       <p style="font-size:16px;color:var(--muted);line-height:1.8;margin-bottom:20px;">
         I started in cyber straight out of college at a two-person SOC, triaging around 2,000 alerts
         a month across finance, education, and energy customers on a week-on/week-off on-call rota.
@@ -63,7 +63,7 @@ permalink: /about/
         <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.08em;color:var(--dim);text-transform:uppercase;margin-bottom:6px;">{{ role.dates }}</div>
         <div style="font-family:var(--font-display);font-size:18px;font-weight:700;color:var(--ink);line-height:1.2;margin-bottom:2px;">{{ role.title }}</div>
         <div style="font-family:var(--font-mono);font-size:11px;color:var(--accent);margin-bottom:8px;">{{ role.company }}</div>
-        <p style="font-size:14px;color:var(--muted);line-height:1.7;max-width:640px;">{{ role.blurb }}</p>
+        <p style="font-size:14px;color:var(--muted);line-height:1.7;">{{ role.blurb }}</p>
       </div>
       {% endfor %}
 
@@ -96,19 +96,14 @@ permalink: /about/
     </div>
   </section>
 
-  <section class="section fade-in-4" style="border-top:1px solid var(--rule);padding-top:32px;">
-    <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.18em;color:var(--dim);text-transform:uppercase;margin-bottom:20px;">Find me</div>
-    <div style="display:flex;gap:32px;flex-wrap:wrap;">
-      <a class="link" href="https://linkedin.com/in/harrywellbelove" target="_blank" rel="noopener">
-        <span class="link-arr">↗</span> linkedin.com/in/harrywellbelove
-      </a>
-      <a class="link" href="https://github.com/wblv-dev" target="_blank" rel="noopener">
-        <span class="link-arr">↗</span> github.com/wblv-dev
-      </a>
-      <a class="link" href="mailto:harry@wellbelove.org">
-        <span class="link-arr">↗</span> harry@wellbelove.org
-      </a>
+  <section class="section fade-in-4" style="display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap;padding:24px 28px;background:var(--s1);border:1px solid var(--rule);border-radius:var(--radius-lg);">
+    <div>
+      <div style="font-family:var(--font-display);font-size:20px;font-weight:700;margin-bottom:6px;">
+        If you've got something worth <em class="accent">talking about.</em>
+      </div>
+      <div style="font-size:13px;color:var(--muted);">Get in touch directly or via the contact page.</div>
     </div>
+    <a class="btn btn-outline" href="/contact/">Get in touch →</a>
   </section>
 
 </div>
