@@ -2,12 +2,9 @@
 title: "Domain Security Toolkit — Harry Wellbelove"
 description: "Open source Python tool for automated domain security auditing. 35+ checks across TLS, email authentication, HTTP headers, DNSSEC, and OSINT."
 summary: "35+ automated security checks across TLS, email authentication, HTTP headers, DNSSEC, and OSINT exposure. Generates customer-ready HTML reports covering NIST, OWASP, NCSC, CISA, and GDPR."
+genre: Tool
 order: 2
 permalink: /domain-security-toolkit/
-tags:
-  - Open Source
-  - Python
-  - Active
 github_url: https://github.com/wblv-dev/domain-security-toolkit
 ---
 

@@ -3,12 +3,9 @@ title: WBLV Private Cloud Lab — Harry Wellbelove
 description: WBLV Private Cloud Lab — Three-node Proxmox/Ceph homelab. Technical
   build documentation.
 summary: Three-node Proxmox/Ceph cluster with HA OPNsense firewalls, VLAN architecture, Ansible provisioning, and CIS-hardened workloads throughout.
+genre: Infrastructure
 order: 1
 permalink: /wblv-private-cloud-lab/
-tags:
-  - Infrastructure
-  - Homelab
-  - Active
 github_url: https://github.com/wblv-dev/wblv-private-cloud-lab
 ---
 

@@ -23,19 +23,13 @@ permalink: /projects/
     {%- set sortedDocs = collections.docs | sort(false, false, "data.order") %}
     {%- for doc in sortedDocs %}
       {%- set titleShort = doc.data.title | replace(" — Harry Wellbelove", "") %}
-      {%- set displayTags = [] %}
-      {%- for tag in doc.data.tags %}
-        {%- if tag != "doc" %}{% set displayTags = (displayTags.push(tag), displayTags) %}{% endif %}
-      {%- endfor %}
-    <a href="{{ doc.url }}" style="text-decoration:none;display:block;padding:22px 26px;background:var(--s1);border:1px solid var(--rule);border-radius:var(--radius-lg);transition:border-color 0.15s, background 0.15s;" onmouseover="this.style.borderColor='var(--accent)';this.style.background='var(--s2)'" onmouseout="this.style.borderColor='var(--rule)';this.style.background='var(--s1)'">
+    <a href="{{ doc.url }}" style="text-decoration:none;display:block;padding:22px 26px;background:var(--s1);border:1px solid var(--rule);border-radius:var(--radius-lg);transition:border-color 0.15s, background 0.15s;min-height:150px;" onmouseover="this.style.borderColor='var(--accent)';this.style.background='var(--s2)'" onmouseout="this.style.borderColor='var(--rule)';this.style.background='var(--s1)'">
       <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:16px;">
         <div style="min-width:0;">
           <div style="font-family:var(--font-display);font-size:22px;font-weight:700;color:var(--ink);line-height:1.2;margin-bottom:10px;">{{ titleShort }}</div>
-          <div style="display:flex;gap:6px;flex-wrap:wrap;">
-            {%- for tag in displayTags %}
-            <span class="tag {% if tag == 'Active' %}tag-accent{% else %}tag-dim{% endif %}">{{ tag }}</span>
-            {%- endfor %}
-          </div>
+          {%- if doc.data.genre %}
+          <span class="tag tag-dim">{{ doc.data.genre }}</span>
+          {%- endif %}
         </div>
         <span style="font-family:var(--font-mono);font-size:14px;color:var(--dim);flex-shrink:0;line-height:1;padding-top:4px;">↗</span>
       </div>

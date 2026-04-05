@@ -2,12 +2,9 @@
 title: "ATS-CVC — Harry Wellbelove"
 description: "CV gap analysis tool. Compares your CV against a job description using the ATS-CVC Framework."
 summary: "CV gap analysis tool. Compares your CV against a job description using the ATS-CVC Framework, highlighting what's missing, undersold, and what a hiring manager will probe on."
+genre: Tool
 order: 3
 permalink: /ATS-CVC/
-tags:
-  - Tool
-  - AI
-  - Active
 github_url: https://github.com/wblv-dev/ATS-CVC
 ---
 
