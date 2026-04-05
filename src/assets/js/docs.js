@@ -51,19 +51,38 @@
 
   // ── DRAWER OPEN / CLOSE ───────────────────────────────────
   function openDrawer() {
-    if (isDesktop()) return;            // sidebar is in-flow on desktop
+    if (isDesktop()) {
+      // Desktop: remove collapsed state
+      sidebar.classList.remove('collapsed');
+      sidebar.closest('.docs-layout').classList.remove('sidebar-collapsed');
+      return;
+    }
     sidebar.classList.add('open');
     overlay.classList.add('visible');
     document.body.style.overflow = 'hidden';
   }
 
   function closeDrawer() {
+    if (isDesktop()) {
+      // Desktop: add collapsed state
+      sidebar.classList.add('collapsed');
+      sidebar.closest('.docs-layout').classList.add('sidebar-collapsed');
+      return;
+    }
     sidebar.classList.remove('open');
     overlay.classList.remove('visible');
     document.body.style.overflow = '';
   }
 
   function toggleDrawer() {
+    if (isDesktop()) {
+      if (sidebar.classList.contains('collapsed')) {
+        openDrawer();
+      } else {
+        closeDrawer();
+      }
+      return;
+    }
     if (sidebar.classList.contains('open')) {
       closeDrawer();
     } else {
@@ -92,8 +111,15 @@
     resizeTick = true;
     requestAnimationFrame(function () {
       if (isDesktop()) {
-        // Clean up any leftover drawer state on desktop
-        closeDrawer();
+        // Clean up mobile drawer state on desktop
+        sidebar.classList.remove('open');
+        overlay.classList.remove('visible');
+        document.body.style.overflow = '';
+      } else {
+        // Clean up desktop collapsed state on mobile
+        sidebar.classList.remove('collapsed');
+        var layout = sidebar.closest('.docs-layout');
+        if (layout) layout.classList.remove('sidebar-collapsed');
       }
       resizeTick = false;
     });

@@ -240,7 +240,7 @@
 .docs-content {
   flex: 1;
   min-width: 0;
-  max-width: 860px;
+  max-width: 1000px;
   padding: 48px 60px 80px;
   overflow-x: hidden;
 }
@@ -355,7 +355,7 @@
     transform: none;
     box-shadow: none;
     z-index: 160;                      /* above ::before background (150) */
-    transition: none;
+    transition: transform 0.3s var(--transition-fn);
   }
 
   /* Remove 'open' class behaviour on desktop — sidebar is always visible */
@@ -366,14 +366,36 @@
   /* Offset content to make room for fixed sidebar */
   .docs-content {
     margin-left: var(--sidebar-w);
+    transition: margin-left 0.3s var(--transition-fn);
   }
 
-  /* Hide toggle — not needed on desktop */
-  .docs-drawer-toggle {
+  /* Sidebar collapsed state on desktop */
+  .docs-sidebar.collapsed {
+    transform: translateX(-100%);
+  }
+
+  .docs-sidebar.collapsed ~ .docs-content {
+    margin-left: 0;
+  }
+
+  .docs-layout.sidebar-collapsed::before {
     display: none;
   }
 
-  /* Overlay never shows on desktop */
+  /* Toggle: always visible on desktop, top-left */
+  .docs-drawer-toggle {
+    display: flex;
+    top: calc(var(--nav-h) + 12px);
+    left: var(--sidebar-w);
+    transition: left 0.3s var(--transition-fn);
+  }
+
+  /* Move toggle when sidebar is collapsed */
+  .docs-sidebar.collapsed ~ .docs-drawer-toggle {
+    left: 12px;
+  }
+
+  /* Overlay not needed on desktop */
   .docs-overlay {
     display: none;
   }
