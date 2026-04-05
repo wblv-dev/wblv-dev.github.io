@@ -3,13 +3,12 @@ module.exports = async function () {
   const USERNAME = "wblv-dev";
   const headers = { "User-Agent": "wblv-dev-site" };
 
-  // Hand-written one-liners shown on the homepage repo cards.
-  // Falls back to the repo's GitHub description if no entry here.
-  const summaries = {
-    "wblv-dev.github.io": "Personal site, blog and project write-ups.",
-    "domain-security-toolkit": "35+ domain checks across TLS, email auth, DNS and OSINT.",
-    "ats-cvc": "Gap analysis between a CV and a job description.",
-    "wblv-private-cloud-lab": "Three-node Proxmox/Ceph cluster with HA OPNsense firewalls.",
+  // Internal docs page per repo. When set, the homepage card links
+  // here instead of GitHub. Leave as null to fall back to GitHub.
+  const docsPaths = {
+    "domain-security-toolkit": "/docs/domain-security-toolkit/",
+    "ats-cvc": "/docs/ATS-CVC/",
+    "wblv-private-cloud-lab": "/docs/wblv-private-cloud-lab/",
   };
 
   try {
@@ -33,10 +32,9 @@ module.exports = async function () {
       .slice(0, 6)
       .map(r => ({
         name: r.name,
-        description: summaries[r.name] || r.description,
         url: r.html_url,
+        docs: docsPaths[r.name] || null,
         stars: r.stargazers_count,
-        language: r.language,
         pushed: r.pushed_at,
       }));
 

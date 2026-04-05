@@ -68,12 +68,12 @@ robots: "index, follow"
     <!-- Recent repos -->
     <div class="fade-in-2" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;">
       {% for repo in github.recent %}
-      <a href="{{ repo.url }}" target="_blank" rel="noopener" style="text-decoration:none;padding:12px 14px;background:var(--s1);border:1px solid var(--rule);border-radius:var(--radius-lg);transition:border-color 0.15s, background 0.15s;display:block;" onmouseover="this.style.borderColor='var(--accent)';this.style.background='var(--s2)'" onmouseout="this.style.borderColor='var(--rule)';this.style.background='var(--s1)'">
-        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:6px;">
+      <a href="{{ repo.docs or repo.url }}"{% if not repo.docs %} target="_blank" rel="noopener"{% endif %} style="text-decoration:none;padding:12px 14px;background:var(--s1);border:1px solid var(--rule);border-radius:var(--radius-lg);transition:border-color 0.15s, background 0.15s;display:flex;flex-direction:column;gap:8px;" onmouseover="this.style.borderColor='var(--accent)';this.style.background='var(--s2)'" onmouseout="this.style.borderColor='var(--rule)';this.style.background='var(--s1)'">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;">
           <div style="font-family:var(--font-mono);font-size:11px;font-weight:500;color:var(--ink);overflow:hidden;text-overflow:ellipsis;">{{ repo.name }}</div>
           {% if repo.stars > 0 %}<div style="font-family:var(--font-mono);font-size:10px;color:var(--dim);flex-shrink:0;">★ {{ repo.stars }}</div>{% endif %}
         </div>
-        {% if repo.description %}<div style="font-size:11px;color:var(--muted);line-height:1.45;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ repo.description }}</div>{% endif %}
+        <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.08em;color:var(--accent);text-transform:uppercase;">View {{ 'project' if repo.docs else 'on GitHub' }} →</div>
       </a>
       {% endfor %}
     </div>
