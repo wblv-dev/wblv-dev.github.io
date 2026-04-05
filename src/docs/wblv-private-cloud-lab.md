@@ -1,11 +1,11 @@
 ---
-title: "WBLV Private Cloud Lab — Harry Wellbelove"
-description: "WBLV Private Cloud Lab — Three-node Proxmox/Ceph homelab. Technical build documentation."
+title: WBLV Private Cloud Lab — Harry Wellbelove
+description: WBLV Private Cloud Lab — Three-node Proxmox/Ceph homelab. Technical
+  build documentation.
 permalink: /wblv-private-cloud-lab/
 tags:
   - Infrastructure
   - Homelab
-  - Active
 github_url: https://github.com/wblv-dev/wblv-private-cloud-lab
 ---
 
