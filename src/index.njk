@@ -61,7 +61,7 @@ robots: "index, follow"
 
     <!-- Activity panel: summary stats + full-year contribution chart -->
     <div class="fade-in-2" style="padding:18px 20px;background:var(--s1);border:1px solid var(--rule);border-radius:var(--radius-lg);">
-      <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.12em;color:var(--dim);text-transform:uppercase;margin-bottom:14px;">Project Activity</div>
+      <a href="https://github.com/{{ github.username }}" target="_blank" rel="noopener" style="display:inline-block;font-family:var(--font-mono);font-size:9px;letter-spacing:0.12em;color:var(--dim);text-transform:uppercase;margin-bottom:14px;text-decoration:none;transition:color 0.15s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--dim)'">Project Activity ↗</a>
       <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-bottom:18px;">
         <div>
           <div style="height:24px;display:flex;align-items:flex-end;margin-bottom:6px;">
@@ -83,7 +83,7 @@ robots: "index, follow"
         </div>
         <div style="min-width:0;">
           <div style="height:24px;display:flex;align-items:flex-end;margin-bottom:6px;">
-            <span style="font-family:var(--font-mono);font-size:12px;font-weight:500;color:var(--ink);line-height:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:100%;">{{ github.currentRepo or '—' }}</span>
+            {% if github.currentRepoUrl %}<a href="{{ github.currentRepoUrl }}"{% if 'http' in github.currentRepoUrl %} target="_blank" rel="noopener"{% endif %} style="font-family:var(--font-mono);font-size:12px;font-weight:500;color:var(--ink);line-height:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:100%;text-decoration:none;transition:color 0.15s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--ink)'">{{ github.currentRepo }}</a>{% else %}<span style="font-family:var(--font-mono);font-size:12px;font-weight:500;color:var(--ink);line-height:1;">—</span>{% endif %}
           </div>
           <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.12em;color:var(--dim);text-transform:uppercase;">Most recent project</div>
         </div>

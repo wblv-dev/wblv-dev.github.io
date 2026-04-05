@@ -124,6 +124,9 @@ module.exports = async function () {
       activeDays,
       lastActivityLabel,
       currentRepo: currentRepo ? currentRepo.name : null,
+      currentRepoUrl: currentRepo
+        ? (docsPaths[currentRepo.name] || currentRepo.html_url)
+        : null,
     };
   } catch (err) {
     console.warn("GitHub data fetch failed:", err.message);
@@ -143,6 +146,7 @@ module.exports = async function () {
       activeDays: 0,
       lastActivityLabel: "—",
       currentRepo: null,
+      currentRepoUrl: null,
     };
   }
 };
