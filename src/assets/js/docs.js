@@ -145,16 +145,46 @@
 
   var scrollTick = false;
   function updateActiveSection() {
-    var offset = navH + 40;
-    var current = null;
-    for (var i = 0; i < sections.length; i++) {
-      if (sections[i].el.getBoundingClientRect().top - offset <= 0) current = sections[i];
-    }
-    sectionLinks.forEach(function (l) { l.classList.remove('active'); });
-    if (current) current.link.classList.add('active');
     scrollTick = false;
+    if (!sections.length) return;
+
+    var offset = navH + 40;
+    var scrollY = window.pageYOffset || document.documentElement.scrollTop;
+    var viewportH = window.innerHeight;
+    var pageH = document.documentElement.scrollHeight;
+    var activeIdx = -1;
+
+    // If scrolled to within 40px of the bottom, always pick the last section
+    if (scrollY + viewportH >= pageH - 40) {
+      activeIdx = sections.length - 1;
+    } else {
+      // Find the last section whose top has passed the offset line
+      for (var i = 0; i < sections.length; i++) {
+        if (sections[i].el.getBoundingClientRect().top - offset <= 0) activeIdx = i;
+      }
+      // If no section has passed yet, default to the first
+      if (activeIdx < 0 && sections[0].el.getBoundingClientRect().top > offset) activeIdx = 0;
+    }
+
+    sectionLinks.forEach(function (l) { l.classList.remove('active'); });
+    if (activeIdx >= 0 && sections[activeIdx]) {
+      sections[activeIdx].link.classList.add('active');
+    }
+
+    // Auto-scroll the sidebar to keep the active link in view
+    if (activeIdx >= 0 && sections[activeIdx]) {
+      var activeLink = sections[activeIdx].link;
+      var sidebarRect = sidebar.getBoundingClientRect();
+      var linkRect = activeLink.getBoundingClientRect();
+      if (linkRect.top < sidebarRect.top + 60 || linkRect.bottom > sidebarRect.bottom - 20) {
+        activeLink.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+      }
+    }
   }
   window.addEventListener('scroll', function () {
+    if (!scrollTick) { requestAnimationFrame(updateActiveSection); scrollTick = true; }
+  }, { passive: true });
+  window.addEventListener('resize', function () {
     if (!scrollTick) { requestAnimationFrame(updateActiveSection); scrollTick = true; }
   }, { passive: true });
   updateActiveSection();

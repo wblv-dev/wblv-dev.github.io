@@ -8,7 +8,8 @@
   --transition-speed: 0.25s;
   --transition-fn: cubic-bezier(0.4, 0, 0.2, 1);
   display: flex;
-  min-height: calc(100vh - var(--nav-h));
+  flex-direction: column;
+  min-height: 100vh;
   padding-top: var(--nav-h);
 }
 
@@ -161,12 +162,61 @@
   flex: 1;
   min-width: 0;
   max-width: 900px;
-  padding: 36px 60px 80px;
-  overflow-x: hidden;
+  padding: 36px 60px 48px;
   margin-left: var(--sidebar-w);
   transition: margin-left var(--transition-speed) var(--transition-fn);
 }
 .docs-layout.sidebar-collapsed .docs-content { margin-left: 0; }
+
+/* ── DOCS FOOTER (sits inside docs-layout, respects sidebar) ─ */
+.docs-footer {
+  margin-left: var(--sidebar-w);
+  padding: 20px 60px 24px;
+  border-top: 1px solid var(--rule);
+  transition: margin-left var(--transition-speed) var(--transition-fn);
+  flex-shrink: 0;
+}
+.docs-layout.sidebar-collapsed .docs-footer {
+  margin-left: 0;
+  width: 100%;
+}
+.docs-footer-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  max-width: 900px;
+}
+.docs-footer-left {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  color: var(--dim);
+  text-transform: uppercase;
+}
+.docs-footer-right {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.docs-footer-right a {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  color: var(--dim);
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: color 0.15s;
+}
+.docs-footer-right a:hover { color: var(--accent); }
+
+/* ── PROJECT LINKS (View on GitHub button row) ───────────────── */
+.project-links {
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid var(--rule);
+}
 
 /* ── BREADCRUMBS ────────────────────────────────────────────── */
 .docs-breadcrumbs {
