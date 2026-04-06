@@ -9,6 +9,7 @@ module.exports = async function () {
     "domain-security-toolkit": "/domain-security-toolkit/",
     "ats-cvc": "/ATS-CVC/",
     "wblv-private-cloud-lab": "/wblv-private-cloud-lab/",
+    "claude-technical-tutor": "/claude-technical-tutor/",
   };
 
   try {
