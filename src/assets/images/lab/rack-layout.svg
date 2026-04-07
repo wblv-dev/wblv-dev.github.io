@@ -1,0 +1,137 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 760" font-family="'DM Mono', 'Courier New', monospace">
+  <defs>
+    <style>
+      .rack-bg { fill: #111; }
+      .rail { fill: #1a1a1a; stroke: #2a2a2a; stroke-width: 1; }
+      .u-bg { fill: #161616; stroke: #222; stroke-width: 0.5; }
+      .u-empty { fill: #131313; stroke: #1c1c1c; stroke-width: 0.5; }
+      .u-label { fill: #444; font-size: 9px; text-anchor: end; }
+      .dev-network { fill: #1a1d1a; stroke: #3a4a3a; stroke-width: 0.75; }
+      .dev-compute { fill: #1a1a1d; stroke: #3a3a4a; stroke-width: 0.75; }
+      .dev-storage { fill: #1d1a1a; stroke: #4a3a3a; stroke-width: 0.75; }
+      .dev-other { fill: #181818; stroke: #2a2a2a; stroke-width: 0.75; }
+      .dev-name { fill: #ccc; font-size: 10px; }
+      .dev-model { fill: #666; font-size: 9px; }
+      .title { fill: #ccc; font-size: 11px; font-weight: bold; letter-spacing: 1px; }
+      .subtitle { fill: #444; font-size: 9px; }
+      .tier-tag { font-size: 8px; letter-spacing: 1.5px; fill: #555; }
+      .totals-bg { fill: #161616; stroke: #2a2a2a; stroke-width: 0.75; }
+      .totals-label { fill: #666; font-size: 9px; }
+      .totals-value { fill: #aaa; font-size: 9px; }
+    </style>
+  </defs>
+
+  <!-- Background -->
+  <rect width="480" height="760" rx="4" class="rack-bg"/>
+
+  <!-- Title block -->
+  <text x="240" y="24" text-anchor="middle" class="title">WBLV PRIVATE CLOUD LAB</text>
+  <text x="240" y="38" text-anchor="middle" class="subtitle">All-Rack CAB226X6 — 22U Rack</text>
+
+  <!-- Rack frame -->
+  <rect x="44" y="52" width="392" height="616" fill="none" stroke="#2a2a2a" stroke-width="1.5" rx="2"/>
+
+  <!-- Left rail -->
+  <rect x="44" y="52" width="28" height="616" class="rail"/>
+  <!-- Right rail -->
+  <rect x="408" y="52" width="28" height="616" class="rail"/>
+
+  <!-- U22 — WatchGuard M370 -->
+  <rect x="74" y="56" width="332" height="26" class="dev-network" rx="1"/>
+  <text x="82" y="73" class="dev-name">WatchGuard Firebox M370</text>
+  <text x="398" y="73" text-anchor="end" class="dev-model">HA Primary</text>
+  <text x="40" y="73" class="u-label">22</text>
+
+  <!-- U21 — WatchGuard M370 -->
+  <rect x="74" y="84" width="332" height="26" class="dev-network" rx="1"/>
+  <text x="82" y="101" class="dev-name">WatchGuard Firebox M370</text>
+  <text x="398" y="101" text-anchor="end" class="dev-model">HA Secondary</text>
+  <text x="40" y="101" class="u-label">21</text>
+
+  <!-- U20 — HPE Aruba Switch -->
+  <rect x="74" y="112" width="332" height="26" class="dev-network" rx="1"/>
+  <text x="82" y="129" class="dev-name">HPE Aruba 2930F</text>
+  <text x="398" y="129" text-anchor="end" class="dev-model">JL253A — 24G + 4xSFP+</text>
+  <text x="40" y="129" class="u-label">20</text>
+
+  <!-- Tier tag -->
+  <text x="446" y="100" transform="rotate(90,446,100)" class="tier-tag">NETWORK</text>
+
+  <!-- U19 — Cable management -->
+  <rect x="74" y="140" width="332" height="26" class="u-empty" rx="1"/>
+  <text x="240" y="157" text-anchor="middle" class="dev-model">Cable Management</text>
+  <text x="40" y="157" class="u-label">19</text>
+
+  <!-- U18 — Synology -->
+  <rect x="74" y="168" width="332" height="26" class="dev-storage" rx="1"/>
+  <text x="82" y="185" class="dev-name">Synology DS418play</text>
+  <text x="398" y="185" text-anchor="end" class="dev-model">4x 6TB WD Red — RAID 6</text>
+  <text x="40" y="185" class="u-label">18</text>
+
+  <!-- U17 — Mac Mini -->
+  <rect x="74" y="196" width="332" height="26" class="dev-compute" rx="1"/>
+  <text x="82" y="213" class="dev-name">Mac Mini</text>
+  <text x="398" y="213" text-anchor="end" class="dev-model">M2 — Ansible Control Node</text>
+  <text x="40" y="213" class="u-label">17</text>
+
+  <!-- Tier tag -->
+  <text x="446" y="186" transform="rotate(90,446,186)" class="tier-tag">MGMT</text>
+
+  <!-- U16-U13 — Empty shelf space -->
+  <rect x="74" y="224" width="332" height="26" class="u-empty" rx="1"/>
+  <text x="40" y="241" class="u-label">16</text>
+  <rect x="74" y="252" width="332" height="26" class="u-empty" rx="1"/>
+  <text x="40" y="269" class="u-label">15</text>
+  <rect x="74" y="280" width="332" height="26" class="u-empty" rx="1"/>
+  <text x="40" y="297" class="u-label">14</text>
+  <rect x="74" y="308" width="332" height="26" class="u-empty" rx="1"/>
+  <text x="40" y="325" class="u-label">13</text>
+
+  <!-- U12-U9 — Node 1 (4U) -->
+  <rect x="74" y="336" width="332" height="110" class="dev-compute" rx="1"/>
+  <text x="82" y="356" class="dev-name">Node 1</text>
+  <text x="398" y="356" text-anchor="end" class="dev-model">Logic Case LC-4480</text>
+  <text x="82" y="372" class="dev-model">SuperMicro X10DRI-T</text>
+  <text x="82" y="386" class="dev-model">2x Xeon E5-2680v4 — 28c/56t</text>
+  <text x="82" y="400" class="dev-model">64GB DDR4 — LSI 9300-16i — 4x 10GbE</text>
+  <text x="82" y="414" class="dev-model">2x10TB + 3x4TB + 3x1.6TB SSD — ~37TB</text>
+  <text x="82" y="436" class="dev-model" style="fill:#3a3a5a">Proxmox + Ceph OSD</text>
+  <text x="40" y="356" class="u-label">12</text>
+  <text x="40" y="436" class="u-label">9</text>
+
+  <!-- U8-U5 — Node 2 (4U) -->
+  <rect x="74" y="448" width="332" height="110" class="dev-compute" rx="1"/>
+  <text x="82" y="468" class="dev-name">Node 2</text>
+  <text x="398" y="468" text-anchor="end" class="dev-model">Logic Case LC-4480</text>
+  <text x="82" y="484" class="dev-model">SuperMicro X10DRI-T</text>
+  <text x="82" y="498" class="dev-model">2x Xeon E5-2680v4 — 28c/56t</text>
+  <text x="82" y="512" class="dev-model">64GB DDR4 — LSI 9300-16i — 4x 10GbE</text>
+  <text x="82" y="526" class="dev-model">2x10TB + 3x4TB + 3x1.6TB SSD — ~37TB</text>
+  <text x="82" y="548" class="dev-model" style="fill:#3a3a5a">Proxmox + Ceph OSD</text>
+  <text x="40" y="468" class="u-label">8</text>
+  <text x="40" y="548" class="u-label">5</text>
+
+  <!-- U4-U1 — Node 3 (4U) -->
+  <rect x="74" y="560" width="332" height="110" class="dev-compute" rx="1"/>
+  <text x="82" y="580" class="dev-name">Node 3</text>
+  <text x="398" y="580" text-anchor="end" class="dev-model">Logic Case LC-4480</text>
+  <text x="82" y="596" class="dev-model">SuperMicro X10DRI-T</text>
+  <text x="82" y="610" class="dev-model">2x Xeon E5-2680v4 — 28c/56t</text>
+  <text x="82" y="624" class="dev-model">64GB DDR4 — LSI 9300-16i — 4x 10GbE</text>
+  <text x="82" y="638" class="dev-model">2x10TB + 3x4TB + 3x1.6TB SSD — ~37TB</text>
+  <text x="82" y="660" class="dev-model" style="fill:#3a3a5a">Proxmox + Ceph OSD</text>
+  <text x="40" y="580" class="u-label">4</text>
+  <text x="40" y="660" class="u-label">1</text>
+
+  <!-- Tier tag -->
+  <text x="446" y="470" transform="rotate(90,446,470)" class="tier-tag">COMPUTE — PROXMOX / CEPH</text>
+
+  <!-- Totals -->
+  <rect x="44" y="686" width="392" height="60" class="totals-bg" rx="2"/>
+  <text x="60" y="704" class="totals-label">CPU</text>
+  <text x="110" y="704" class="totals-value">84 cores / 168 threads (6x E5-2680v4)</text>
+  <text x="60" y="720" class="totals-label">RAM</text>
+  <text x="110" y="720" class="totals-value">192 GB DDR4</text>
+  <text x="60" y="736" class="totals-label">DISK</text>
+  <text x="110" y="736" class="totals-value">~111TB raw (Ceph) + 24TB (NAS) — 12x 10GbE uplinks</text>
+</svg>
