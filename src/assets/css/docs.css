@@ -312,7 +312,7 @@
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 16px;
-  margin: 24px 0 32px;
+  margin: 32px 0 40px;
   align-items: center;
 }
 .photo-grid img {
