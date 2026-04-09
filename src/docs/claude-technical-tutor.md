@@ -79,40 +79,46 @@ Disable for a single turn with "just tell me" or "skip the teaching".
 
 ## Session Note-Taking
 
-The build-log system captures structured notes using a **Task / Reason / Challenge** rubric:
+The session-log system captures structured notes using two rubrics:
 
+**T/R/C — Task / Reason / Challenge** (for build work):
 - **Task** — what did we do?
 - **Reason** — why did we do it?
 - **Challenge** — what broke, and how did we fix it?
 
-Every entry gets a signal level (`high` / `medium` / `low`) that drives synthesis priority. High-signal challenges — broken assumptions, debugging breakthroughs — surface first.
+**Q/A/R — Question / Answer / Resolution** (for teaching exchanges):
+- **Question** — what was asked, and what's the context?
+- **Answer** — what did the learner say? (captured faithfully, in their own words)
+- **Resolution** — what did the discussion conclude?
+
+Every entry gets a signal level (`high` / `medium` / `low`) that drives synthesis priority. Scratch entries are written in meeting-minutes style — faithful to what was actually said, not paraphrased.
 
 ## Commands
 
 <div class="card mb-md">
 <table class="spec-table">
-<tr><td>/project-start [topic]</td><td>Start a recording session with an optional topic</td></tr>
-<tr><td>/note [hint]</td><td>Manually capture a T/R/C entry for the current moment</td></tr>
+<tr><td>/session-start [topic]</td><td>Start a recording session with an optional topic</td></tr>
+<tr><td>/note [hint]</td><td>Manually capture a T/R/C or Q/A/R entry for the current moment</td></tr>
 <tr><td>/recover</td><td>Retroactively generate notes from the session transcript</td></tr>
-<tr><td>/project-end</td><td>Synthesize all entries into a final note and clean up</td></tr>
+<tr><td>/session-end</td><td>Synthesize all entries into a final note and clean up</td></tr>
 </table>
 </div>
 
 ## Workflow
 
 ```
-/project-start Kubernetes networking lab
+/session-start OPNsense HA setup
   ... work normally, Claude captures notes silently ...
   /note            (manual capture if Claude misses something)
-/project-end       (synthesize, confirm filename, done)
+/session-end       (synthesize, confirm filename, done)
 ```
 
-If you forget `/project-start`:
+If you forget `/session-start`:
 
 ```
 ... work normally, no notes captured ...
 /recover           (mines session transcript retroactively)
-/project-end       (synthesize as normal)
+/session-end       (synthesize as normal)
 ```
 
 ## Components
@@ -122,7 +128,7 @@ The plugin uses multiple Claude Code extension points working together:
 <div class="card mb-md">
 <table class="spec-table">
 <tr><td>CLAUDE.md</td><td>Guided discovery teaching persona and core principles</td></tr>
-<tr><td>Skill</td><td>Build-log capture logic, T/R/C rubric, signal levels, synthesis</td></tr>
+<tr><td>Skill</td><td>Session-log capture logic, T/R/C + Q/A/R rubrics, signal levels, synthesis</td></tr>
 <tr><td>Commands</td><td>Session lifecycle: start, note, recover, end</td></tr>
 <tr><td>Hook</td><td>Warns on exit if a session wasn't wrapped</td></tr>
 <tr><td>Rule</td><td>Format enforcement on note files</td></tr>
@@ -133,7 +139,7 @@ The plugin uses multiple Claude Code extension points working together:
 
 Claude watches for noteworthy moments and filters out noise:
 
-**Captured:** new concepts, decisions with tradeoffs, debugging breakthroughs, broken assumptions, reusable patterns, gotchas that cost time.
+**Captured:** new concepts, decisions with tradeoffs, debugging breakthroughs, broken assumptions, opinions formed or changed, reading assignments completed, reusable patterns, gotchas that cost time.
 
 **Filtered:** routine tool calls, typo fixes, dead-ends that taught nothing, things obvious from code or commit history.
 
